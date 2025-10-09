@@ -1,0 +1,78 @@
+name: app
+description: "A social media project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  # State Management
+  flutter_riverpod: ^3.0.2
+  riverpod_annotation: ^3.0.2
+  # Navigation
+  go_router: ^16.2.4
+  # Network
+  dio: ^5.9.0
+  connectivity_plus: ^7.0.0
+  # Storage
+  flutter_secure_storage: ^9.2.4
+  # For immutable classes
+  freezed_annotation: ^3.1.0
+  # For JSON serialization
+  json_annotation: ^4.9.0
+  # For value equality
+  equatable: ^2.0.7
+  # path provide
+  path_provider: ^2.1.5
+  path: ^1.9.1
+  # local database
+  sqflite: ^2.4.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  riverpod_generator: ^3.0.2
+  freezed: ^3.2.3
+  json_serializable: ^6.11.1
+  build_runner: ^2.7.1
+
+
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icons/ # static icon asset
+    - assets/images/ # static image assets
+
+  fonts:
+    # outfit font 
+    - family: outfit
+      fonts:
+        - asset: assets/fonts/outfit/Outfit-ExtraBold.ttf 
+          weight: 800
+        - asset: assets/fonts/outfit/Outfit-Bold.ttf 
+          weight: 700
+        - asset: assets/fonts/outfit/Outfit-Light.ttf 
+          weight: 300
+        - asset: assets/fonts/outfit/Outfit-Medium.ttf 
+          weight: 500
+        - asset: assets/fonts/outfit/Outfit-Regular.ttf 
+          weight: 400
+        - asset: assets/fonts/outfit/Outfit-SemiBold.ttf 
+          weight: 600
+
+  
+
+  
+   
+   
+  
+  
+  
+  
+  
