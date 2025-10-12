@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-/// User entity in the domain layer
 class User extends Equatable {
   final String id;
   final String email;
@@ -24,4 +23,7 @@ class User extends Equatable {
     avatar,
     isEmailVerified,
   ];
+
+   @override
+  String toString() => 'User(id: $id, email: $email, name: $name, isEmailVerified: $isEmailVerified)';
 }

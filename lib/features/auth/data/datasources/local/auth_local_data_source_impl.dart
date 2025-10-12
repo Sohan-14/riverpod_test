@@ -1,6 +1,6 @@
-import '../../../../../core/constants/storage_keys.dart';
+import '../../../../../core/constants/database_constants.dart';
 import '../../../../../core/exceptions/exceptions.dart';
-import '../../../../../core/storage/local/local_storage.dart';
+import '../../../../../core/storage/database_helper.dart';
 import '../../../../../core/storage/secure/secure_token_storage.dart';
 import '../../../../../core/utils/app_logger.dart';
 import '../../models/user/user_model.dart';
@@ -8,52 +8,57 @@ import 'auth_local_data_source.dart';
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   final SecureTokenStorage secureTokenStorage;
-  final LocalStorage localStorage;
+  final DatabaseHelper databaseHelper;
 
   AuthLocalDataSourceImpl({
     required this.secureTokenStorage,
-    required this.localStorage,
+    required this.databaseHelper,
   });
 
   @override
-  Future<void> cacheUser(UserModel user) async {
+  Future<void> saveUser(UserModel user) async {
     try {
-      AppLogger().d('Caching user data: ${user.email}');
-      await localStorage.saveData(StorageKeys.currentUser, user.toJson());
+      AppLogger().d('Saving user data: ${user.email}');
+      await databaseHelper.insert(
+        DatabaseConstants.userTable,
+        user.toDatabase(),
+      );
     } catch (e) {
-      AppLogger().e('Error caching user data', error: e);
-      throw LocalStorageException(message: 'Failed to cache user data: $e');
+      AppLogger().e('Error saving user data', error: e);
+      throw DatabaseException(message: 'Failed to save user data: $e');
     }
   }
 
   @override
-  Future<void> cacheTokens({
+  Future<void> saveTokens({
     required String accessToken,
     required String refreshToken,
   }) async {
     try {
-      AppLogger().d('Caching auth tokens');
+      AppLogger().d('Saving auth tokens');
       await secureTokenStorage.saveAccessToken(accessToken);
       await secureTokenStorage.saveRefreshToken(refreshToken);
     } catch (e) {
-      AppLogger().e('Error caching tokens', error: e);
-      throw TokenException(message: 'Failed to cache tokens: $e');
+      AppLogger().e('Error saving tokens', error: e);
+      throw DatabaseException(message: 'Failed to save tokens: $e');
     }
   }
 
   @override
   Future<UserModel?> getUser() async {
     try {
-      AppLogger().d('Getting cached user data');
-      final Map<String, dynamic>? userData = await localStorage
-          .getData<Map<String, dynamic>>(StorageKeys.currentUser);
-      if (userData != null) {
-        return UserModel.fromJson(userData);
+      AppLogger().d('Getting user data from database');
+      final List<Map<String, dynamic>> users = await databaseHelper
+          .queryAllRows(DatabaseConstants.userTable);
+
+      if (users.isNotEmpty) {
+        return UserModel.fromDatabase(users.first);
       }
+
       return null;
     } catch (e) {
-      AppLogger().e('Error getting cached user', error: e);
-      throw LocalStorageException(message: 'Failed to get cached user: $e');
+      AppLogger().e('Error getting user data', error: e);
+      throw DatabaseException(message: 'Failed to get user data: $e');
     }
   }
 
@@ -63,7 +68,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       return await secureTokenStorage.getAccessToken();
     } catch (e) {
       AppLogger().e('Error getting access token', error: e);
-      throw TokenException(message: 'Failed to get access token: $e');
+      throw DatabaseException(message: 'Failed to get access token: $e');
     }
   }
 
@@ -73,19 +78,19 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       return await secureTokenStorage.getRefreshToken();
     } catch (e) {
       AppLogger().e('Error getting refresh token', error: e);
-      throw TokenException(message: 'Failed to get refresh token: $e');
+      throw DatabaseException(message: 'Failed to get refresh token: $e');
     }
   }
 
   @override
-  Future<void> clearCache() async {
+  Future<void> clearAuth() async {
     try {
-      AppLogger().d('Clearing user cache');
+      AppLogger().d('Clearing auth data');
       await secureTokenStorage.deleteTokens();
-      await localStorage.deleteData(StorageKeys.currentUser);
+      await databaseHelper.deleteAll(DatabaseConstants.userTable);
     } catch (e) {
-      AppLogger().e('Error clearing cache', error: e);
-      throw TokenException(message: 'Failed to clear cache: $e');
+      AppLogger().e('Error clearing auth data', error: e);
+      throw DatabaseException(message: 'Failed to clear auth data: $e');
     }
   }
 
@@ -95,7 +100,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       return await secureTokenStorage.hasAccessToken();
     } catch (e) {
       AppLogger().e('Error checking auth status', error: e);
-      throw TokenException(message: 'Error checking auth status: $e');
+      throw DatabaseException(message: 'Error checking auth status: $e');
     }
   }
 }

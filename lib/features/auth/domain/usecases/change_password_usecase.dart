@@ -1,7 +1,7 @@
 
 import '../../../../core/entities/result.dart';
 import '../../../../core/exceptions/failures.dart';
-import '../repositories/auth_repo.dart';
+import '../repositories/auth_repository.dart';
 
 /// Use case for changing a password when authenticated
 class ChangePasswordUseCase {

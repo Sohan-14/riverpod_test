@@ -1,7 +1,7 @@
 import '../../../../core/entities/result.dart';
 import '../../../../core/exceptions/failures.dart';
 import '../entities/user.dart';
-import '../repositories/auth_repo.dart';
+import '../repositories/auth_repository.dart';
 
 /// Use case for signing up a new user
 class SignUpUseCase {

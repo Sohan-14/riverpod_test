@@ -1,6 +1,8 @@
 /// Route paths for the app
 class RoutePaths {
   // Auth routes
+  static const String initial = '/';
+
   static const String signIn = '/sign-in';
   static const String signUp = '/sign-up';
   static const String forgotPassword = '/forgot-password';

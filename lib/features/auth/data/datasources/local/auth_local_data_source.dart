@@ -1,8 +1,8 @@
 import '../../models/user/user_model.dart';
 
 abstract class AuthLocalDataSource {
-  Future<void> cacheUser(UserModel user);
-  Future<void> cacheTokens({
+  Future<void> saveUser(UserModel user);
+  Future<void> saveTokens({
     required String accessToken,
     required String refreshToken,
   });
@@ -11,6 +11,6 @@ abstract class AuthLocalDataSource {
   Future<String?> getAccessToken();
   Future<String?> getRefreshToken();
   
-  Future<void> clearCache();
+  Future<void> clearAuth();
   Future<bool> isSignedIn();
 }

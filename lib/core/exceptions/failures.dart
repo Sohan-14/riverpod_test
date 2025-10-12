@@ -26,6 +26,11 @@ class CacheFailure extends Failure {
   const CacheFailure({required super.message, super.statusCode});
 }
 
+class DatabaseFailure extends Failure {
+  const DatabaseFailure({required super.message, super.statusCode});
+}
+
+
 class ValidationFailure extends Failure {
   const ValidationFailure({required super.message, super.statusCode});
 }

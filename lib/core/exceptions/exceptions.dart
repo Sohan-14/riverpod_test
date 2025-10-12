@@ -58,6 +58,15 @@ class TokenException extends AppException {
   const TokenException({required super.message, super.statusCode});
 }
 
+/// [DatabaseException] is used when there's a mismatch or unexpected type during runtime,
+class DatabaseException extends AppException {
+  DatabaseException({required super.message, super.statusCode});
+}
+
+/// [ValidationException] is used when there's a mismatch or unexpected type during runtime,
+class ValidationException extends AppException {
+  ValidationException({required super.message, super.statusCode});
+}
 /// [LocalStorageException] is used when there's a mismatch or unexpected type during runtime,
 class LocalStorageException extends AppException {
   const LocalStorageException({required super.message, super.statusCode});

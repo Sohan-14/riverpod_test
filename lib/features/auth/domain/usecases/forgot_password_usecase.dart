@@ -1,6 +1,6 @@
 import '../../../../core/entities/result.dart';
 import '../../../../core/exceptions/failures.dart';
-import '../repositories/auth_repo.dart';
+import '../repositories/auth_repository.dart';
 
 /// Use case for sending a password reset email
 class ForgotPasswordUseCase {

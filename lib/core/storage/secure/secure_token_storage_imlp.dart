@@ -4,11 +4,11 @@ import '../../exceptions/exceptions.dart';
 import '../../utils/app_logger.dart';
 import 'secure_token_storage.dart';
 
-/// [SecureTokenStorageManager ] Implementation of secure token storage using flutter_secure_storage
-class SecureTokenStorageManager implements SecureTokenStorage {
+/// [SecureTokenStorageImpl ] Implementation of secure token storage using flutter_secure_storage
+class SecureTokenStorageImpl implements SecureTokenStorage {
   final FlutterSecureStorage _storage;
 
-  SecureTokenStorageManager (this._storage);
+  SecureTokenStorageImpl (this._storage);
 
   @override
   Future<void> saveAccessToken(String token) async {

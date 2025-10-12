@@ -6,7 +6,7 @@ import '../../../../core/exceptions/exceptions.dart';
 import '../../../../core/exceptions/failures.dart';
 import '../../../../core/utils/app_logger.dart';
 import '../../domain/entities/user.dart';
-import '../../domain/repositories/auth_repo.dart';
+import '../../domain/repositories/auth_repository.dart';
 import '../datasources/local/auth_local_data_source.dart';
 import '../datasources/remote/auth_remote_data_source.dart';
 
@@ -35,12 +35,12 @@ class AuthRepositoryImpl implements AuthRepository {
           password: password,
         );
 
-        await localDataSource.cacheTokens(
+        await localDataSource.saveTokens(
           accessToken: authResponse.accessToken,
           refreshToken: authResponse.refreshToken,
         );
 
-        await localDataSource.cacheUser(authResponse.user);
+        await localDataSource.saveUser(authResponse.user);
 
         AppLogger().i('Repository: Sign in successful');
         return Result<User, Failure>.success(authResponse.user.toEntity());
@@ -93,12 +93,12 @@ class AuthRepositoryImpl implements AuthRepository {
           password: password,
         );
 
-        await localDataSource.cacheTokens(
+        await localDataSource.saveTokens(
           accessToken: authResponse.accessToken,
           refreshToken: authResponse.refreshToken,
         );
 
-        await localDataSource.cacheUser(authResponse.user);
+        await localDataSource.saveUser(authResponse.user);
 
         AppLogger().i('Repository: Sign up successful');
         return Result<User, Failure>.success(authResponse.user.toEntity());
@@ -296,7 +296,7 @@ class AuthRepositoryImpl implements AuthRepository {
         }
       }
 
-      await localDataSource.clearCache();
+      await localDataSource.clearAuth();
       AppLogger().i('Repository: Local sign out successful');
       return Result<void, Failure>.success(null);
     } on TokenException catch (e) {

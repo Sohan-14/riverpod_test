@@ -1,7 +1,7 @@
 import '../../../../core/entities/result.dart';
 import '../../../../core/exceptions/failures.dart';
 import '../entities/user.dart';
-import '../repositories/auth_repo.dart';
+import '../repositories/auth_repository.dart';
 
 class SignInUseCase {
   final AuthRepository repository;
