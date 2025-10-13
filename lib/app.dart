@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/navigation/app_router.dart';
+import 'core/theme/theme.dart';
 
 /// Main application widget
 class MyApp extends ConsumerWidget {
@@ -8,24 +9,11 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return MaterialApp.router(
       title: 'Fouta App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          brightness: Brightness.light,
-        ),
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          brightness: Brightness.dark,
-        ),
-      ),
+      theme: AppTheme.getTheme(ThemeMode.light),
+      darkTheme: AppTheme.getTheme(ThemeMode.dark),
       themeMode: ThemeMode.system,
       routerConfig: ref.watch(appRouterProvider),
     );
