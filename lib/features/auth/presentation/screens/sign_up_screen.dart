@@ -1,138 +1,191 @@
-import 'package:app/features/auth/presentation/states/auth_state.dart';
-import 'package:app/features/auth/presentation/states/sign_up_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/config/colors.dart';
+import '../../../../core/shared/app_elevated_button.dart';
+import '../../../../core/extensions/context_extensions.dart';
+import '../../../../core/config/icons.dart';
+import '../../../../core/config/sizes.dart';
 import '../../../../core/navigation/route_paths.dart';
+import '../../../../core/shared/image_loader.dart';
 import '../providers/auth_provider.dart';
+import '../widgets/auth_text_field.dart';
+import '../widgets/auth_title_section.dart';
 
 class SignUpScreen extends ConsumerWidget {
   const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextEditingController nameController = TextEditingController();
+    final TextEditingController userController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
+    final TextEditingController locationController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    final TextEditingController confirmPasswordController =
-        TextEditingController();
-
-    final SignupState signupState = ref.watch(signupControllerProvider);
-    final AuthState authState = ref.watch(authProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign Up')),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSizes.screenHorizontal,
+            vertical: AppSizes.spaceBetweenItems,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              if (authState.errorMessage != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: Text(
-                    authState.errorMessage!,
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                ),
+              const SizedBox(height: AppSizes.spaceBetweenSections),
 
-              TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  labelText: 'Full Name',
-                  border: const OutlineInputBorder(),
-                  errorText: signupState.nameError,
-                ),
-                onChanged: (String value) => ref
-                    .read(signupControllerProvider.notifier)
-                    .updateName(value),
+              const ImageLoader(
+                imagePath: AppIcons.signUp,
+                width: 160,
+                height: 160,
+                fit: BoxFit.contain,
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSizes.spaceBetweenItems),
 
-              TextFormField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: const OutlineInputBorder(),
-                  errorText: signupState.emailError,
-                ),
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (String value) => ref
-                    .read(signupControllerProvider.notifier)
-                    .updateEmail(value),
+              const AuthTitleSection(
+                title: "Create Your Account",
+                subTitle: "Please provide your details to sign up",
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSizes.spaceBetweenSections),
 
-              TextFormField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: const OutlineInputBorder(),
-                  errorText: signupState.passwordError,
-                ),
-                obscureText: true,
-                onChanged: (String value) {
-                  ref
-                      .read(signupControllerProvider.notifier)
-                      .updatePassword(value);
-                  // Also validate confirm password when password changes
-                  if (confirmPasswordController.text.isNotEmpty) {
-                    ref
-                        .read(signupControllerProvider.notifier)
-                        .updateConfirmPassword(
-                          value,
-                          confirmPasswordController.text,
-                        );
-                  }
+              Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  return AuthTextField(
+                    controller: userController,
+                    labelText: 'User Name',
+                    keyboardType: TextInputType.text,
+                    prefixIcon: CupertinoIcons.profile_circled,
+                  );
                 },
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSizes.spaceBetweenItems),
 
-              TextFormField(
-                controller: confirmPasswordController,
-                decoration: InputDecoration(
-                  labelText: 'Confirm Password',
-                  border: const OutlineInputBorder(),
-                  errorText: signupState.confirmPasswordError,
-                ),
-                obscureText: true,
-                onChanged: (String value) => ref
-                    .read(signupControllerProvider.notifier)
-                    .updateConfirmPassword(passwordController.text, value),
+              Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  return AuthTextField(
+                    controller: emailController,
+                    labelText: 'Email',
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: Icons.email,
+                  );
+                },
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSizes.spaceBetweenItems),
 
-              ElevatedButton(
-                onPressed: signupState.isSubmitting
-                    ? null
-                    : () => ref
-                          .read(signupControllerProvider.notifier)
-                          .signup(
-                            nameController.text,
-                            emailController.text,
-                            passwordController.text,
-                            confirmPasswordController.text,
+              Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  return AuthTextField(
+                    controller: locationController,
+                    labelText: 'Location',
+                    keyboardType: TextInputType.text,
+                    prefixIcon: Icons.location_on_outlined,
+                  );
+                },
+              ),
+
+              const SizedBox(height: AppSizes.spaceBetweenItems),
+
+              Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  return AuthTextField(
+                    controller: locationController,
+                    labelText: 'Date of birth',
+                    keyboardType: TextInputType.text,
+                    prefixIcon: Icons.calendar_today,
+                  );
+                },
+              ),
+
+              const SizedBox(height: AppSizes.spaceBetweenItems),
+
+              Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  return AuthTextField(
+                    controller: passwordController,
+                    labelText: 'Password',
+                    obscureText: true,
+                    prefixIcon: Icons.lock,
+                  );
+                },
+              ),
+
+              const SizedBox(height: AppSizes.spaceBetweenItems),
+
+              Row(
+                children: <Widget>[
+                  Checkbox(
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    value: false,
+                    onChanged: (bool? value) {},
+                  ),
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        text: "By creating an account, I accept the ",
+                        style: context.txtTheme.bodyMedium,
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "Terms & Conditions",
+                            style: context.txtTheme.bodyMedium?.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                child: signupState.isSubmitting
-                    ? const CircularProgressIndicator()
-                    : const Text('Sign Up'),
+                          const TextSpan(
+                            text: " & ",
+                          ),
+                          TextSpan(
+                            text: "Privacy Policy.",
+                            style: context.txtTheme.bodyMedium?.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSizes.spaceBetweenItems),
+
+              AppElevatedButton(
+                onPressed: () {
+                  ref
+                      .read(loginControllerProvider.notifier)
+                      .login(
+                        emailController.text,
+                        passwordController.text,
+                      );
+                },
+                label: 'Continue',
+                isLoading: ref.watch(loginControllerProvider).isSubmitting,
+              ),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text('Already have an account?'),
+                  Text(
+                    "Already have an account?",
+                    style: context.txtTheme.bodyMedium,
+                  ),
                   TextButton(
                     onPressed: () => context.push(RoutePaths.login),
-                    child: const Text('Log In'),
+                    child: Text(
+                      'Sign In',
+                      style: context.txtTheme.bodyMedium?.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),

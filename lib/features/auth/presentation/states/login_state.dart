@@ -11,6 +11,7 @@ class LoginState {
     this.formSubmitted = false,
   });
 
+  // A helper method to clone the state and make specific changes
   LoginState copyWith({
     String? emailError,
     String? passwordError,

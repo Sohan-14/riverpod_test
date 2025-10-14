@@ -1,15 +1,17 @@
-import 'package:app/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/config/colors.dart';
+import '../../../../core/shared/app_elevated_button.dart';
+import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/config/icons.dart';
 import '../../../../core/config/sizes.dart';
 import '../../../../core/navigation/route_paths.dart';
+import '../../../../core/shared/app_outline_button.dart';
 import '../../../../core/shared/image_loader.dart';
-import '../states/login_state.dart';
-import '../states/auth_state.dart';
 import '../providers/auth_provider.dart';
+import '../widgets/auth_text_field.dart';
 import '../widgets/auth_title_section.dart';
 
 class LoginScreen extends ConsumerWidget {
@@ -19,8 +21,6 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    final LoginState loginState = ref.watch(loginControllerProvider);
-    final AuthState authState = ref.watch(authProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -28,98 +28,128 @@ class LoginScreen extends ConsumerWidget {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(
             horizontal: AppSizes.screenHorizontal,
-            vertical: AppSizes.md,
+            vertical: AppSizes.spaceBetweenItems,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              const SizedBox(height: AppSizes.spaceBetweenSections),
+
               const ImageLoader(
                 imagePath: AppIcons.login,
+                width: 160,
+                height: 160,
+                fit: BoxFit.contain,
               ),
 
-              const SizedBox(
-                height: AppSizes.md,
-              ),
+              const SizedBox(height: AppSizes.spaceBetweenItems),
 
               const AuthTitleSection(
                 title: "Sign in to continue",
-                subTitle: "Enter valid user name & password to continue ",
+                subTitle: "Enter valid user name & password to continue",
+              ),
+
+              const SizedBox(height: AppSizes.spaceBetweenSections),
+
+              Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  return AuthTextField(
+                    controller: emailController,
+                    labelText: 'Email',
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: Icons.email_outlined,
+                  );
+                },
+              ),
+
+              const SizedBox(height: AppSizes.spaceBetweenItems),
+
+              Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  return AuthTextField(
+                    controller: passwordController,
+                    labelText: 'Password',
+                    obscureText: true,
+                    prefixIcon: Icons.lock_outline_sharp,
+                  );
+                },
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () => context.push(RoutePaths.forgotPassword),
+                    child: Text(
+                      'Forgot Password?',
+                      style: context.txtTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              AppElevatedButton(
+                onPressed: () {
+                  ref
+                      .read(loginControllerProvider.notifier)
+                      .login(
+                        emailController.text,
+                        passwordController.text,
+                      );
+                },
+                label: 'Log In',
+                isLoading: ref.watch(loginControllerProvider).isSubmitting,
               ),
 
               const SizedBox(
-                height: AppSizes.md,
+                height: AppSizes.spaceBetweenItems,
+              ),
+              Text(
+                "OR",
+                textAlign: TextAlign.center,
+                style: context.txtTheme.bodySmall,
+              ),
+              const SizedBox(
+                height: AppSizes.spaceBetweenItems,
               ),
 
-              if (authState.errorMessage == null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: Text(
-                    authState.errorMessage.toString(),
-                    textAlign: TextAlign.center,
-                    style: context.txtTheme.bodyLarge?.copyWith(
-                      color: Colors.red,
-                    ),
-                  ),
+              AppOutlineButton(
+                onPressed: () {
+                  ref
+                      .read(loginControllerProvider.notifier)
+                      .login(
+                        emailController.text,
+                        passwordController.text,
+                      );
+                },
+                label: 'Google',
+                icon: const ImageLoader(
+                  imagePath: AppIcons.google,
+                  width: AppSizes.iconSm,
+                  height: AppSizes.iconSm,
                 ),
-
-              TextFormField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: const OutlineInputBorder(),
-                  errorText: loginState.emailError,
-                ),
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (String value) => ref
-                    .read(loginControllerProvider.notifier)
-                    .updateEmail(value),
+                isLoading: ref.watch(loginControllerProvider).isSubmitting,
               ),
-
-              const SizedBox(height: 16),
-
-              TextFormField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: const OutlineInputBorder(),
-                  errorText: loginState.passwordError,
-                ),
-                obscureText: true,
-                onChanged: (String value) => ref
-                    .read(loginControllerProvider.notifier)
-                    .updatePassword(value),
-              ),
-
-              const SizedBox(height: 24),
-
-              ElevatedButton(
-                onPressed: loginState.isSubmitting
-                    ? null
-                    : () => ref
-                          .read(loginControllerProvider.notifier)
-                          .login(
-                            emailController.text,
-                            passwordController.text,
-                          ),
-                child: loginState.isSubmitting
-                    ? const CircularProgressIndicator()
-                    : const Text('Log In'),
-              ),
-
-              TextButton(
-                onPressed: () => context.push(RoutePaths.forgotPassword),
-                child: const Text('Forgot Password?'),
-              ),
-
-              const SizedBox(height: 16),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text("Don't have an account?"),
+                  Text(
+                    "Don't have an account?",
+                    style: context.txtTheme.bodyMedium,
+                  ),
                   TextButton(
                     onPressed: () => context.push(RoutePaths.signUp),
-                    child: const Text('Sign Up'),
+                    child: Text(
+                      'Sign Up',
+                      style: context.txtTheme.bodyMedium?.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),

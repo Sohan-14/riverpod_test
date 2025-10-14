@@ -8,7 +8,7 @@ class LoginController extends Notifier<LoginState> {
   LoginState build() {
     return const LoginState();
   }
-  
+
   void updateEmail(String email) {
     if (email.isEmpty) {
       state = state.copyWith(emailError: 'Email cannot be empty');
@@ -23,7 +23,9 @@ class LoginController extends Notifier<LoginState> {
     if (password.isEmpty) {
       state = state.copyWith(passwordError: 'Password cannot be empty');
     } else if (password.length < 6) {
-      state = state.copyWith(passwordError: 'Password must be at least 6 characters');
+      state = state.copyWith(
+        passwordError: 'Password must be at least 6 characters',
+      );
     } else {
       state = state.copyWith(passwordError: null);
     }
@@ -33,24 +35,23 @@ class LoginController extends Notifier<LoginState> {
     // Validate first
     updateEmail(email);
     updatePassword(password);
-    
+
     // Stop if validation failed
     if (state.emailError != null || state.passwordError != null) {
       return;
     }
-    
+
     state = state.copyWith(isSubmitting: true);
-    
+
     try {
-      await ref.read(authProvider.notifier).signIn(
-        email: email.trim(), 
-        password: password,
-      );
-      
-      state = state.copyWith(
-        isSubmitting: false, 
-        formSubmitted: true
-      );
+      await ref
+          .read(authProvider.notifier)
+          .signIn(
+            email: email.trim(),
+            password: password,
+          );
+
+      state = state.copyWith(isSubmitting: false, formSubmitted: true);
     } catch (e) {
       state = state.copyWith(isSubmitting: false);
     }
