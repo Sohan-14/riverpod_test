@@ -1,9 +1,9 @@
 import 'package:app/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../core/config/colors.dart';
-import '../core/config/images.dart';
-import '../core/navigation/route_paths.dart';
+import '../../../../core/config/colors.dart';
+import '../../../../core/config/images.dart';
+import '../../../../core/navigation/route_paths.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(milliseconds: 1500),
     );
     if (context.mounted) {
-      context.go(RoutePaths.login);
+      context.go(RoutePaths.role);
     }
   }
 

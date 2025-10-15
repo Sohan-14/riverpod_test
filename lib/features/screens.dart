@@ -1,4 +1,7 @@
-export './splash_screen.dart';
+// onboarding
+export 'onboarding/presentation/screens/splash_screen.dart';
+export 'onboarding/presentation/screens/role_screen.dart';
+
 // auth screens
 export './auth/presentation/screens/forgot_screen.dart';
 export './auth/presentation/screens/login_screen.dart';

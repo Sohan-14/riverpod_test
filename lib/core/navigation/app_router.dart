@@ -33,53 +33,70 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
     //   return null;
     // },
     routes: <RouteBase>[
-      GoRoute(
-        path: RoutePaths.initial,
-        builder: (BuildContext context, GoRouterState state) =>
-            const SplashScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.login,
-        builder: (BuildContext context, GoRouterState state) =>
-            const LoginScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.signUp,
-        builder: (BuildContext context, GoRouterState state) =>
-            const SignUpScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.forgotPassword,
-        builder: (BuildContext context, GoRouterState state) =>
-            const ForgotPasswordScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.resetPassword,
-        builder: (BuildContext context, GoRouterState state) {
-          return const ResetPasswordScreen();
-        },
-      ),
-      GoRoute(
-        path: RoutePaths.verifyEmail,
-        builder: (BuildContext context, GoRouterState state) {
-          final Map<String, dynamic>? extraData =
-              state.extra as Map<String, dynamic>?;
-          final String type = extraData?['type'] as String? ?? 'forgot';
-          return VerifyEmailScreen(
-            type: type,
-          );
-        },
-      ),
-      GoRoute(
-        path: RoutePaths.profile,
-        builder: (BuildContext context, GoRouterState state) => const Scaffold(
-          body: Center(
-            child: Text("Profile"),
-          ),
-        ),
-      ),
+      ...authRoutes,
+      ...onboardingRoutes,
     ],
     errorBuilder: (BuildContext context, GoRouterState state) =>
         const AppErrorScreen(),
   );
 });
+
+List<RouteBase> get onboardingRoutes {
+  return <RouteBase>[
+    GoRoute(
+      path: RoutePaths.role,
+      builder: (BuildContext context, GoRouterState state) =>
+          const RoleScreen(),
+    ),
+  ];
+}
+
+List<RouteBase> get authRoutes {
+  return <RouteBase>[
+    GoRoute(
+      path: RoutePaths.initial,
+      builder: (BuildContext context, GoRouterState state) =>
+          const SplashScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.login,
+      builder: (BuildContext context, GoRouterState state) =>
+          const LoginScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.signUp,
+      builder: (BuildContext context, GoRouterState state) =>
+          const SignUpScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.forgotPassword,
+      builder: (BuildContext context, GoRouterState state) =>
+          const ForgotPasswordScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.resetPassword,
+      builder: (BuildContext context, GoRouterState state) {
+        return const ResetPasswordScreen();
+      },
+    ),
+    GoRoute(
+      path: RoutePaths.verifyEmail,
+      builder: (BuildContext context, GoRouterState state) {
+        final Map<String, dynamic>? extraData =
+            state.extra as Map<String, dynamic>?;
+        final String type = extraData?['type'] as String? ?? 'forgot';
+        return VerifyEmailScreen(
+          type: type,
+        );
+      },
+    ),
+    GoRoute(
+      path: RoutePaths.profile,
+      builder: (BuildContext context, GoRouterState state) => const Scaffold(
+        body: Center(
+          child: Text("Profile"),
+        ),
+      ),
+    ),
+  ];
+}

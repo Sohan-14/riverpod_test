@@ -3,6 +3,9 @@ class RoutePaths {
   // Auth routes
   static const String initial = '/';
 
+  // Onboarding routes
+  static const String role = '/role';
+
   static const String login = '/sign-in';
   static const String signUp = '/sign-up';
   static const String forgotPassword = '/forgot-password';
