@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import '../utils/app_logger.dart';
+import '../../utils/app_logger.dart';
 
 enum ImageType {
   asset,

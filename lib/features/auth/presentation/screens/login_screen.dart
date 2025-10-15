@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/colors.dart';
-import '../../../../core/shared/app_elevated_button.dart';
+import '../../../../core/shared/widgets/app_elevated_button.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/config/icons.dart';
 import '../../../../core/config/sizes.dart';
 import '../../../../core/navigation/route_paths.dart';
-import '../../../../core/shared/app_outline_button.dart';
-import '../../../../core/shared/image_loader.dart';
+import '../../../../core/shared/widgets/app_outline_button.dart';
+import '../../../../core/shared/widgets/image_loader.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/auth_title_section.dart';

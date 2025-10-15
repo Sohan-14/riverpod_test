@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../../core/shared/app_elevated_button.dart';
+import '../../../../core/navigation/route_paths.dart';
+import '../../../../core/shared/widgets/app_elevated_button.dart';
 import '../../../../core/config/sizes.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/auth_title_section.dart';
@@ -45,7 +47,12 @@ class ForgotPasswordScreen extends ConsumerWidget {
               ),
               const SizedBox(height: AppSizes.spaceBetweenSections),
               AppElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.push(
+                    RoutePaths.verifyEmail,
+                    extra: <String, String>{"type": "forgot"},
+                  );
+                },
                 label: 'Send Code',
               ),
             ],

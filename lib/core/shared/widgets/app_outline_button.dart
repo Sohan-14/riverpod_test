@@ -1,37 +1,41 @@
 import 'package:flutter/material.dart';
 
-import '../extensions/context_extensions.dart';
-import '../config/colors.dart';
+import '../../extensions/context_extensions.dart';
+import '../../config/colors.dart';
 
-class AppElevatedButton extends StatelessWidget {
+class AppOutlineButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
   final bool isLoading;
   final bool isEnabled;
   final Widget? icon;
   final double? height;
-  final Color? backgroundColor;
+  final Color? outlineColor;
 
-  const AppElevatedButton({
+  const AppOutlineButton({
     super.key,
     required this.label,
     required this.onPressed,
     this.isLoading = false,
     this.isEnabled = true,
     this.icon,
-    this.backgroundColor,
+    this.outlineColor,
     this.height = 48.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return OutlinedButton(
       onPressed: isEnabled && !isLoading ? onPressed : null,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor ?? AppColors.primary,
-        minimumSize: Size(double.infinity, height!),
+      style: OutlinedButton.styleFrom(
+        minimumSize: Size(double.infinity, height!), // Full width button
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
+        ),
+        side: BorderSide(
+          color: isEnabled
+              ? outlineColor ?? AppColors.primary
+              : AppColors.grey, // Border color
         ),
       ),
       child: isLoading
@@ -45,9 +49,7 @@ class AppElevatedButton extends StatelessWidget {
                 ],
                 Text(
                   label,
-                  style: context.txtTheme.bodyLarge?.copyWith(
-                    color: AppColors.white,
-                  ),
+                  style: context.txtTheme.bodyLarge,
                 ),
               ],
             ),

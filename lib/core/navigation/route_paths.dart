@@ -7,6 +7,7 @@ class RoutePaths {
   static const String signUp = '/sign-up';
   static const String forgotPassword = '/forgot-password';
   static const String resetPassword = '/reset-password';
+  static const String verifyEmail = '/verify-email';
   
   // App routes
   static const String home = '/home';
