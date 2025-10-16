@@ -93,12 +93,13 @@ class LoginScreen extends ConsumerWidget {
 
               AppElevatedButton(
                 onPressed: () {
-                  ref
-                      .read(loginControllerProvider.notifier)
-                      .login(
-                        emailController.text,
-                        passwordController.text,
-                      );
+                  context.go(RoutePaths.bottomNav);
+                  // ref
+                  //     .read(loginControllerProvider.notifier)
+                  //     .login(
+                  //       emailController.text,
+                  //       passwordController.text,
+                  //     );
                 },
                 label: 'Log In',
                 isLoading: ref.watch(loginControllerProvider).isSubmitting,

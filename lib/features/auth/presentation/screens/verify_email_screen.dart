@@ -59,6 +59,9 @@ class VerifyEmailScreen extends ConsumerWidget {
                       RoutePaths.resetPassword,
                     );
                   }
+                  else{
+                    context.go(RoutePaths.bottomNav);
+                  }
                 },
                 label: 'Verify Email',
               ),

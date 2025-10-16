@@ -35,14 +35,35 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
     routes: <RouteBase>[
       ...authRoutes,
       ...onboardingRoutes,
+      ...bottomNavRoutes,
     ],
     errorBuilder: (BuildContext context, GoRouterState state) =>
         const AppErrorScreen(),
   );
 });
 
+List<RouteBase> get bottomNavRoutes {
+  return <RouteBase>[
+    GoRoute(
+      path: RoutePaths.bottomNav,
+      builder: (BuildContext context, GoRouterState state) =>
+          const BottomNavScreen(),
+    ),
+  ];
+}
+
 List<RouteBase> get onboardingRoutes {
   return <RouteBase>[
+    GoRoute(
+      path: RoutePaths.initial,
+      builder: (BuildContext context, GoRouterState state) =>
+          const SplashScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.onboarding,
+      builder: (BuildContext context, GoRouterState state) =>
+          const OnboardingScreen(),
+    ),
     GoRoute(
       path: RoutePaths.role,
       builder: (BuildContext context, GoRouterState state) =>
@@ -53,11 +74,6 @@ List<RouteBase> get onboardingRoutes {
 
 List<RouteBase> get authRoutes {
   return <RouteBase>[
-    GoRoute(
-      path: RoutePaths.initial,
-      builder: (BuildContext context, GoRouterState state) =>
-          const SplashScreen(),
-    ),
     GoRoute(
       path: RoutePaths.login,
       builder: (BuildContext context, GoRouterState state) =>

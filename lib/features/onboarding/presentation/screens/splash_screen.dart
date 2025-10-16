@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(milliseconds: 1500),
     );
     if (context.mounted) {
-      context.go(RoutePaths.role);
+      context.go(RoutePaths.onboarding);
     }
   }
 
