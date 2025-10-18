@@ -1,3 +1,4 @@
+import 'package:app/core/extensions/widget_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/colors.dart';
@@ -40,19 +41,19 @@ class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
     // List of screens to display in the body
     final List<Widget> screens = <Widget>[
       Container(
-        color: Colors.amber,
+        child: const Text("Home").centered,
       ),
       Container(
-        color: Colors.blue,
+        child: const Text("MarketPlace").centered,
       ),
       Container(
-        color: Colors.redAccent,
+        child: const Text("Post").centered,
       ),
       Container(
-        color: Colors.tealAccent,
+        child: const Text("Chat").centered,
       ),
       Container(
-        color: Colors.purple,
+        child: const Text("Profile").centered,
       ),
     ];
 

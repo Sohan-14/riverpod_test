@@ -1,3 +1,4 @@
+import 'package:app/core/shared/provider/role_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -93,7 +94,16 @@ class LoginScreen extends ConsumerWidget {
 
               AppElevatedButton(
                 onPressed: () {
-                  context.go(RoutePaths.bottomNav);
+                  final Role role = ref.read(selectedRoleProvider);
+                  if(role == Role.seller){
+                    context.go(RoutePaths.businessInfo);
+                  }
+                  else if(role == Role.driver){
+                    context.go(RoutePaths.vehicleInfo);
+                  }
+                  else{
+                    context.go(RoutePaths.bottomNav);
+                  }
                   // ref
                   //     .read(loginControllerProvider.notifier)
                   //     .login(

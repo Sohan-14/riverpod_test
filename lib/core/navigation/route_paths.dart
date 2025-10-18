@@ -5,6 +5,8 @@ class RoutePaths {
   static const String initial = '/';
   static const String role = '/role';
   static const String onboarding = '/onboarding';
+  static const String vehicleInfo = '/vehicle-info';
+  static const String businessInfo = '/business-info';
 
   // Auth routes
   static const String login = '/sign-in';

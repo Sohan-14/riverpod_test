@@ -1,4 +1,3 @@
-import 'package:app/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../config/colors.dart';
@@ -45,7 +44,19 @@ class AppNavBar extends StatelessWidget {
                 return GestureDetector(
                   onTap: () => onTabTapped(index),
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4.0,
+                      horizontal: 16.0,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? AppColors.primary
+                          : Colors.transparent,
+                      borderRadius: isSelected
+                          ? BorderRadius.circular(16.0)
+                          : null,
+                    ),
                     child: Column(
                       children: <Widget>[
                         SvgPicture.asset(
@@ -55,19 +66,19 @@ class AppNavBar extends StatelessWidget {
                           height: AppSizes.iconMd,
                           width: AppSizes.iconMd,
                           colorFilter: ColorFilter.mode(
-                            isSelected ? AppColors.primary : AppColors.black,
+                            isSelected ? AppColors.white : AppColors.black,
                             BlendMode.srcATop,
                           ),
                         ),
-                        const SizedBox(height: AppSizes.xs),
-                        Text(
-                          items[index].label,
-                          style: context.txtTheme.bodySmall?.copyWith(
-                            color: isSelected
-                                ? AppColors.primary
-                                : AppColors.black,
-                          ),
-                        ),
+                        // const SizedBox(height: AppSizes.xs),
+                        // Text(
+                        //   items[index].label,
+                        //   style: context.txtTheme.bodySmall?.copyWith(
+                        //     color: isSelected
+                        //         ? AppColors.primary
+                        //         : AppColors.black,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

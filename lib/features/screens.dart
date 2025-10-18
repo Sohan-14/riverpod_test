@@ -2,6 +2,8 @@
 export 'onboarding/presentation/screens/splash_screen.dart';
 export 'onboarding/presentation/screens/role_screen.dart';
 export 'onboarding/presentation/screens/onboarding_screen.dart';
+export 'onboarding/presentation/screens/business_info_screen.dart';
+export 'onboarding/presentation/screens/vehicle_info_screen.dart';
 
 // auth screens
 export './auth/presentation/screens/forgot_screen.dart';

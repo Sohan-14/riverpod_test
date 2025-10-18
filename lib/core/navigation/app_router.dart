@@ -69,6 +69,16 @@ List<RouteBase> get onboardingRoutes {
       builder: (BuildContext context, GoRouterState state) =>
           const RoleScreen(),
     ),
+    GoRoute(
+      path: RoutePaths.businessInfo,
+      builder: (BuildContext context, GoRouterState state) =>
+          const BusinessInfoScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.vehicleInfo,
+      builder: (BuildContext context, GoRouterState state) =>
+          const VehicleInfoScreen(),
+    ),
   ];
 }
 
