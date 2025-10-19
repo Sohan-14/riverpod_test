@@ -35,19 +35,30 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
     routes: <RouteBase>[
       ...authRoutes,
       ...onboardingRoutes,
-      ...bottomNavRoutes,
+      ...generalRoutes,
     ],
     errorBuilder: (BuildContext context, GoRouterState state) =>
         const AppErrorScreen(),
   );
 });
 
-List<RouteBase> get bottomNavRoutes {
+List<RouteBase> get generalRoutes {
   return <RouteBase>[
     GoRoute(
       path: RoutePaths.bottomNav,
       builder: (BuildContext context, GoRouterState state) =>
           const BottomNavScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.imageFullScreen,
+      builder: (BuildContext context, GoRouterState state) {
+        final Map<String, dynamic>? extraData =
+            state.extra as Map<String, dynamic>?;
+        final dynamic imagePath = extraData?['imagePath'] as dynamic;
+        return FullScreenImageScreen(
+          imagePath: imagePath,
+        );
+      },
     ),
   ];
 }

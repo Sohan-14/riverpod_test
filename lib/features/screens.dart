@@ -17,3 +17,6 @@ export '../core/shared/screens/bottom_nav_screen.dart';
 
 // error
 export '../core/shared/screens/app_error_screen.dart';
+
+// error
+export '../core/shared/screens/full_screen_image_view.dart';

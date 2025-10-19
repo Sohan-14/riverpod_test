@@ -22,6 +22,11 @@ class RoutePaths {
   
   // bottom nav
   static const String bottomNav = "/bottom-nav";
+
+  // general
+  static const String imageFullScreen = "/image-full-screen";
+
+
   // Nested routes
   static const String changePassword = '/settings/change-password';
 }

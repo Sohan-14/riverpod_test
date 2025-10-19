@@ -4,16 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../utils/app_logger.dart';
+import '../../utils/detect_image_type.dart';
 
-enum ImageType {
-  asset,
-  network,
-  svgAsset,
-  file,
-}
+
 
 class ImageLoader extends StatelessWidget {
-  final String imagePath;
+  final dynamic imagePath;
   final double? width;
   final double? height;
   final BoxFit? fit;
@@ -37,7 +33,7 @@ class ImageLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ImageType imageType = _detectImageType(imagePath);
-
+    AppLogger().i(imageType.toString());
     switch (imageType) {
       case ImageType.asset:
         return _buildAssetImage();
@@ -51,19 +47,20 @@ class ImageLoader extends StatelessWidget {
   }
 
   // Detect image type based on file extension
-  ImageType _detectImageType(String imagePath) {
+  ImageType _detectImageType(dynamic imagePath) {
     // Check if the imagePath contains 'http' or 'https' (network image)
-    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    if (imagePath is String &&
+        (imagePath.startsWith('http://') || imagePath.startsWith('https://'))) {
       return ImageType.network;
     }
 
     // Check if the imagePath ends with .svg (SVG asset image)
-    if (imagePath.endsWith('.svg')) {
+    if (imagePath is String && imagePath.endsWith('.svg')) {
       return ImageType.svgAsset;
     }
 
     // Check if the imagePath represents a local file (local file image)
-    if (imagePath.startsWith('file://')) {
+    if (imagePath is File) {
       return ImageType.file;
     }
 
@@ -74,7 +71,7 @@ class ImageLoader extends StatelessWidget {
   // Method to build an asset image
   Widget _buildAssetImage() {
     return Image.asset(
-      imagePath,
+      imagePath as String,
       width: width,
       height: height,
       fit: fit ?? BoxFit.cover,
@@ -112,7 +109,7 @@ class ImageLoader extends StatelessWidget {
   // Method to build a network image with caching
   Widget _buildNetworkImage() {
     return CachedNetworkImage(
-      imageUrl: imagePath,
+      imageUrl: imagePath as String,
       width: width,
       height: height,
       fit: fit ?? BoxFit.cover,
@@ -135,7 +132,7 @@ class ImageLoader extends StatelessWidget {
   // Method to build an SVG image
   Widget _buildSvgImage() {
     return SvgPicture.asset(
-      imagePath,
+      imagePath as String,
       width: width,
       height: height,
       fit: fit ?? BoxFit.cover,
@@ -159,16 +156,14 @@ class ImageLoader extends StatelessWidget {
 
   // Method to build a file image
   Widget _buildFileImage() {
-    final File file = File(imagePath.replaceFirst('file://', ''));
-
     // Ensure the file exists before displaying it
-    if (!file.existsSync()) {
+    if (!(imagePath as File).existsSync()) {
       return errorWidget ??
           const Center(child: Icon(Icons.error, color: Colors.red));
     }
 
     return Image.file(
-      file,
+      imagePath as File,
       width: width,
       height: height,
       fit: fit ?? BoxFit.cover,

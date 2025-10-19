@@ -1,12 +1,17 @@
 import 'dart:io';
 
 import 'package:app/core/extensions/context_extensions.dart';
+import 'package:app/core/shared/widgets/app_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/colors.dart';
 import '../../../../core/config/icons.dart';
 import '../../../../core/config/sizes.dart';
+import '../../../../core/navigation/route_paths.dart';
 import '../../../../core/shared/widgets/image_loader.dart';
+import '../../../../core/utils/dotted_border.dart';
+import '../../../../core/utils/image_picker_utils.dart';
 import '../widgets/onboarding_text_field.dart';
 import '../widgets/onboarding_title_section.dart';
 
@@ -59,52 +64,78 @@ class _BusinessInfoScreenState extends State<BusinessInfoScreen> {
               const SizedBox(height: AppSizes.spaceBetweenItems),
 
               GestureDetector(
-                onTap: () {
-                  
+                onTap: () async {
+                  final File? file = await ImagePickerUtils.pickImageFile();
+                  setState(() {
+                    profile = file;
+                  });
                 },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: AppSizes.xxxL,
-                    horizontal: AppSizes.md,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.grey.withValues(alpha: .4),
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: AppSizes.sm,
-                    children: <Widget>[
-                      const Icon(
-                        Icons.add_photo_alternate_outlined,
-                        size: AppSizes.iconLg,
-                        color: AppColors.grey,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: AppSizes.sm,
-                        children: <Widget>[
-                          const ImageLoader(
-                            imagePath: AppIcons.cloud,
-                            width: 24.0,
-                            height: 24.0,
-                            color: AppColors.grey,
+                child: profile != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: ImageLoader(
+                          imagePath: profile,
+                          width: double.infinity,
+                          height: 200,
+                        ),
+                      )
+                    : CustomPaint(
+                      painter: DottedBorderPainter(),
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: AppSizes.xxxL,
+                            horizontal: AppSizes.md,
                           ),
-                          Text(
-                            "Add Your File",
-                            style: context.txtTheme.bodyMedium?.copyWith(
-                              color: AppColors.grey,
-                            ),
+                          decoration: BoxDecoration(
+                            color: AppColors.grey.withValues(alpha: .4),
+                            borderRadius: BorderRadius.circular(12.0),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            spacing: AppSizes.sm,
+                            children: <Widget>[
+                              const Icon(
+                                Icons.add_photo_alternate_outlined,
+                                size: AppSizes.iconLg,
+                                color: AppColors.grey,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                spacing: AppSizes.sm,
+                                children: <Widget>[
+                                  const ImageLoader(
+                                    imagePath: AppIcons.cloud,
+                                    width: 24.0,
+                                    height: 24.0,
+                                    color: AppColors.grey,
+                                  ),
+                                  Text(
+                                    "Add Your File",
+                                    style: context.txtTheme.bodyMedium?.copyWith(
+                                      color: AppColors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                    ),
               ),
 
-              Container(),
+              const SizedBox(
+                height: AppSizes.spaceBetweenSections,
+              ),
+
+              AppElevatedButton(
+                onPressed: () {
+                  context.go(
+                    RoutePaths.bottomNav,
+                  );
+                },
+                label: "Continue",
+              ),
             ],
           ),
         ),
