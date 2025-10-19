@@ -10,6 +10,7 @@ class AppOutlineButton extends StatelessWidget {
   final bool isEnabled;
   final Widget? icon;
   final double? height;
+  final double? width;
   final Color? outlineColor;
 
   const AppOutlineButton({
@@ -21,6 +22,7 @@ class AppOutlineButton extends StatelessWidget {
     this.icon,
     this.outlineColor,
     this.height = 48.0,
+    this.width,
   });
 
   @override
@@ -28,7 +30,10 @@ class AppOutlineButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: isEnabled && !isLoading ? onPressed : null,
       style: OutlinedButton.styleFrom(
-        minimumSize: Size(double.infinity, height!), // Full width button
+        minimumSize: Size(
+          width ?? double.infinity,
+          height!,
+        ), 
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -49,7 +54,9 @@ class AppOutlineButton extends StatelessWidget {
                 ],
                 Text(
                   label,
-                  style: context.txtTheme.bodyLarge,
+                  style: context.txtTheme.bodyLarge?.copyWith(
+                    color: outlineColor
+                  ),
                 ),
               ],
             ),

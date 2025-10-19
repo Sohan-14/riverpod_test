@@ -14,6 +14,7 @@ export './auth/presentation/screens/verify_email_screen.dart';
 
 // bottom nav
 export '../core/shared/screens/bottom_nav_screen.dart';
+export './profile/presentation/screens/profile_screen.dart';
 
 // error
 export '../core/shared/screens/app_error_screen.dart';
