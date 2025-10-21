@@ -10,6 +10,7 @@ class AppElevatedButton extends StatelessWidget {
   final bool isEnabled;
   final Widget? icon;
   final double? height;
+  final double? width;
   final Color? backgroundColor;
 
   const AppElevatedButton({
@@ -20,7 +21,8 @@ class AppElevatedButton extends StatelessWidget {
     this.isEnabled = true,
     this.icon,
     this.backgroundColor,
-    this.height = 48.0,
+    this.height = 48.0, 
+    this.width,
   });
 
   @override
@@ -29,7 +31,7 @@ class AppElevatedButton extends StatelessWidget {
       onPressed: isEnabled && !isLoading ? onPressed : null,
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor ?? AppColors.primary,
-        minimumSize: Size(double.infinity, height!),
+        minimumSize: Size(width ?? double.infinity, height!),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),

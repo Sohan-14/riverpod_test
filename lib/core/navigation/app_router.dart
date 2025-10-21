@@ -36,6 +36,7 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
       ...authRoutes,
       ...onboardingRoutes,
       ...generalRoutes,
+      ...marketplaceRoutes,
     ],
     errorBuilder: (BuildContext context, GoRouterState state) =>
         const AppErrorScreen(),
@@ -59,6 +60,36 @@ List<RouteBase> get generalRoutes {
           imagePath: imagePath,
         );
       },
+    ),
+  ];
+}
+
+List<RouteBase> get marketplaceRoutes {
+  return <RouteBase>[
+    GoRoute(
+      path: RoutePaths.localGems,
+      builder: (BuildContext context, GoRouterState state) =>
+          const LocalGemsScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.storeDetails,
+      builder: (BuildContext context, GoRouterState state) =>
+          const StoreDetailsScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.productDetails,
+      builder: (BuildContext context, GoRouterState state) =>
+          const ProductDetailsScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.checkoutForm,
+      builder: (BuildContext context, GoRouterState state) =>
+          const CheckoutFormScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.confirmOrder,
+      builder: (BuildContext context, GoRouterState state) =>
+          const OrderConfirmScreen(),
     ),
   ];
 }

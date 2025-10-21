@@ -1,10 +1,8 @@
-import 'package:app/core/extensions/context_extensions.dart';
-import 'package:app/core/shared/widgets/image_loader.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/config/icons.dart';
 import '../../../../core/config/sizes.dart';
-import '../../../../core/shared/widgets/app_outline_button.dart';
+import '../widgets/marketplace_card.dart';
+import '../widgets/marketplace_top_layout.dart';
 
 class MarketplaceScreen extends StatelessWidget {
   const MarketplaceScreen({super.key});
@@ -20,33 +18,22 @@ class MarketplaceScreen extends StatelessWidget {
           ),
           child: Column(
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "Products",
-                    style: context.txtTheme.bodyLarge,
-                  ),
-
-                  AppOutlineButton(
-                    onPressed: () {},
-                    width: 100,
-                    label: 'Try Local Gems',
-                  ),
-
-                  Container(
-                    decoration: const BoxDecoration(),
-                    child: const Column(
-                      children: <Widget>[
-                        ImageLoader(
-                          imagePath: AppIcons.cart,
-                          width: 16.0,
-                          height: 16.0,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              const MarketplaceTopLayout(),
+              const SizedBox(
+                height: AppSizes.md,
+              ),
+              GridView.builder(
+                itemCount: 10,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 16.0,
+                  crossAxisSpacing: 16.0,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return const MarketPlaceCard();
+                },
               ),
               Container(),
             ],

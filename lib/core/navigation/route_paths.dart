@@ -26,6 +26,12 @@ class RoutePaths {
   // general
   static const String imageFullScreen = "/image-full-screen";
 
+  // marketplace
+  static const String localGems = "/local-gems";
+  static const String storeDetails = "/store-details";
+  static const String productDetails = "/product-details";
+  static const String checkoutForm = "/checkout-form";
+  static const String confirmOrder = "/confirm-order";
 
   // Nested routes
   static const String changePassword = '/settings/change-password';

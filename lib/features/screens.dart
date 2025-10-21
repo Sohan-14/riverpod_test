@@ -14,8 +14,17 @@ export './auth/presentation/screens/verify_email_screen.dart';
 
 // bottom nav
 export '../core/shared/screens/bottom_nav_screen.dart';
+
+// profile
 export './profile/presentation/screens/profile_screen.dart';
+
+// marketplace
 export './marketplace/presentation/screens/marketplace_screen.dart';
+export './marketplace/presentation/screens/local_gems_screen.dart';
+export './marketplace/presentation/screens/store_details_screen.dart';
+export './marketplace/presentation/screens/product_details_screen.dart';
+export './marketplace/presentation/screens/checkout_form_screen.dart';
+export './marketplace/presentation/screens/order_confirm_screen.dart';
 
 // error
 export '../core/shared/screens/app_error_screen.dart';
