@@ -34,6 +34,7 @@ class RoutePaths {
   static const String confirmOrder = "/confirm-order";
   static const String cart = "/cart";
   static const String order = "/order";
+  static const String oneToOneChat = "/one-to-one-chat";
 
   // Nested routes
   static const String changePassword = '/settings/change-password';

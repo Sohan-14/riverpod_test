@@ -1,6 +1,7 @@
 import 'package:app/core/extensions/widget_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../features/chat/presentation/screens/chat_screen.dart';
 import '../../../features/marketplace/presentation/screens/marketplace_screen.dart';
 import '../../../features/profile/presentation/screens/profile_screen.dart';
 import '../../config/colors.dart';
@@ -49,9 +50,7 @@ class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
       Container(
         child: const Text("Post").centered,
       ),
-      Container(
-        child: const Text("Chat").centered,
-      ),
+      const ChatScreen(),
       const ProfileScreen(),
     ];
 

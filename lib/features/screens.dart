@@ -28,6 +28,10 @@ export './marketplace/presentation/screens/order_confirm_screen.dart';
 export './marketplace/presentation/screens/cart_screen.dart';
 export './marketplace/presentation/screens/order_screen.dart';
 
+
+// chat
+export './chat/presentation/screens/one_to_one_chat_screen.dart';
+
 // error
 export '../core/shared/screens/app_error_screen.dart';
 
