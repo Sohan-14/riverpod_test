@@ -16,6 +16,10 @@ class AppIcons {
   static const String order = '$_baseUrl/order.svg';
   static const String menu = '$_baseUrl/menu.svg';
   static const String send = '$_baseUrl/send.svg';
+  static const String setting = '$_baseUrl/setting.svg';
+  static const String friends = '$_baseUrl/friends.svg';
+  static const String gallery = '$_baseUrl/gallery.svg';
+  static const String info = '$_baseUrl/info.svg';
 
   static const String userRole = '$_baseUrl/user_role.svg';
   static const String creatorRole = '$_baseUrl/creator_role.svg';

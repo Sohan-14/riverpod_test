@@ -189,49 +189,47 @@ class MessageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: <Widget>[
-          if (message.isSender) const Spacer(),
-          if (message.isSender) ...<Widget>[
-            Text(
-              DateTime.now().formattedTime,
-              style: context.txtTheme.bodyMedium,
-            ),
-            const SizedBox(
-              width: 8.0,
-            ),
-          ],
+    return Row(
+      children: <Widget>[
+        if (message.isSender) const Spacer(),
+        if (message.isSender) ...<Widget>[
+          Text(
+            DateTime.now().formattedTime,
+            style: context.txtTheme.bodyMedium,
+          ),
+          const SizedBox(
+            width: 8.0,
+          ),
+        ],
 
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 8.0,
-            ),
-            constraints: BoxConstraints(maxWidth: context.screenWidth * .5),
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: Text(
-              message.message,
-              style: context.txtTheme.bodyMedium?.copyWith(
-                color: AppColors.white,
-              ),
+        Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+            vertical: 8.0,
+          ),
+          constraints: BoxConstraints(maxWidth: context.screenWidth * .5),
+          decoration: BoxDecoration(
+            color: AppColors.primary,
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: Text(
+            message.message,
+            style: context.txtTheme.bodyMedium?.copyWith(
+              color: AppColors.white,
             ),
           ),
+        ),
 
-          if (!message.isSender) ...<Widget>[
-            const SizedBox(
-              width: 8.0,
-            ),
-            Text(
-              DateTime.now().formattedTime,
-              style: context.txtTheme.bodyMedium,
-            ),
-          ],
+        if (!message.isSender) ...<Widget>[
+          const SizedBox(
+            width: 8.0,
+          ),
+          Text(
+            DateTime.now().formattedTime,
+            style: context.txtTheme.bodyMedium,
+          ),
         ],
-      ),
+      ],
     );
   }
 }

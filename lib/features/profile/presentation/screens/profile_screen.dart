@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/extensions/context_extensions.dart';
-import '../../../../core/extensions/widget_extensions.dart';
-import '../../../../core/shared/widgets/app_outline_button.dart';
-import '../../../../core/shared/widgets/image_loader.dart';
+import '../../../../core/config/icons.dart';
 import '../../../../core/config/colors.dart';
 import '../../../../core/config/sizes.dart';
+import '../tabs/friends_profile_tab.dart';
+import '../tabs/gallery_profile_tab.dart';
+import '../tabs/info_profile_tab.dart';
+import '../tabs/post_profile_tab.dart';
+import '../tabs/setting_profile_tab.dart';
+import '../widgets/profile_card.dart';
+import '../widgets/tab_item.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -22,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     _tabController.addListener(() {
       if (_tabController.index != _selectedIndex) {
         setState(() {
@@ -55,95 +59,48 @@ class _ProfileScreenState extends State<ProfileScreen>
                 height: AppSizes.md,
               ),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: AppSizes.sm),
+                padding: const EdgeInsets.symmetric(vertical: AppSizes.xs),
                 decoration: BoxDecoration(
+                  color: AppColors.primary,
                   border: Border.all(width: 1.0, color: AppColors.primary),
-                  borderRadius: BorderRadius.circular(12.0),
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: TabBar(
                   controller: _tabController,
                   dividerHeight: 0.0,
                   indicatorColor: Colors.transparent,
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.start,
                   tabs: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSizes.sm,
-                        vertical: AppSizes.sm,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0),
-                        color: _selectedIndex == 0
-                            ? AppColors.primary
-                            : Colors.transparent,
-                      ),
-                      child: Text(
-                        "Post",
-                        style: context.txtTheme.bodyMedium?.copyWith(
-                          color: _selectedIndex == 0
-                              ? AppColors.white
-                              : AppColors.black,
-                        ),
-                      ),
+                    TabItem(
+                      selectedIndex: _selectedIndex,
+                      index: 0,
+                      label: "info",
+                      icon: AppIcons.info,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSizes.sm,
-                        vertical: AppSizes.sm,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0),
-                        color: _selectedIndex == 1
-                            ? AppColors.primary
-                            : Colors.transparent,
-                      ),
-                      child: Text(
-                        "Photos",
-                        style: context.txtTheme.bodyMedium?.copyWith(
-                          color: _selectedIndex == 1
-                              ? AppColors.white
-                              : AppColors.black,
-                        ),
-                      ),
+                    TabItem(
+                      selectedIndex: _selectedIndex,
+                      index: 1,
+                      label: "Posts",
+                      icon: AppIcons.addBottomNav,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSizes.sm,
-                        vertical: AppSizes.sm,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0),
-                        color: _selectedIndex == 2
-                            ? AppColors.primary
-                            : Colors.transparent,
-                      ),
-                      child: Text(
-                        "Video",
-                        style: context.txtTheme.bodyMedium?.copyWith(
-                          color: _selectedIndex == 2
-                              ? AppColors.white
-                              : AppColors.black,
-                        ),
-                      ),
+                    TabItem(
+                      selectedIndex: _selectedIndex,
+                      label: "Gallery",
+                      index: 2,
+                      icon: AppIcons.gallery,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSizes.sm,
-                        vertical: AppSizes.sm,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0),
-                        color: _selectedIndex == 3
-                            ? AppColors.primary
-                            : Colors.transparent,
-                      ),
-                      child: Text(
-                        "Friends",
-                        style: context.txtTheme.bodyMedium?.copyWith(
-                          color: _selectedIndex == 3
-                              ? AppColors.white
-                              : AppColors.black,
-                        ),
-                      ),
+                    TabItem(
+                      selectedIndex: _selectedIndex,
+                      label: "Friends",
+                      index: 3,
+                      icon: AppIcons.friends,
+                    ),
+                    TabItem(
+                      selectedIndex: _selectedIndex,
+                      label: "Setting",
+                      index: 4,
+                      icon: AppIcons.setting,
                     ),
                   ],
                 ),
@@ -154,151 +111,18 @@ class _ProfileScreenState extends State<ProfileScreen>
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
-                  children: <Widget>[
-                    Container(
-                      color: Colors.amber,
-                    ),
-                    Container(
-                      color: Colors.redAccent,
-                    ),
-                    Container(
-                      color: Colors.pinkAccent,
-                    ),
-                    Container(
-                      color: Colors.lightGreenAccent,
-                    ),
+                  children: const <Widget>[
+                    InfoProfileTab(),
+                    PostProfileTab(),
+                    GalleryProfileTab(),
+                    FriendsProfileTab(),
+                    SettingProfileTab(),
                   ],
                 ),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class ProfileCard extends StatelessWidget {
-  const ProfileCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: context.screenWidth,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSizes.md,
-        vertical: AppSizes.lg,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.silver,
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const ClipOval(
-            child: ImageLoader(
-              imagePath:
-                  "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
-              width: 160,
-              height: 160,
-            ),
-          ).centered,
-
-          const SizedBox(
-            height: AppSizes.spaceBetweenSections,
-          ),
-
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Zahidul Islam Shohan",
-                style: context.txtTheme.bodyLarge,
-              ),
-              Text(
-                "50 followers",
-                style: context.txtTheme.bodyMedium?.copyWith(
-                  color: AppColors.grey,
-                ),
-              ),
-              Text(
-                "20 following",
-                style: context.txtTheme.bodyMedium?.copyWith(
-                  color: AppColors.grey,
-                ),
-              ),
-            ],
-          ),
-
-          const SizedBox(
-            height: AppSizes.md,
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              SizedBox(
-                width: context.screenWidth * .4,
-                height: 40,
-                child: const SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      ClipOval(
-                        child: ImageLoader(
-                          imagePath:
-                              "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
-                          width: 30,
-                          height: 30,
-                        ),
-                      ),
-                      ClipOval(
-                        child: ImageLoader(
-                          imagePath:
-                              "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
-                          width: 30,
-                          height: 30,
-                        ),
-                      ),
-                      ClipOval(
-                        child: ImageLoader(
-                          imagePath:
-                              "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
-                          width: 30,
-                          height: 30,
-                        ),
-                      ),
-                      ClipOval(
-                        child: ImageLoader(
-                          imagePath:
-                              "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
-                          width: 30,
-                          height: 30,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              AppOutlineButton(
-                width: 100,
-                icon: const Icon(
-                  Icons.edit,
-                  color: AppColors.primary,
-                ),
-                onPressed: () {},
-                label: "Edit",
-                outlineColor: AppColors.primary,
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
