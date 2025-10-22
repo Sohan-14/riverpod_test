@@ -13,6 +13,7 @@ class AppIcons {
   static const String direction = '$_baseUrl/direction.svg';
   static const String cloud = '$_baseUrl/cloud.svg';
   static const String cart = '$_baseUrl/cart.svg';
+  static const String order = '$_baseUrl/order.svg';
 
   static const String userRole = '$_baseUrl/user_role.svg';
   static const String creatorRole = '$_baseUrl/creator_role.svg';

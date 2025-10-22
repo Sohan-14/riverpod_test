@@ -25,6 +25,8 @@ export './marketplace/presentation/screens/store_details_screen.dart';
 export './marketplace/presentation/screens/product_details_screen.dart';
 export './marketplace/presentation/screens/checkout_form_screen.dart';
 export './marketplace/presentation/screens/order_confirm_screen.dart';
+export './marketplace/presentation/screens/cart_screen.dart';
+export './marketplace/presentation/screens/order_screen.dart';
 
 // error
 export '../core/shared/screens/app_error_screen.dart';

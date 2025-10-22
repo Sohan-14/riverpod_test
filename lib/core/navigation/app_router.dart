@@ -91,6 +91,16 @@ List<RouteBase> get marketplaceRoutes {
       builder: (BuildContext context, GoRouterState state) =>
           const OrderConfirmScreen(),
     ),
+    GoRoute(
+      path: RoutePaths.cart,
+      builder: (BuildContext context, GoRouterState state) =>
+          const CartScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.order,
+      builder: (BuildContext context, GoRouterState state) =>
+          const OrderScreen(),
+    ),
   ];
 }
 

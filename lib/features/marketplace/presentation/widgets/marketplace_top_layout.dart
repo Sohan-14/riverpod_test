@@ -30,28 +30,33 @@ class MarketplaceTopLayout extends StatelessWidget {
               onPressed: () {
                 context.push(RoutePaths.localGems);
               },
-              width: 100,
+              width: 200,
               label: 'Try Local Gems',
             ),
 
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.grey),
-                shape: BoxShape.circle,
-              ),
-              child: Column(
-                children: <Widget>[
-                  const ImageLoader(
-                    imagePath: AppIcons.cart,
-                    width: 16.0,
-                    height: 16.0,
-                  ),
-                  Text(
-                    "Cart",
-                    style: context.txtTheme.bodySmall,
-                  ),
-                ],
+            GestureDetector(
+              onTap: () {
+                context.push(RoutePaths.cart);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.grey),
+                  shape: BoxShape.circle,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    const ImageLoader(
+                      imagePath: AppIcons.cart,
+                      width: 16.0,
+                      height: 16.0,
+                    ),
+                    Text(
+                      "Cart",
+                      style: context.txtTheme.bodySmall,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

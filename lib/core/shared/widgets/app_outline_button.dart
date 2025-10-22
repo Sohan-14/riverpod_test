@@ -33,7 +33,7 @@ class AppOutlineButton extends StatelessWidget {
         minimumSize: Size(
           width ?? double.infinity,
           height!,
-        ), 
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -55,7 +55,7 @@ class AppOutlineButton extends StatelessWidget {
                 Text(
                   label,
                   style: context.txtTheme.bodyLarge?.copyWith(
-                    color: outlineColor
+                    color: outlineColor,
                   ),
                 ),
               ],
