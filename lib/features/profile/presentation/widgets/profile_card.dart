@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/config/icons.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/extensions/widget_extensions.dart';
 import '../../../../core/config/colors.dart';
 import '../../../../core/config/sizes.dart';
+import '../../../../core/navigation/route_paths.dart';
+import '../../../../core/shared/provider/role_provider.dart';
+import '../../../../core/shared/widgets/app_elevated_button.dart';
 import '../../../../core/shared/widgets/app_outline_button.dart';
 import '../../../../core/shared/widgets/image_loader.dart';
 
@@ -126,6 +132,34 @@ class ProfileCard extends StatelessWidget {
                 outlineColor: AppColors.primary,
               ),
             ],
+          ),
+
+          Consumer(
+            builder: (BuildContext context, WidgetRef ref, Widget? child) {
+              final Role role = ref.read(selectedRoleProvider);
+              if (role != Role.user) {
+                return Column(
+                  children: <Widget>[
+                    const SizedBox(
+                      height: AppSizes.spaceBetweenItems,
+                    ),
+                    AppElevatedButton(
+                      icon: const ImageLoader(
+                        imagePath: AppIcons.advertise,
+                        width: 24.0,
+                        height: 24.0,
+                        color: AppColors.white,
+                      ),
+                      onPressed: () {
+                        context.push(RoutePaths.ads);
+                      },
+                      label: "Advertise",
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox.shrink();
+            },
           ),
         ],
       ),

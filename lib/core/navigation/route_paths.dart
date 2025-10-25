@@ -1,5 +1,6 @@
 /// Route paths for the app
 class RoutePaths {
+  RoutePaths._();
 
   // Onboarding routes
   static const String initial = '/';
@@ -14,10 +15,17 @@ class RoutePaths {
   static const String forgotPassword = '/forgot-password';
   static const String resetPassword = '/reset-password';
   static const String verifyEmail = '/verify-email';
+  static const String changePassword = '/settings/change-password';
   
   // App routes
   static const String home = '/home';
   static const String profile = '/profile';
+  static const String privacyPolicy = '/privacy-policy';
+  static const String termsCondition = '/terms-condition';
+  static const String contactUs = '/contact-us';
+  static const String ads = '/profile/ads';
+  static const String createAds = '/profile/ads/create';
+  static const String boostAds = '/profile/ads/boost';
   static const String settings = '/settings';
   
   // bottom nav
@@ -36,6 +44,4 @@ class RoutePaths {
   static const String order = "/order";
   static const String oneToOneChat = "/one-to-one-chat";
 
-  // Nested routes
-  static const String changePassword = '/settings/change-password';
 }

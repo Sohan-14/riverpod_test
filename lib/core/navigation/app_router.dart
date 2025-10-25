@@ -38,6 +38,7 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
       ...generalRoutes,
       ...marketplaceRoutes,
       ...chatRoutes,
+      ...profileRoutes,
     ],
     errorBuilder: (BuildContext context, GoRouterState state) =>
         const AppErrorScreen(),
@@ -61,6 +62,53 @@ List<RouteBase> get generalRoutes {
           imagePath: imagePath,
         );
       },
+    ),
+  ];
+}
+
+List<RouteBase> get profileRoutes {
+  return <RouteBase>[
+    GoRoute(
+      path: RoutePaths.profile,
+      builder: (BuildContext context, GoRouterState state) => const Scaffold(
+        body: Center(
+          child: Text("Profile"),
+        ),
+      ),
+    ),
+
+    GoRoute(
+      path: RoutePaths.privacyPolicy,
+      builder: (BuildContext context, GoRouterState state) =>
+          const PrivacyPolicyScreen(),
+    ),
+
+    GoRoute(
+      path: RoutePaths.termsCondition,
+      builder: (BuildContext context, GoRouterState state) =>
+          const TermsConditionScreen(),
+    ),
+
+    GoRoute(
+      path: RoutePaths.contactUs,
+      builder: (BuildContext context, GoRouterState state) =>
+          const ContactUsScreen(),
+    ),
+
+    GoRoute(
+      path: RoutePaths.ads,
+      builder: (BuildContext context, GoRouterState state) => const AdsScreen(),
+    ),
+
+    GoRoute(
+      path: RoutePaths.createAds,
+      builder: (BuildContext context, GoRouterState state) =>
+          const CreateAdsScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.boostAds,
+      builder: (BuildContext context, GoRouterState state) =>
+          const BoostAdsScreen(),
     ),
   ];
 }
@@ -169,6 +217,12 @@ List<RouteBase> get authRoutes {
       },
     ),
     GoRoute(
+      path: RoutePaths.changePassword,
+      builder: (BuildContext context, GoRouterState state) {
+        return const ChangePasswordScreen();
+      },
+    ),
+    GoRoute(
       path: RoutePaths.verifyEmail,
       builder: (BuildContext context, GoRouterState state) {
         final Map<String, dynamic>? extraData =
@@ -178,14 +232,6 @@ List<RouteBase> get authRoutes {
           type: type,
         );
       },
-    ),
-    GoRoute(
-      path: RoutePaths.profile,
-      builder: (BuildContext context, GoRouterState state) => const Scaffold(
-        body: Center(
-          child: Text("Profile"),
-        ),
-      ),
     ),
   ];
 }

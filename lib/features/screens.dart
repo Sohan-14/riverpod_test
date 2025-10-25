@@ -9,6 +9,7 @@ export 'onboarding/presentation/screens/vehicle_info_screen.dart';
 export './auth/presentation/screens/forgot_screen.dart';
 export './auth/presentation/screens/login_screen.dart';
 export './auth/presentation/screens/reset_password_screen.dart';
+export './auth/presentation/screens/change_password_screen.dart';
 export './auth/presentation/screens/sign_up_screen.dart';
 export './auth/presentation/screens/verify_email_screen.dart';
 
@@ -17,6 +18,12 @@ export '../core/shared/screens/bottom_nav_screen.dart';
 
 // profile
 export './profile/presentation/screens/profile_screen.dart';
+export './profile/presentation/screens/privacy_policy_screen.dart';
+export './profile/presentation/screens/terms_condition_screen.dart';
+export './profile/presentation/screens/contact_us_screen.dart';
+export './profile/presentation/screens/ads_screen.dart';
+export './profile/presentation/screens/create_ads_screen.dart';
+export './profile/presentation/screens/boost_ads_screen.dart';
 
 // marketplace
 export './marketplace/presentation/screens/marketplace_screen.dart';
@@ -35,5 +42,5 @@ export './chat/presentation/screens/one_to_one_chat_screen.dart';
 // error
 export '../core/shared/screens/app_error_screen.dart';
 
-// error
+// image
 export '../core/shared/screens/full_screen_image_view.dart';

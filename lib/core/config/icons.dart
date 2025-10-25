@@ -20,6 +20,7 @@ class AppIcons {
   static const String friends = '$_baseUrl/friends.svg';
   static const String gallery = '$_baseUrl/gallery.svg';
   static const String info = '$_baseUrl/info.svg';
+  static const String advertise = '$_baseUrl/advertise.svg';
 
   static const String userRole = '$_baseUrl/user_role.svg';
   static const String creatorRole = '$_baseUrl/creator_role.svg';
