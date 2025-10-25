@@ -35,6 +35,9 @@ export './marketplace/presentation/screens/order_confirm_screen.dart';
 export './marketplace/presentation/screens/cart_screen.dart';
 export './marketplace/presentation/screens/order_screen.dart';
 
+// post
+export './post/presentation/screens/feed_post_screen.dart';
+export './post/presentation/screens/story_post_screen.dart';
 
 // chat
 export './chat/presentation/screens/one_to_one_chat_screen.dart';

@@ -39,6 +39,7 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
       ...marketplaceRoutes,
       ...chatRoutes,
       ...profileRoutes,
+      ...postRoutes,
     ],
     errorBuilder: (BuildContext context, GoRouterState state) =>
         const AppErrorScreen(),
@@ -62,6 +63,22 @@ List<RouteBase> get generalRoutes {
           imagePath: imagePath,
         );
       },
+    ),
+  ];
+}
+
+List<RouteBase> get postRoutes {
+  return <RouteBase>[
+    GoRoute(
+      path: RoutePaths.postStory,
+      builder: (BuildContext context, GoRouterState state) =>
+          const StoryPostScreen(),
+    ),
+
+    GoRoute(
+      path: RoutePaths.postFeed,
+      builder: (BuildContext context, GoRouterState state) =>
+          const FeedPostScreen(),
     ),
   ];
 }

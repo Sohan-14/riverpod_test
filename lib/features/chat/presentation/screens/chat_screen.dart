@@ -40,6 +40,7 @@ class ChatScreen extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (_, int index) {
                   return GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () => context.push(RoutePaths.oneToOneChat),
                     child: const ChatCard(),
                   );

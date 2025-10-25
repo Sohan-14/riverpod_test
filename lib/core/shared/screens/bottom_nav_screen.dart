@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/chat/presentation/screens/chat_screen.dart';
 import '../../../features/marketplace/presentation/screens/marketplace_screen.dart';
+import '../../../features/post/presentation/screens/post_screen.dart';
 import '../../../features/profile/presentation/screens/profile_screen.dart';
 import '../../config/colors.dart';
 import '../../config/icons.dart';
@@ -47,9 +48,7 @@ class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
         child: const Text("Home").centered,
       ),
       const MarketplaceScreen(),
-      Container(
-        child: const Text("Post").centered,
-      ),
+      const PostScreen(),
       const ChatScreen(),
       const ProfileScreen(),
     ];

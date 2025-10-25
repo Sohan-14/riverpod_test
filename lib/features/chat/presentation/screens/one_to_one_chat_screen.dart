@@ -70,8 +70,13 @@ class OneToOneChatScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: AppSizes.sm,
             children: <Widget>[
-              const SizedBox(
-                width: AppSizes.sm,
+              IconButton(
+                onPressed: () => context.pop(),
+                icon: const Icon(
+                  Icons.arrow_back_ios_sharp,
+                  size: 24.0,
+                  color: AppColors.black,
+                ),
               ),
               ClipOval(
                 child: GestureDetector(

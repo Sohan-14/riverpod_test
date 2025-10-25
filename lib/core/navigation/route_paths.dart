@@ -44,4 +44,8 @@ class RoutePaths {
   static const String order = "/order";
   static const String oneToOneChat = "/one-to-one-chat";
 
+  // posts
+  static const String postStory = "/post-story";
+  static const String postFeed = "/post-feed";
+
 }
