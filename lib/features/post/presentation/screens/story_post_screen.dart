@@ -1,10 +1,13 @@
-import 'package:app/core/extensions/widget_extensions.dart';
+import 'package:app/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/config/colors.dart';
 import '../../../../core/config/icons.dart';
 import '../../../../core/config/sizes.dart';
+import '../../../../core/navigation/route_paths.dart';
+import '../../../../core/shared/widgets/app_elevated_button.dart';
 import '../../../../core/shared/widgets/image_loader.dart';
-import '../widget/post_card.dart';
 
 class StoryPostScreen extends StatelessWidget {
   const StoryPostScreen({super.key});
@@ -21,30 +24,67 @@ class StoryPostScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Row(
-                spacing: 8.0,
+                mainAxisAlignment: MainAxisAlignment.start,
+                spacing: AppSizes.sm,
                 children: <Widget>[
-                  PostCard(
-                    onTapCallback: () {},
-                    label: "Create Story",
-                    icon: const ImageLoader(
-                      imagePath: AppIcons.gallery,
-                      width: 24.0,
-                      height: 24.0,
+                  ClipOval(
+                    child: GestureDetector(
+                      onTap: () => context.push(
+                        RoutePaths.imageFullScreen,
+                        extra: <String, String>{
+                          "imagePath":
+                              "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
+                        },
+                      ),
+                      child: const ImageLoader(
+                        imagePath:
+                            "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
+                        width: 40,
+                        height: 40,
+                      ),
                     ),
-                  ).expanded,
-                  PostCard(
-                    onTapCallback: () {},
-                    label: "Type Text",
-                    icon: const ImageLoader(
-                      imagePath: AppIcons.gallery,
-                      width: 24.0,
-                      height: 24.0,
-                    ),
-                  ).expanded,
+                  ),
+                  Column(
+                    spacing: AppSizes.xs,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Rocky Parker",
+                        style: context.txtTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
                 ],
+              ),
+
+              const SizedBox(height: AppSizes.md),
+              ImageLoader(
+                imagePath:
+                    "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
+                height: context.screenHeight * 0.6,
+                width: double.infinity,
               ),
             ],
           ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          spacing: AppSizes.lg,
+          children: <Widget>[
+            const ImageLoader(
+              imagePath: AppIcons.gallery,
+              width: 32.0,
+              height: 32.0,
+              color: AppColors.black,
+            ),
+            AppElevatedButton(label: "Share", onPressed: () {}),
+          ],
         ),
       ),
     );

@@ -9,6 +9,8 @@ class AppTextField extends StatelessWidget {
   final IconData? prefixIcon;
   final Widget? suffixIcon;
   final bool obscureText;
+  final int minLines;
+  final int maxLines;
   final ValueChanged<String>? onChanged;
 
   const AppTextField({
@@ -21,6 +23,8 @@ class AppTextField extends StatelessWidget {
     this.obscureText = false,
     this.onChanged,
     this.suffixIcon,
+    this.minLines = 1,
+    this.maxLines = 1,
   });
 
   @override
@@ -31,8 +35,12 @@ class AppTextField extends StatelessWidget {
       obscureText: obscureText,
       keyboardType: keyboardType,
       onChanged: onChanged,
+      minLines: minLines,
+      maxLines: maxLines,
+      textAlign: TextAlign.start,
       style: context.txtTheme.bodyMedium,
       decoration: InputDecoration(
+        alignLabelWithHint: true,
         prefixIcon: prefixIcon != null
             ? Padding(
                 padding: const EdgeInsets.all(8.0),

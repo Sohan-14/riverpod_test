@@ -21,7 +21,7 @@ class AppElevatedButton extends StatelessWidget {
     this.isEnabled = true,
     this.icon,
     this.backgroundColor,
-    this.height = 48.0, 
+    this.height = 48.0,
     this.width,
   });
 
@@ -47,7 +47,7 @@ class AppElevatedButton extends StatelessWidget {
                 ],
                 Text(
                   label,
-                  style: context.txtTheme.bodyLarge?.copyWith(
+                  style: context.txtTheme.bodyMedium?.copyWith(
                     color: AppColors.white,
                   ),
                 ),

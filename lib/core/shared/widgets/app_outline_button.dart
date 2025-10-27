@@ -54,7 +54,7 @@ class AppOutlineButton extends StatelessWidget {
                 ],
                 Text(
                   label,
-                  style: context.txtTheme.bodyLarge?.copyWith(
+                  style: context.txtTheme.bodyMedium?.copyWith(
                     color: outlineColor,
                   ),
                 ),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/shared/provider/role_provider.dart';
 import 'feed_post_screen.dart';
+import 'product_screen.dart';
 
 class PostScreen extends StatelessWidget {
   const PostScreen({super.key});
@@ -17,7 +18,7 @@ class PostScreen extends StatelessWidget {
             if (role != Role.seller) {
               return const FeedPostScreen();
             } else {
-              return const SizedBox.shrink();
+              return const ProductScreen();
             }
           },
         ),

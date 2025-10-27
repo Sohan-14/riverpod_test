@@ -38,7 +38,7 @@ class FeedPostScreen extends StatelessWidget {
               ).expanded,
               PostCard(
                 onTapCallback: () {
-                  context.push(RoutePaths.postFeed);
+                  context.push(RoutePaths.createPostFeed);
                 },
                 label: "Create Post",
                 icon: Text(

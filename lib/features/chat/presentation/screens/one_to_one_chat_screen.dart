@@ -22,6 +22,7 @@ class OneToOneChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey buttonKey = GlobalKey();
     final List<MessageModel> messages = <MessageModel>[
       MessageModel(isSender: true, message: "Hi"),
       MessageModel(isSender: false, message: "Hi"),
@@ -113,7 +114,10 @@ class OneToOneChatScreen extends StatelessWidget {
               const Spacer(),
 
               IconButton(
-                onPressed: () {},
+                key: buttonKey,
+                onPressed: () {
+                  // _showPopupMenu(context, buttonKey);
+                },
                 icon: const ImageLoader(
                   imagePath: AppIcons.menu,
                   width: 24.0,
@@ -185,6 +189,44 @@ class OneToOneChatScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _showPopupMenu(BuildContext context, GlobalKey buttonKey) async {
+    // Get the position of the button
+    final RenderBox button =
+        buttonKey.currentContext!.findRenderObject() as RenderBox;
+    final Offset buttonPosition = button.localToGlobal(
+      Offset.zero,
+    ); // Get the button's position on the screen
+
+    // Show the menu at the button's position
+    final String? result = await showMenu<String>(
+      context: context,
+      position: RelativeRect.fromLTRB(
+        buttonPosition.dx, // x position of the button
+        buttonPosition.dy +
+            button
+                .size
+                .height, // y position of the button (position + height for below the button)
+        buttonPosition.dx + button.size.width, // x position for the right edge
+        buttonPosition.dy +
+            button.size.height, // y position (just below the button)
+      ),
+      items: <PopupMenuEntry<String>>[
+        const PopupMenuItem<String>(
+          value: 'Report',
+          child: Text('Report'),
+        ),
+      ],
+    );
+
+    if (result != null) {
+      switch (result) {
+        case 'Report':
+          context.push(RoutePaths.report);
+          break;
+      }
+    }
   }
 }
 

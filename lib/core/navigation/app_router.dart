@@ -80,6 +80,42 @@ List<RouteBase> get postRoutes {
       builder: (BuildContext context, GoRouterState state) =>
           const FeedPostScreen(),
     ),
+
+    GoRoute(
+      path: RoutePaths.createPostFeed,
+      builder: (BuildContext context, GoRouterState state) =>
+          const CreateFeedPostScreen(),
+    ),
+
+    GoRoute(
+      path: RoutePaths.createProduct,
+      builder: (BuildContext context, GoRouterState state) =>
+          const CreateProductScreen(),
+    ),
+
+    GoRoute(
+      path: RoutePaths.productOrders,
+      builder: (BuildContext context, GoRouterState state) =>
+          const ProductOrderScreen(),
+    ),
+
+    GoRoute(
+      path: RoutePaths.sendDelivery,
+      builder: (BuildContext context, GoRouterState state) =>
+          const SendDeliveryScreen(),
+    ),
+
+    GoRoute(
+      path: RoutePaths.assignedDriver,
+      builder: (BuildContext context, GoRouterState state) =>
+          const AssignedDriverScreen(),
+    ),
+
+    GoRoute(
+      path: RoutePaths.report,
+      builder: (BuildContext context, GoRouterState state) =>
+          const ReportScreen(),
+    ),
   ];
 }
 

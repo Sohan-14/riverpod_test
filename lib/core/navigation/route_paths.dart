@@ -42,10 +42,18 @@ class RoutePaths {
   static const String confirmOrder = "/confirm-order";
   static const String cart = "/cart";
   static const String order = "/order";
+
+  // chat
   static const String oneToOneChat = "/one-to-one-chat";
+  static const String report = "/report";
 
   // posts
   static const String postStory = "/post-story";
   static const String postFeed = "/post-feed";
+  static const String createPostFeed = "/create-post-feed";
+  static const String createProduct = "/create-product";
+  static const String productOrders = "/product-orders";
+  static const String sendDelivery = "/send-delivery";
+  static const String assignedDriver = "/assigned-driver";
 
 }

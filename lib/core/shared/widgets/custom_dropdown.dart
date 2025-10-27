@@ -165,10 +165,10 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                       _selectedOption != null
                           ? widget.displayString(_selectedOption as T)
                           : widget.hint ?? "Select an option",
-                      style: context.txtTheme.bodySmall?.copyWith(
+                      style: context.txtTheme.bodyMedium?.copyWith(
                         color: _selectedOption != null
                             ? Colors.black
-                            : AppColors.grey,
+                            : AppColors.black,
                       ),
                     ),
                     if (_isOpen)
@@ -195,7 +195,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                   color: Colors.white, // white to cover the border
                   child: Text(
                     widget.label!,
-                    style: context.txtTheme.bodySmall?.copyWith(
+                    style: context.txtTheme.bodyMedium?.copyWith(
                       color: AppColors.primary,
                       fontSize: 10.0,
                     ),

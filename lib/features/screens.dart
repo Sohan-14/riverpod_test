@@ -38,9 +38,15 @@ export './marketplace/presentation/screens/order_screen.dart';
 // post
 export './post/presentation/screens/feed_post_screen.dart';
 export './post/presentation/screens/story_post_screen.dart';
+export './post/presentation/screens/create_feed_post_screen.dart';
+export './post/presentation/screens/create_product_screen.dart';
+export './post/presentation/screens/product_order_screen.dart';
+export './post/presentation/screens/send_delivery_screen.dart';
+export './post/presentation/screens/assigned_driver_screen.dart';
 
 // chat
 export './chat/presentation/screens/one_to_one_chat_screen.dart';
+export './chat/presentation/screens/report_screen.dart';
 
 // error
 export '../core/shared/screens/app_error_screen.dart';
