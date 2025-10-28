@@ -191,7 +191,7 @@ class OneToOneChatScreen extends StatelessWidget {
     );
   }
 
-  void _showPopupMenu(BuildContext context, GlobalKey buttonKey) async {
+  void showPopupMenu(BuildContext context, GlobalKey buttonKey) async {
     // Get the position of the button
     final RenderBox button =
         buttonKey.currentContext!.findRenderObject() as RenderBox;

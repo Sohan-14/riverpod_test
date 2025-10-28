@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/core/extensions/context_extensions.dart';
 import 'package:app/core/shared/widgets/app_elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +11,17 @@ import '../../../../core/config/sizes.dart';
 import '../../../../core/navigation/route_paths.dart';
 import '../../../../core/shared/widgets/custom_app_bar.dart';
 import '../../../../core/shared/widgets/image_loader.dart';
+import '../../../../core/utils/file_picker_utils.dart';
 
-class CreateFeedPostScreen extends StatelessWidget {
+class CreateFeedPostScreen extends StatefulWidget {
   const CreateFeedPostScreen({super.key});
+
+  @override
+  State<CreateFeedPostScreen> createState() => _CreateFeedPostScreenState();
+}
+
+class _CreateFeedPostScreenState extends State<CreateFeedPostScreen> {
+  File? imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -75,20 +85,13 @@ class CreateFeedPostScreen extends StatelessWidget {
               style: context.txtTheme.bodyMedium,
             ),
 
-            const ImageLoader(
+            ImageLoader(
               imagePath:
+                  imageFile ??
                   "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
-              height: 200,
+              height: 400,
               width: double.infinity,
             ),
-            const SizedBox(height: AppSizes.sm),
-            const ImageLoader(
-              imagePath:
-                  "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
-              height: 200,
-              width: double.infinity,
-            ),
-
           ],
         ),
       ),
@@ -100,13 +103,28 @@ class CreateFeedPostScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           spacing: AppSizes.lg,
           children: <Widget>[
-            const ImageLoader(
-              imagePath: AppIcons.gallery,
-              width: 32.0,
-              height: 32.0,
-              color: AppColors.black,
+            GestureDetector(
+              onTap: () async {
+                final File? file = await FilePickerUtils.pickFile();
+                if (file != null) {
+                  setState(() {
+                    imageFile = file;
+                  });
+                }
+              },
+              child: const ImageLoader(
+                imagePath: AppIcons.gallery,
+                width: 32.0,
+                height: 32.0,
+                color: AppColors.black,
+              ),
             ),
-            AppElevatedButton(label: "Post", onPressed: () {}),
+            AppElevatedButton(
+              label: "Post",
+              onPressed: () {
+                context.pop();
+              },
+            ),
           ],
         ),
       ),

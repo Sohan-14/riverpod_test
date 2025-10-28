@@ -51,5 +51,10 @@ export './chat/presentation/screens/report_screen.dart';
 // error
 export '../core/shared/screens/app_error_screen.dart';
 
+// home
+export './home/presentation/screens/home_screen.dart';
+export './home/presentation/screens/story_view_screen.dart';
+export './home/presentation/screens/notification_screen.dart';
+
 // image
 export '../core/shared/screens/full_screen_image_view.dart';

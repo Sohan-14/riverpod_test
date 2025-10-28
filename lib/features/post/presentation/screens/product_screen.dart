@@ -1,5 +1,4 @@
 import 'package:app/core/extensions/context_extensions.dart';
-import 'package:app/core/extensions/widget_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,26 +22,31 @@ class ProductScreen extends StatelessWidget {
         ),
         child: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                AppElevatedButton(
-                  onPressed: () {
-                    context.push(RoutePaths.createProduct);
-                  },
-                  label: "Create Product",
-                  icon: const Icon(
-                    Icons.add,
-                    color: AppColors.white,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: <Widget>[
+                  AppElevatedButton(
+                    width: context.screenWidth * .3,
+                    onPressed: () {
+                      context.push(RoutePaths.createProduct);
+                    },
+                    label: "Create Product",
+                    icon: const Icon(
+                      Icons.add,
+                      color: AppColors.white,
+                    ),
                   ),
-                ).expanded,
-                const SizedBox(width: AppSizes.md),
-                AppOutlineButton(
-                  onPressed: () {
-                    context.push(RoutePaths.productOrders);
-                  },
-                  label: "Product Orders",
-                ).expanded,
-              ],
+                  const SizedBox(width: AppSizes.md),
+                  AppOutlineButton(
+                    width: context.screenWidth * .3,
+                    onPressed: () {
+                      context.push(RoutePaths.productOrders);
+                    },
+                    label: "Product Orders",
+                  ),
+                ],
+              ),
             ),
 
             const SizedBox(height: AppSizes.lg),
@@ -64,6 +68,7 @@ class ProductScreen extends StatelessWidget {
                 crossAxisCount: 2,
                 mainAxisSpacing: 16.0,
                 crossAxisSpacing: 16.0,
+                childAspectRatio: .8,
               ),
               itemBuilder: (BuildContext context, int index) {
                 return const ProductCard();

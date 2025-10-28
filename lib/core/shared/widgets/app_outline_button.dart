@@ -46,6 +46,7 @@ class AppOutlineButton extends StatelessWidget {
       child: isLoading
           ? const CircularProgressIndicator()
           : Row(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 if (icon != null) ...<Widget>[
@@ -54,6 +55,9 @@ class AppOutlineButton extends StatelessWidget {
                 ],
                 Text(
                   label,
+                  softWrap: true,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: context.txtTheme.bodyMedium?.copyWith(
                     color: outlineColor,
                   ),

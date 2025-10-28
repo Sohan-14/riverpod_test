@@ -40,6 +40,10 @@ class AppTextField extends StatelessWidget {
       textAlign: TextAlign.start,
       style: context.txtTheme.bodyMedium,
       decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 8.0,
+          horizontal: 8.0,
+        ),
         alignLabelWithHint: true,
         prefixIcon: prefixIcon != null
             ? Padding(

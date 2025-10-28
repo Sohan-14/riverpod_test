@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../core/config/icons.dart';
 import '../../../../core/config/colors.dart';
 import '../../../../core/config/sizes.dart';
@@ -46,81 +45,83 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSizes.screenHorizontal,
-            vertical: AppSizes.md,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              const ProfileCard(),
-              const SizedBox(
-                height: AppSizes.md,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: AppSizes.xs),
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  border: Border.all(width: 1.0, color: AppColors.primary),
-                  borderRadius: BorderRadius.circular(8.0),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSizes.screenHorizontal,
+              vertical: AppSizes.md,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                const ProfileCard(),
+                const SizedBox(height: AppSizes.md),
+
+                // TabBar
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: AppSizes.xs),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    border: Border.all(width: 1.0, color: AppColors.primary),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: TabBar(
+                    controller: _tabController,
+                    dividerHeight: 0.0,
+                    indicatorColor: Colors.transparent,
+                    isScrollable: true,
+                    tabAlignment: TabAlignment.start,
+                    tabs: <Widget>[
+                      TabItem(
+                        selectedIndex: _selectedIndex,
+                        index: 0,
+                        label: "Info",
+                        icon: AppIcons.info,
+                      ),
+                      TabItem(
+                        selectedIndex: _selectedIndex,
+                        index: 1,
+                        label: "Posts",
+                        icon: AppIcons.addBottomNav,
+                      ),
+                      TabItem(
+                        selectedIndex: _selectedIndex,
+                        label: "Gallery",
+                        index: 2,
+                        icon: AppIcons.gallery,
+                      ),
+                      TabItem(
+                        selectedIndex: _selectedIndex,
+                        label: "Friends",
+                        index: 3,
+                        icon: AppIcons.friends,
+                      ),
+                      TabItem(
+                        selectedIndex: _selectedIndex,
+                        label: "Setting",
+                        index: 4,
+                        icon: AppIcons.setting,
+                      ),
+                    ],
+                  ),
                 ),
-                child: TabBar(
-                  controller: _tabController,
-                  dividerHeight: 0.0,
-                  indicatorColor: Colors.transparent,
-                  isScrollable: true,
-                  tabAlignment: TabAlignment.start,
-                  tabs: <Widget>[
-                    TabItem(
-                      selectedIndex: _selectedIndex,
-                      index: 0,
-                      label: "info",
-                      icon: AppIcons.info,
-                    ),
-                    TabItem(
-                      selectedIndex: _selectedIndex,
-                      index: 1,
-                      label: "Posts",
-                      icon: AppIcons.addBottomNav,
-                    ),
-                    TabItem(
-                      selectedIndex: _selectedIndex,
-                      label: "Gallery",
-                      index: 2,
-                      icon: AppIcons.gallery,
-                    ),
-                    TabItem(
-                      selectedIndex: _selectedIndex,
-                      label: "Friends",
-                      index: 3,
-                      icon: AppIcons.friends,
-                    ),
-                    TabItem(
-                      selectedIndex: _selectedIndex,
-                      label: "Setting",
-                      index: 4,
-                      icon: AppIcons.setting,
-                    ),
-                  ],
+                const SizedBox(height: AppSizes.md),
+
+                SizedBox(
+                  height: 500, 
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: const <Widget>[
+                      InfoProfileTab(),
+                      PostProfileTab(),
+                      GalleryProfileTab(),
+                      FriendsProfileTab(),
+                      SettingProfileTab(),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: AppSizes.md,
-              ),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: const <Widget>[
-                    InfoProfileTab(),
-                    PostProfileTab(),
-                    GalleryProfileTab(),
-                    FriendsProfileTab(),
-                    SettingProfileTab(),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

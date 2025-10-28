@@ -21,24 +21,25 @@ class AppIcons {
   static const String gallery = '$_baseUrl/gallery.svg';
   static const String info = '$_baseUrl/info.svg';
   static const String advertise = '$_baseUrl/advertise.svg';
+  static const String search = '$_baseUrl/search.svg';
+  static const String notification = '$_baseUrl/notification.svg';
 
   static const String userRole = '$_baseUrl/user_role.svg';
   static const String creatorRole = '$_baseUrl/creator_role.svg';
   static const String driverRole = '$_baseUrl/driver_role.svg';
   static const String sellerRole = '$_baseUrl/seller_role.svg';
-  
+
   static const String onboarding1 = '$_baseUrl/onboarding1.svg';
   static const String onboarding2 = '$_baseUrl/onboarding2.svg';
   static const String onboarding3 = '$_baseUrl/onboarding3.svg';
-  
-  
-  static const String profileBottomNav = '$_baseUrl/bottom_nav/profile_bottom_nav.svg';
-  static const String chatBottomNav = '$_baseUrl/bottom_nav/chat_bottom_nav.svg';
-  static const String homeBottomNav = '$_baseUrl/bottom_nav/home_bottom_nav.svg';
-  static const String marketplaceBottomNav = '$_baseUrl/bottom_nav/marketplace_bottom_nav.svg';
+
+  static const String profileBottomNav =
+      '$_baseUrl/bottom_nav/profile_bottom_nav.svg';
+  static const String chatBottomNav =
+      '$_baseUrl/bottom_nav/chat_bottom_nav.svg';
+  static const String homeBottomNav =
+      '$_baseUrl/bottom_nav/home_bottom_nav.svg';
+  static const String marketplaceBottomNav =
+      '$_baseUrl/bottom_nav/marketplace_bottom_nav.svg';
   static const String addBottomNav = '$_baseUrl/bottom_nav/add_bottom_nav.svg';
-
-
-
-
 }

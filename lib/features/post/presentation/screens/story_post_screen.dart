@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:app/core/extensions/context_extensions.dart';
+import 'package:app/core/utils/file_picker_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,8 +12,15 @@ import '../../../../core/navigation/route_paths.dart';
 import '../../../../core/shared/widgets/app_elevated_button.dart';
 import '../../../../core/shared/widgets/image_loader.dart';
 
-class StoryPostScreen extends StatelessWidget {
+class StoryPostScreen extends StatefulWidget {
   const StoryPostScreen({super.key});
+
+  @override
+  State<StoryPostScreen> createState() => _StoryPostScreenState();
+}
+
+class _StoryPostScreenState extends State<StoryPostScreen> {
+  File? imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +71,9 @@ class StoryPostScreen extends StatelessWidget {
               const SizedBox(height: AppSizes.md),
               ImageLoader(
                 imagePath:
+                    imageFile ??
                     "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
+
                 height: context.screenHeight * 0.6,
                 width: double.infinity,
               ),
@@ -77,13 +89,28 @@ class StoryPostScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           spacing: AppSizes.lg,
           children: <Widget>[
-            const ImageLoader(
-              imagePath: AppIcons.gallery,
-              width: 32.0,
-              height: 32.0,
-              color: AppColors.black,
+            GestureDetector(
+              onTap: () async {
+                final File? file = await FilePickerUtils.pickFile();
+                if (file != null) {
+                  setState(() {
+                    imageFile = file;
+                  });
+                }
+              },
+              child: const ImageLoader(
+                imagePath: AppIcons.gallery,
+                width: 32.0,
+                height: 32.0,
+                color: AppColors.black,
+              ),
             ),
-            AppElevatedButton(label: "Share", onPressed: () {}),
+            AppElevatedButton(
+              label: "Share",
+              onPressed: () {
+                context.pop();
+              },
+            ),
           ],
         ),
       ),

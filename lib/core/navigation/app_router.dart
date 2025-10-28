@@ -40,6 +40,7 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
       ...chatRoutes,
       ...profileRoutes,
       ...postRoutes,
+      ...homeRoutes,
     ],
     errorBuilder: (BuildContext context, GoRouterState state) =>
         const AppErrorScreen(),
@@ -63,6 +64,21 @@ List<RouteBase> get generalRoutes {
           imagePath: imagePath,
         );
       },
+    ),
+  ];
+}
+
+List<RouteBase> get homeRoutes {
+  return <RouteBase>[
+    GoRoute(
+      path: RoutePaths.storyView,
+      builder: (BuildContext context, GoRouterState state) =>
+          const StoryViewScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.notification,
+      builder: (BuildContext context, GoRouterState state) =>
+          const NotificationScreen(),
     ),
   ];
 }
