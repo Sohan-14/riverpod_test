@@ -22,6 +22,7 @@ class RoutePaths {
   static const String storyView = '/story-view';
   static const String notification = '/notifications';
   static const String profile = '/profile';
+  static const String friendsProfile = '/friends-profile';
   static const String privacyPolicy = '/privacy-policy';
   static const String termsCondition = '/terms-condition';
   static const String contactUs = '/contact-us';

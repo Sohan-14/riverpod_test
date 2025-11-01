@@ -18,6 +18,7 @@ export '../core/shared/screens/bottom_nav_screen.dart';
 
 // profile
 export './profile/presentation/screens/profile_screen.dart';
+export './profile/presentation/screens/friends_profile_screen.dart';
 export './profile/presentation/screens/privacy_policy_screen.dart';
 export './profile/presentation/screens/terms_condition_screen.dart';
 export './profile/presentation/screens/contact_us_screen.dart';

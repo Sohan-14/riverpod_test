@@ -148,8 +148,8 @@ class StoreDetailsScreen extends StatelessWidget {
               ),
 
               Wrap(
-                spacing: 8.0,
-                runSpacing: 8.0,
+                spacing: 4.0,
+                runSpacing: 4.0,
                 children: List<ClipRRect>.generate(
                   10,
                   (int index) => ClipRRect(
@@ -162,10 +162,10 @@ class StoreDetailsScreen extends StatelessWidget {
                               "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
                         },
                       ),
-                      child: const ImageLoader(
+                      child: ImageLoader(
                         imagePath:
                             "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
-                        width: 120,
+                        width: context.screenWidth * .42,
                         height: 120,
                       ),
                     ),

@@ -87,56 +87,55 @@ class StoreCard extends StatelessWidget {
             ),
 
             const SizedBox(
-              height: AppSizes.md,
+              height: AppSizes.sm,
             ),
 
-            Row(
-              spacing: AppSizes.md,
-              children: <Widget>[
-                AppElevatedButton(
-                  width: 100,
-                  height: 50,
-                  onPressed: () {},
-                  label: "Chat",
-                  icon: const ImageLoader(
-                    imagePath: AppIcons.chatBottomNav,
-                    color: AppColors.white,
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                  width: context.screenWidth * .55,
-                  child: ListView.separated(
-                    itemCount: 10,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const SizedBox(
-                          width: AppSizes.sm,
-                        ),
-                    itemBuilder: (_, int index) {
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: GestureDetector(
-                          onTap: () => context.push(
-                            RoutePaths.imageFullScreen,
-                            extra: <String, String>{
-                              "imagePath":
-                                  "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
-                            },
-                          ),
-                          child: const ImageLoader(
-                            imagePath:
-                                "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
-                            width: 40,
-                            height: 40,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+            AppElevatedButton(
+              width: 30,
+              height: 30,
+              onPressed: () {},
+              label: "Chat",
+              icon: const ImageLoader(
+                imagePath: AppIcons.chatBottomNav,
+                color: AppColors.white,
+              ),
+            ),
+
+            const SizedBox(
+              height: AppSizes.sm,
+            ),
+
+            SizedBox(
+              height: 50,
+              child: ListView.separated(
+                itemCount: 10,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(
+                      width: AppSizes.sm,
+                    ),
+                itemBuilder: (_, int index) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: GestureDetector(
+                      onTap: () => context.push(
+                        RoutePaths.imageFullScreen,
+                        extra: <String, String>{
+                          "imagePath":
+                              "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
+                        },
+                      ),
+                      child: const ImageLoader(
+                        imagePath:
+                            "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
+                        width: 40,
+                        height: 40,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),

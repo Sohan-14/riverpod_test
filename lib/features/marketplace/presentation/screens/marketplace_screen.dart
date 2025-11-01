@@ -30,7 +30,7 @@ class MarketplaceScreen extends StatelessWidget {
                   crossAxisCount: 2,
                   mainAxisSpacing: 16.0,
                   crossAxisSpacing: 16.0,
-                  childAspectRatio: .8,
+                  childAspectRatio: .7,
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   return const MarketPlaceCard();

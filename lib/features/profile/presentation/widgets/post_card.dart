@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/config/colors.dart';
 import '../../../../core/config/icons.dart';
 import '../../../../core/config/sizes.dart';
+import '../../../../core/navigation/route_paths.dart';
 import '../../../../core/shared/widgets/app_text_field.dart';
 import '../../../../core/shared/widgets/image_loader.dart';
 
@@ -499,19 +500,27 @@ class CommentCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        const ClipOval(
-          child: ImageLoader(
-            imagePath:
-                "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
-            width: 40,
-            height: 40,
+        GestureDetector(
+          onTap: () => context.push(
+            RoutePaths.imageFullScreen,
+            extra: <String, String>{
+              "imagePath":
+                  "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
+            },
+          ),
+          child: const ClipOval(
+            child: ImageLoader(
+              imagePath:
+                  "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
+              width: 40,
+              height: 40,
+            ),
           ),
         ),
         const SizedBox(
           width: AppSizes.sm,
         ),
         Container(
-          width: context.screenWidth * 0.8,
           padding: const EdgeInsets.symmetric(
             horizontal: AppSizes.sm,
             vertical: AppSizes.sm,

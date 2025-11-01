@@ -145,6 +145,10 @@ List<RouteBase> get profileRoutes {
         ),
       ),
     ),
+    GoRoute(
+      path: RoutePaths.friendsProfile,
+      builder: (BuildContext context, GoRouterState state) => const FriendsProfileScreen(),
+    ),
 
     GoRoute(
       path: RoutePaths.privacyPolicy,

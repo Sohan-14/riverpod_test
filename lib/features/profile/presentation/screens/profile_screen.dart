@@ -1,3 +1,4 @@
+import 'package:app/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/config/icons.dart';
 import '../../../../core/config/colors.dart';
@@ -108,7 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 const SizedBox(height: AppSizes.md),
 
                 SizedBox(
-                  height: 500, 
+                  height: context.screenHeight * .75,
                   child: TabBarView(
                     controller: _tabController,
                     children: const <Widget>[

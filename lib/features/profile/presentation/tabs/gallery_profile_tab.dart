@@ -1,3 +1,4 @@
+import 'package:app/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,10 +18,12 @@ class GalleryProfileTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Wrap(
-            spacing: 8.0,
-            runSpacing: 8.0,
+            spacing: 4.0, // Space between images
+            runSpacing: 4.0, // Space between rows
+            alignment: WrapAlignment.start,
+            runAlignment: WrapAlignment.start,
             children: List<ClipRRect>.generate(
-              10,
+              11, // Total images
               (int index) => ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: GestureDetector(
@@ -31,10 +34,10 @@ class GalleryProfileTab extends StatelessWidget {
                           "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
                     },
                   ),
-                  child: const ImageLoader(
+                  child: ImageLoader(
                     imagePath:
                         "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
-                    width: 120,
+                    width: context.screenWidth * .42,
                     height: 120,
                   ),
                 ),

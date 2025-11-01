@@ -1,3 +1,4 @@
+import 'package:app/core/config/sizes.dart';
 import 'package:app/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +17,7 @@ class MarketplaceTopLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      spacing: AppSizes.md,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Text(
@@ -23,43 +25,39 @@ class MarketplaceTopLayout extends StatelessWidget {
           style: context.txtTheme.bodyLarge,
         ),
 
-        Row(
-          spacing: 8.0,
-          children: <Widget>[
-            AppOutlineButton(
-              onPressed: () {
-                context.push(RoutePaths.localGems);
-              },
-              width: 200,
-              label: 'Try Local Gems',
-            ),
+        AppOutlineButton(
+          onPressed: () {
+            context.push(RoutePaths.localGems);
+          },
+          height: 30,
+          width: 150,
+          label: 'Try Local Gems',
+        ),
 
-            GestureDetector(
-              onTap: () {
-                context.push(RoutePaths.cart);
-              },
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.grey),
-                  shape: BoxShape.circle,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    const ImageLoader(
-                      imagePath: AppIcons.cart,
-                      width: 16.0,
-                      height: 16.0,
-                    ),
-                    Text(
-                      "Cart",
-                      style: context.txtTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              ),
+        GestureDetector(
+          onTap: () {
+            context.push(RoutePaths.cart);
+          },
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.grey),
+              shape: BoxShape.circle,
             ),
-          ],
+            child: Column(
+              children: <Widget>[
+                const ImageLoader(
+                  imagePath: AppIcons.cart,
+                  width: 16.0,
+                  height: 16.0,
+                ),
+                Text(
+                  "Cart",
+                  style: context.txtTheme.bodySmall,
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );

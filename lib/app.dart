@@ -18,7 +18,7 @@ class MyApp extends ConsumerWidget {
       themeMode: ThemeMode.system,
       routerConfig: ref.watch(appRouterProvider),
       builder: (BuildContext context, Widget? child) {
-        return ToastProvider(child: child!);
+        return SafeArea(top: false, child: ToastProvider(child: child!));
       },
     );
   }
