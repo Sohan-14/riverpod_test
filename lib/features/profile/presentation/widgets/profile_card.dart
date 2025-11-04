@@ -127,7 +127,9 @@ class ProfileCard extends StatelessWidget {
                   Icons.edit,
                   color: AppColors.primary,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  context.push(RoutePaths.profileEdit);
+                },
                 label: "Edit",
                 outlineColor: AppColors.primary,
               ),
@@ -137,7 +139,7 @@ class ProfileCard extends StatelessWidget {
           Consumer(
             builder: (BuildContext context, WidgetRef ref, Widget? child) {
               final Role role = ref.read(selectedRoleProvider);
-              if (role != Role.user) {
+              if (role == Role.creator) {
                 return Column(
                   children: <Widget>[
                     const SizedBox(
@@ -154,6 +156,46 @@ class ProfileCard extends StatelessWidget {
                         context.push(RoutePaths.ads);
                       },
                       label: "Advertise",
+                    ),
+                  ],
+                );
+              } else if (role == Role.seller) {
+                return Column(
+                  children: <Widget>[
+                    const SizedBox(
+                      height: AppSizes.spaceBetweenItems,
+                    ),
+                    AppElevatedButton(
+                      icon: const ImageLoader(
+                        imagePath: AppIcons.order,
+                        width: 24.0,
+                        height: 24.0,
+                        color: AppColors.white,
+                      ),
+                      onPressed: () {
+                        context.push(RoutePaths.productOrders);
+                      },
+                      label: "Orders",
+                    ),
+                  ],
+                );
+              } else if (role == Role.driver) {
+                return Column(
+                  children: <Widget>[
+                    const SizedBox(
+                      height: AppSizes.spaceBetweenItems,
+                    ),
+                    AppElevatedButton(
+                      icon: const ImageLoader(
+                        imagePath: AppIcons.parcelRequest,
+                        width: 24.0,
+                        height: 24.0,
+                        color: AppColors.white,
+                      ),
+                      onPressed: () {
+                        context.push(RoutePaths.parcelRequest);
+                      },
+                      label: "Request",
                     ),
                   ],
                 );

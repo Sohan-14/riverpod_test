@@ -53,6 +53,7 @@ class SettingItems extends StatelessWidget {
 
             const Icon(
               Icons.keyboard_arrow_right,
+              color: AppColors.black,
               size: 24.0,
             ),
           ],

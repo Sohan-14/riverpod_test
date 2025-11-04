@@ -34,12 +34,21 @@ class PostCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: AppSizes.sm,
             children: <Widget>[
-              const ClipOval(
-                child: ImageLoader(
-                  imagePath:
-                      "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
-                  width: 50,
-                  height: 50,
+              GestureDetector(
+                onTap: () => context.push(
+                  RoutePaths.imageFullScreen,
+                  extra: <String, String>{
+                    "imagePath":
+                        "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
+                  },
+                ),
+                child: const ClipOval(
+                  child: ImageLoader(
+                    imagePath:
+                        "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
               ),
               Column(
@@ -80,16 +89,25 @@ class PostCard extends StatelessWidget {
             height: AppSizes.md,
           ),
 
-          const ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(12.0),
-              topRight: Radius.circular(12.0),
+          GestureDetector(
+            onTap: () => context.push(
+              RoutePaths.imageFullScreen,
+              extra: <String, String>{
+                "imagePath":
+                    "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
+              },
             ),
-            child: ImageLoader(
-              imagePath:
-                  "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
-              width: double.infinity,
-              height: 300,
+            child: const ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12.0),
+                topRight: Radius.circular(12.0),
+              ),
+              child: ImageLoader(
+                imagePath:
+                    "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
+                width: double.infinity,
+                height: 300,
+              ),
             ),
           ),
           Container(

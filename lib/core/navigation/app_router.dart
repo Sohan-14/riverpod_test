@@ -41,6 +41,7 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
       ...profileRoutes,
       ...postRoutes,
       ...homeRoutes,
+      ...parcelRoutes,
     ],
     errorBuilder: (BuildContext context, GoRouterState state) =>
         const AppErrorScreen(),
@@ -64,6 +65,26 @@ List<RouteBase> get generalRoutes {
           imagePath: imagePath,
         );
       },
+    ),
+  ];
+}
+
+List<RouteBase> get parcelRoutes {
+  return <RouteBase>[
+    GoRoute(
+      path: RoutePaths.parcelRequest,
+      builder: (BuildContext context, GoRouterState state) =>
+          const ParcelRequestScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.parcelRequestDetails,
+      builder: (BuildContext context, GoRouterState state) =>
+          const ParcelRequestDetailsScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.taskDetails,
+      builder: (BuildContext context, GoRouterState state) =>
+          const TaskDetailsScreen(),
     ),
   ];
 }
@@ -147,7 +168,19 @@ List<RouteBase> get profileRoutes {
     ),
     GoRoute(
       path: RoutePaths.friendsProfile,
-      builder: (BuildContext context, GoRouterState state) => const FriendsProfileScreen(),
+      builder: (BuildContext context, GoRouterState state) =>
+          const FriendsProfileScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.profileEdit,
+      builder: (BuildContext context, GoRouterState state) =>
+          const ProfileEditScreen(),
+    ),
+
+    GoRoute(
+      path: RoutePaths.interest,
+      builder: (BuildContext context, GoRouterState state) =>
+          const InterestScreen(),
     ),
 
     GoRoute(

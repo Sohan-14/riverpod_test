@@ -22,7 +22,6 @@ class OneToOneChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey buttonKey = GlobalKey();
     final List<MessageModel> messages = <MessageModel>[
       MessageModel(isSender: true, message: "Hi"),
       MessageModel(isSender: false, message: "Hi"),
@@ -113,17 +112,17 @@ class OneToOneChatScreen extends StatelessWidget {
 
               const Spacer(),
 
-              IconButton(
-                key: buttonKey,
-                onPressed: () {
-                  // _showPopupMenu(context, buttonKey);
-                },
-                icon: const ImageLoader(
-                  imagePath: AppIcons.menu,
-                  width: 24.0,
-                  height: 24.0,
-                  color: AppColors.black,
-                ),
+              PopupMenuButton<Text>(
+                iconColor: AppColors.black,
+                itemBuilder: (BuildContext context) => <PopupMenuItem<Text>>[
+                  PopupMenuItem<Text>(
+                    onTap: () => context.push(RoutePaths.report),
+                    child: Text(
+                      'Report User',
+                      style: context.txtTheme.bodyMedium,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -29,7 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onTitlePressCallback = emptyCallback,
     this.titleColor = Colors.black,
     this.titleAlignment = TitleAlignment.center,
-    this.showBackBtn = false,
+    this.showBackBtn = true,
     this.showDrawerIcon = false,
     this.alignmentValue = -30.0,
     this.actions,

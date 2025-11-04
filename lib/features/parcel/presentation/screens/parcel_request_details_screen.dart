@@ -1,23 +1,26 @@
+import 'package:app/core/config/icons.dart';
 import 'package:app/core/config/sizes.dart';
 import 'package:app/core/extensions/context_extensions.dart';
 import 'package:app/core/extensions/widget_extensions.dart';
+import 'package:app/core/navigation/route_paths.dart';
 import 'package:app/core/shared/widgets/app_elevated_button.dart';
 import 'package:app/core/shared/widgets/custom_app_bar.dart';
+import 'package:app/core/shared/widgets/image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/colors.dart';
-import '../../../../core/navigation/route_paths.dart';
-import '../../../../core/shared/widgets/image_loader.dart';
+import '../../../../core/shared/widgets/app_outline_button.dart';
+import '../../../../core/utils/toast/toast.dart';
 
-class AssignedDriverScreen extends StatelessWidget {
-  const AssignedDriverScreen({super.key});
+class ParcelRequestDetailsScreen extends StatelessWidget {
+  const ParcelRequestDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'Assigned Driver',
+        title: 'Parcel Request Details',
         showBackBtn: true,
       ),
       body: SingleChildScrollView(
@@ -53,145 +56,35 @@ class AssignedDriverScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(AppSizes.xs),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.0),
                   border: Border.all(
                     color: AppColors.primary,
-                    width: 1.0,
+                    width: .5,
                   ),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: AppSizes.sm,
-                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12.0),
-                      child: GestureDetector(
-                        onTap: () => context.push(
-                          RoutePaths.imageFullScreen,
-                          extra: <String, String>{
-                            "imagePath":
-                                "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
-                          },
-                        ),
-                        child: const ImageLoader(
-                          imagePath:
-                              "https://www.victoriassecret.com/p/504x672/png/zz/25/09/26/14/112696011885_OM_S.jpg",
-                          width: 80,
-                          height: 60,
-                        ),
-                      ),
+                    Text(
+                      "John",
+                      style: context.txtTheme.bodyMedium,
                     ),
-                    Column(
-                      spacing: AppSizes.xs,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Text(
-                          "Luréa",
-                          style: context.txtTheme.bodyLarge,
-                        ),
-                        Text(
-                          "Price: \$25",
-                          style: context.txtTheme.bodySmall,
-                        ),
-                        const SizedBox(
-                          height: AppSizes.sm,
-                        ),
-                      ],
+                    Text(
+                      "Seller",
+                      style: context.txtTheme.bodyMedium?.copyWith(
+                        color: AppColors.grey,
+                      ),
                     ),
                   ],
                 ),
               ),
 
               const SizedBox(
-                height: AppSizes.md,
+                height: AppSizes.spaceBetweenItems,
               ),
 
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.0),
-                  border: Border.all(
-                    color: AppColors.primary,
-                    width: 1.0,
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: AppSizes.sm,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12.0),
-                      child: GestureDetector(
-                        onTap: () => context.push(
-                          RoutePaths.imageFullScreen,
-                          extra: <String, String>{
-                            "imagePath":
-                                "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
-                          },
-                        ),
-                        child: const ImageLoader(
-                          imagePath:
-                              "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
-                          width: 100,
-                          height: 100,
-                        ),
-                      ),
-                    ),
-                    Column(
-                      spacing: AppSizes.xs,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Text(
-                          "John Doe",
-                          style: context.txtTheme.bodyLarge,
-                        ),
-                        Text(
-                          "1234 Elm Street, Springfield, IL 62704",
-                          style: context.txtTheme.bodyMedium,
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            spacing: AppSizes.sm,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                "876-543-2109",
-                                style: context.txtTheme.bodyMedium,
-                              ),
-                              AppElevatedButton(
-                                label: "Chat",
-                                width: 80,
-                                height: 30,
-                                icon: const Icon(
-                                  Icons.chat_bubble,
-                                  color: Colors.white,
-                                  size: 16,
-                                ),
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: AppSizes.sm,
-                        ),
-                      ],
-                    ).expanded,
-                  ],
-                ),
-              ),
-              const SizedBox(height: AppSizes.spaceBetweenItems),
               Text(
                 'Destination',
                 style: context.txtTheme.titleLarge,
@@ -410,6 +303,70 @@ class AssignedDriverScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+
+              const SizedBox(height: AppSizes.spaceBetweenItems),
+
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 4.0,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: .5),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Chat with seller",
+                      style: context.txtTheme.bodyMedium,
+                    ),
+                    AppElevatedButton(
+                      width: 100,
+                      height: 30,
+                      label: "Chat",
+                      onPressed: () => context.push(RoutePaths.oneToOneChat),
+                      icon: const ImageLoader(
+                        imagePath: AppIcons.chatBottomNav,
+                        color: AppColors.white,
+                        width: 20,
+                        height: 20,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(
+                height: AppSizes.spaceBetweenItems,
+              ),
+
+              Row(
+                spacing: AppSizes.md,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  AppOutlineButton(
+                    height: 30,
+                    label: "Cancel",
+                    onPressed: () {
+                      Toast.showSuccess("Cancel");
+                    },
+                    outlineColor: Colors.red,
+                  ).expanded,
+                  AppElevatedButton(
+                    height: 30,
+                    label: "Confirm",
+                    onPressed: () {
+                      Toast.showSuccess("Confirm");
+                    },
+                  ).expanded,
+                ],
+              ),
+
+              const SizedBox(
+                height: AppSizes.spaceBetweenItems,
               ),
             ],
           ),

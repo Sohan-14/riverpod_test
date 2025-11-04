@@ -69,7 +69,7 @@ class VerifyEmailScreen extends ConsumerWidget {
                       context.go(RoutePaths.vehicleInfo);
                     }
                     else{
-                      context.go(RoutePaths.bottomNav);
+                      context.go(RoutePaths.interest);
                     }
                   }
                 },

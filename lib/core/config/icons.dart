@@ -23,6 +23,7 @@ class AppIcons {
   static const String advertise = '$_baseUrl/advertise.svg';
   static const String search = '$_baseUrl/search.svg';
   static const String notification = '$_baseUrl/notification.svg';
+  static const String parcelRequest = '$_baseUrl/parcel_request.svg';
 
   static const String userRole = '$_baseUrl/user_role.svg';
   static const String creatorRole = '$_baseUrl/creator_role.svg';
@@ -32,6 +33,11 @@ class AppIcons {
   static const String onboarding1 = '$_baseUrl/onboarding1.svg';
   static const String onboarding2 = '$_baseUrl/onboarding2.svg';
   static const String onboarding3 = '$_baseUrl/onboarding3.svg';
+
+  static const String angry = '$_baseUrl/react/angry.svg';
+  static const String emotion = '$_baseUrl/react/emotion.svg';
+  static const String haha = '$_baseUrl/react/haha.svg';
+  static const String love = '$_baseUrl/react/love.svg';
 
   static const String profileBottomNav =
       '$_baseUrl/bottom_nav/profile_bottom_nav.svg';

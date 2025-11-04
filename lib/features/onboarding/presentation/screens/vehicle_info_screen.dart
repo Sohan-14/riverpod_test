@@ -202,7 +202,7 @@ class _VehicleInfoScreenState extends State<VehicleInfoScreen> {
               AppElevatedButton(
                 onPressed: () {
                   context.go(
-                    RoutePaths.bottomNav,
+                    RoutePaths.interest,
                   );
                 },
                 label: "Verify",

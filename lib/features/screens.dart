@@ -18,6 +18,8 @@ export '../core/shared/screens/bottom_nav_screen.dart';
 
 // profile
 export './profile/presentation/screens/profile_screen.dart';
+export './profile/presentation/screens/profile_edit_screen.dart';
+export './profile/presentation/screens/interest_screen.dart';
 export './profile/presentation/screens/friends_profile_screen.dart';
 export './profile/presentation/screens/privacy_policy_screen.dart';
 export './profile/presentation/screens/terms_condition_screen.dart';
@@ -56,6 +58,11 @@ export '../core/shared/screens/app_error_screen.dart';
 export './home/presentation/screens/home_screen.dart';
 export './home/presentation/screens/story_view_screen.dart';
 export './home/presentation/screens/notification_screen.dart';
+
+// parcel
+export './parcel/presentation/screens/parcel_request_screen.dart';
+export './parcel/presentation/screens/parcel_request_details_screen.dart';
+export './parcel/presentation/screens/task_details_screen.dart';
 
 // image
 export '../core/shared/screens/full_screen_image_view.dart';

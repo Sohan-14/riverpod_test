@@ -13,92 +13,90 @@ class SettingProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        spacing: AppSizes.md,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SettingItems(
-            icon: Icons.lock_outlined,
-            label: "Change Password",
-            onTapCallback: () {
-              context.push(RoutePaths.changePassword);
-            },
-          ),
-          SettingItems(
-            icon: Icons.privacy_tip_outlined,
-            label: "Privacy Policy",
-            onTapCallback: () {
-              context.push(RoutePaths.privacyPolicy);
-            },
-          ),
-          SettingItems(
-            icon: Icons.warning_amber_rounded,
-            label: "Terms & Condition",
-            onTapCallback: () {
-              context.push(RoutePaths.termsCondition);
-            },
-          ),
-          SettingItems(
-            icon: Icons.info_outline,
-            label: "Contact Us",
-            onTapCallback: () {
-              context.push(RoutePaths.contactUs);
-            },
-          ),
-          SettingItems(
-            icon: Icons.logout,
-            label: "Logout",
-            onTapCallback: () {
-              CustomBottomSheet.show<Column>(
-                context: context,
-                child: Column(
-                  spacing: 4.0,
-                  children: <Widget>[
-                    Text(
-                      "Logout",
-                      style: context.txtTheme.headlineLarge?.copyWith(
-                        color: Colors.redAccent,
+    return Column(
+      spacing: AppSizes.md,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SettingItems(
+          icon: Icons.lock_outlined,
+          label: "Change Password",
+          onTapCallback: () {
+            context.push(RoutePaths.changePassword);
+          },
+        ),
+        SettingItems(
+          icon: Icons.privacy_tip_outlined,
+          label: "Privacy Policy",
+          onTapCallback: () {
+            context.push(RoutePaths.privacyPolicy);
+          },
+        ),
+        SettingItems(
+          icon: Icons.warning_amber_rounded,
+          label: "Terms & Condition",
+          onTapCallback: () {
+            context.push(RoutePaths.termsCondition);
+          },
+        ),
+        SettingItems(
+          icon: Icons.info_outline,
+          label: "Contact Us",
+          onTapCallback: () {
+            context.push(RoutePaths.contactUs);
+          },
+        ),
+        SettingItems(
+          icon: Icons.logout,
+          label: "Logout",
+          onTapCallback: () {
+            CustomBottomSheet.show<Column>(
+              context: context,
+              child: Column(
+                spacing: 4.0,
+                children: <Widget>[
+                  Text(
+                    "Logout",
+                    style: context.txtTheme.headlineLarge?.copyWith(
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                  Text(
+                    "Are you sure you want to logout?",
+                    style: context.txtTheme.bodyMedium,
+                  ),
+
+                  const SizedBox(
+                    height: AppSizes.spaceBetweenItems,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: AppSizes.md,
+                    children: <Widget>[
+                      AppOutlineButton(
+                        width: 100,
+                        outlineColor: Colors.redAccent,
+                        label: "Cancel",
+                        onPressed: () {
+                          context.pop();
+                        },
                       ),
-                    ),
-                    Text(
-                      "Are you sure you want to logout?",
-                      style: context.txtTheme.bodyMedium,
-                    ),
-
-                    const SizedBox(
-                      height: AppSizes.spaceBetweenItems,
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: AppSizes.md,
-                      children: <Widget>[
-                        AppOutlineButton(
-                          width: 100,
-                          outlineColor: Colors.redAccent,
-                          label: "Cancel",
-                          onPressed: () {
-                            context.pop();
-                          },
-                        ),
-                        AppElevatedButton(
-                          width: 100,
-                          label: "Logout",
-                          onPressed: () {
-                            context.go(RoutePaths.role);
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+                      AppElevatedButton(
+                        width: 100,
+                        label: "Logout",
+                        onPressed: () {
+                          context.go(RoutePaths.role);
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

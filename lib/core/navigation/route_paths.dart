@@ -22,6 +22,8 @@ class RoutePaths {
   static const String storyView = '/story-view';
   static const String notification = '/notifications';
   static const String profile = '/profile';
+  static const String profileEdit = '/profile-edit';
+  static const String interest = '/interest';
   static const String friendsProfile = '/friends-profile';
   static const String privacyPolicy = '/privacy-policy';
   static const String termsCondition = '/terms-condition';
@@ -58,5 +60,10 @@ class RoutePaths {
   static const String productOrders = "/product-orders";
   static const String sendDelivery = "/send-delivery";
   static const String assignedDriver = "/assigned-driver";
+
+  // parcel
+  static const String parcelRequest = "/parcel-request";
+  static const String parcelRequestDetails = "/parcel-request-details";
+  static const String taskDetails = "/task-details";
 
 }

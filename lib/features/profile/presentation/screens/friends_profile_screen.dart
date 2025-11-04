@@ -1,5 +1,7 @@
 import 'package:app/core/extensions/context_extensions.dart';
 import 'package:app/core/extensions/widget_extensions.dart';
+import 'package:app/core/shared/widgets/app_outline_button.dart';
+import 'package:app/core/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/config/icons.dart';
 import '../../../../core/config/colors.dart';
@@ -45,6 +47,9 @@ class _FriendsProfileScreenState extends State<FriendsProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(
+        title: "Friends Profile",
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -102,18 +107,10 @@ class _FriendsProfileScreenState extends State<FriendsProfileScreen>
                 ),
                 const SizedBox(height: AppSizes.md),
 
-                SizedBox(
-                  height: context.screenHeight * .75,
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: const <Widget>[
-                      InfoProfileTab(),
-                      PostProfileTab(),
-                      GalleryProfileTab(),
-                      FriendsProfileTab(),
-                    ],
-                  ),
-                ),
+                if (_selectedIndex == 0) const InfoProfileTab(),
+                if (_selectedIndex == 1) const PostProfileTab(),
+                if (_selectedIndex == 2) const GalleryProfileTab(),
+                if (_selectedIndex == 3) const FriendsProfileTab(),
               ],
             ),
           ),
@@ -161,9 +158,20 @@ class ProfileCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                "Zahidul Islam Shohan",
-                style: context.txtTheme.bodyLarge,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "Zahidul Islam Shohan",
+                    style: context.txtTheme.bodyLarge,
+                  ),
+                  AppOutlineButton(
+                    label: "Follow",
+                    onPressed: () {},
+                    width: 100,
+                    height: 40,
+                  ),
+                ],
               ),
               Text(
                 "50 followers",

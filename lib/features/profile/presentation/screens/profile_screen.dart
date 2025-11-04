@@ -1,4 +1,3 @@
-import 'package:app/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/config/icons.dart';
 import '../../../../core/config/colors.dart';
@@ -108,19 +107,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
                 const SizedBox(height: AppSizes.md),
 
-                SizedBox(
-                  height: context.screenHeight * .75,
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: const <Widget>[
-                      InfoProfileTab(),
-                      PostProfileTab(),
-                      GalleryProfileTab(),
-                      FriendsProfileTab(),
-                      SettingProfileTab(),
-                    ],
-                  ),
-                ),
+                if (_selectedIndex == 0) const InfoProfileTab(),
+                if (_selectedIndex == 1) const PostProfileTab(),
+                if (_selectedIndex == 2) const GalleryProfileTab(),
+                if (_selectedIndex == 3) const FriendsProfileTab(),
+                if (_selectedIndex == 4) const SettingProfileTab(),
               ],
             ),
           ),

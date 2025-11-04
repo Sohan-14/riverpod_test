@@ -1,3 +1,4 @@
+import 'package:app/core/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -52,6 +53,7 @@ class FriendsCard extends StatelessWidget {
 
         PopupMenuButton<Text>(
           padding: EdgeInsets.zero,
+          iconColor: AppColors.black,
           itemBuilder: (BuildContext context) => <PopupMenuItem<Text>>[
             PopupMenuItem<Text>(
               onTap: () {

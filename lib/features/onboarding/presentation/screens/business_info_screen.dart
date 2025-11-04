@@ -131,7 +131,7 @@ class _BusinessInfoScreenState extends State<BusinessInfoScreen> {
               AppElevatedButton(
                 onPressed: () {
                   context.go(
-                    RoutePaths.bottomNav,
+                    RoutePaths.interest,
                   );
                 },
                 label: "Continue",

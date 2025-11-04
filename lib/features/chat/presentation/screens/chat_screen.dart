@@ -1,4 +1,5 @@
 import 'package:app/core/extensions/context_extensions.dart';
+import 'package:app/core/shared/widgets/app_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,6 +22,20 @@ class ChatScreen extends StatelessWidget {
           ),
           child: Column(
             children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  SizedBox(
+                    width: 200,
+                    child: AppElevatedButton(
+                      width: 100,
+                      label: "Group Message",
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+
               const SizedBox(
                 height: AppSizes.spaceBetweenItems,
               ),

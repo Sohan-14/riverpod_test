@@ -1,11 +1,14 @@
+import 'package:app/core/config/sizes.dart';
 import 'package:app/core/extensions/context_extensions.dart';
 import 'package:app/core/navigation/route_paths.dart';
 import 'package:app/core/shared/widgets/image_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/colors.dart';
 import '../../../../core/config/icons.dart';
+import '../../../../core/shared/provider/role_provider.dart';
 import '../../../../core/shared/widgets/app_text_field.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -61,11 +64,28 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           const Spacer(),
-
-          const ImageLoader(
-            imagePath: AppIcons.search,
-            height: 24,
-            width: 24,
+          Consumer(
+            builder: (BuildContext context, WidgetRef ref, Widget? child) {
+              final Role role = ref.read(selectedRoleProvider);
+              if (role == Role.driver) {
+                return Column(
+                  children: <Widget>[
+                    const SizedBox(
+                      height: AppSizes.spaceBetweenItems,
+                    ),
+                    GestureDetector(
+                      onTap: () => context.push(RoutePaths.parcelRequest),
+                      child: const ImageLoader(
+                        imagePath: AppIcons.parcelRequest,
+                        height: 24,
+                        width: 24,
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox.shrink();
+            },
           ),
           GestureDetector(
             onTap: () => context.push(RoutePaths.notification),
@@ -74,6 +94,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               height: 24,
               width: 24,
             ),
+          ),
+          const SizedBox(
+            width: AppSizes.sm,
           ),
         ],
       ),
