@@ -153,6 +153,16 @@ List<RouteBase> get postRoutes {
       builder: (BuildContext context, GoRouterState state) =>
           const ReportScreen(),
     ),
+    GoRoute(
+      path: RoutePaths.postProduct,
+      builder: (BuildContext context, GoRouterState state) =>
+          const ProductScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.productBoost,
+      builder: (BuildContext context, GoRouterState state) =>
+          const ProductBoostScreen(),
+    ),
   ];
 }
 

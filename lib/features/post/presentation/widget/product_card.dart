@@ -57,17 +57,20 @@ class ProductCard extends StatelessWidget {
                 Positioned(
                   top: 5,
                   right: 5,
-                  child: Container(
-                    padding: const EdgeInsets.all(4.0),
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8.0),
+                  child: GestureDetector(
+                    onTap: () => context.push(RoutePaths.createProduct),
+                    child: Container(
+                      padding: const EdgeInsets.all(4.0),
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8.0),
+                        ),
                       ),
-                    ),
-                    child: const Icon(
-                      Icons.edit,
-                      color: AppColors.white,
+                      child: const Icon(
+                        Icons.edit,
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                 ),

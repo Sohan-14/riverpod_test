@@ -40,6 +40,9 @@ export './marketplace/presentation/screens/order_screen.dart';
 
 // post
 export './post/presentation/screens/feed_post_screen.dart';
+export './post/presentation/screens/post_screen.dart';
+export './post/presentation/screens/product_screen.dart';
+export './marketplace/presentation/screens/product_boost_screen.dart';
 export './post/presentation/screens/story_post_screen.dart';
 export './post/presentation/screens/create_feed_post_screen.dart';
 export './post/presentation/screens/create_product_screen.dart';

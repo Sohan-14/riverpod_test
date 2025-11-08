@@ -1,6 +1,11 @@
+import 'package:app/core/config/colors.dart';
+import 'package:app/core/navigation/route_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/sizes.dart';
+import '../../../../core/shared/provider/role_provider.dart';
 import '../widgets/marketplace_card.dart';
 import '../widgets/marketplace_top_layout.dart';
 
@@ -40,6 +45,27 @@ class MarketplaceScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: Consumer(
+        builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          final Role role = ref.read(selectedRoleProvider);
+          if (role == Role.seller) {
+            return ClipOval(
+              child: FloatingActionButton(
+                foregroundColor: AppColors.primary,
+                backgroundColor: AppColors.primary,
+                onPressed: () {
+                  context.push(RoutePaths.createProduct);
+                },
+                child: const Icon(
+                  Icons.add,
+                  color: AppColors.white,
+                ),
+              ),
+            );
+          }
+          return const SizedBox.shrink();
+        },
       ),
     );
   }

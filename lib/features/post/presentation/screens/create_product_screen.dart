@@ -19,7 +19,7 @@ class CreateProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'Create Product',
+        title: 'Product',
         showBackBtn: true,
       ),
       body: SingleChildScrollView(

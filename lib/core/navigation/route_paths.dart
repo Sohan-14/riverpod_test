@@ -60,6 +60,8 @@ class RoutePaths {
   static const String productOrders = "/product-orders";
   static const String sendDelivery = "/send-delivery";
   static const String assignedDriver = "/assigned-driver";
+  static const String postProduct = "/post-product";
+  static const String productBoost = "/product-boost";
 
   // parcel
   static const String parcelRequest = "/parcel-request";

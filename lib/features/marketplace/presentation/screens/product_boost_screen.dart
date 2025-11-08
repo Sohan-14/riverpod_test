@@ -1,26 +1,23 @@
 import 'package:app/core/extensions/context_extensions.dart';
-import 'package:app/core/extensions/widget_extensions.dart';
-import 'package:app/core/shared/widgets/app_outline_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/colors.dart';
 import '../../../../core/config/sizes.dart';
 import '../../../../core/navigation/route_paths.dart';
-import '../../../../core/shared/provider/role_provider.dart';
 import '../../../../core/shared/widgets/app_elevated_button.dart';
+import '../../../../core/shared/widgets/app_text_field.dart';
 import '../../../../core/shared/widgets/custom_app_bar.dart';
 import '../../../../core/shared/widgets/image_loader.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+class ProductBoostScreen extends StatelessWidget {
+  const ProductBoostScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: "Product Details",
+        title: "Product Boost",
         showBackBtn: true,
       ),
       body: SafeArea(
@@ -30,6 +27,8 @@ class ProductDetailsScreen extends StatelessWidget {
             vertical: AppSizes.md,
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -171,94 +170,44 @@ class ProductDetailsScreen extends StatelessWidget {
                 height: AppSizes.md,
               ),
 
-              Consumer(
-                builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  final Role role = ref.read(selectedRoleProvider);
-                  if (role != Role.seller) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          spacing: AppSizes.md,
-                          children: <Widget>[
-                            Text(
-                              "Quantity : ",
-                              style: context.txtTheme.bodyLarge,
-                            ),
+              const SizedBox(
+                height: AppSizes.spaceBetweenItems,
+              ),
 
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 4.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.silver,
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: Text(
-                                "-",
-                                style: context.txtTheme.bodyLarge,
-                              ),
-                            ),
+              Text(
+                "Boost Time",
+                style: context.txtTheme.bodyMedium,
+              ),
 
-                            Text(
-                              "1",
-                              style: context.txtTheme.bodyLarge,
-                            ),
+              RangeSlider(
+                values: const RangeValues(0, 10),
+                min: 0,
+                max: 20,
+                onChanged: (RangeValues value) => <dynamic, dynamic>{},
+              ),
 
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 4.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.silver,
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: Text(
-                                "+",
-                                style: context.txtTheme.bodyLarge,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: AppSizes.md,
-                        ),
+              const SizedBox(
+                height: AppSizes.spaceBetweenItems,
+              ),
 
-                        AppElevatedButton(
-                          label: "Order Now",
-                          onPressed: () {
-                            context.push(RoutePaths.checkoutForm);
-                          },
-                        ),
-                      ],
-                    );
-                  } else if (role == Role.seller) {
-                    return Row(
-                      spacing: AppSizes.sm,
-                      children: <Widget>[
-                        AppOutlineButton(
-                          label: "Edit",
-                          icon: const Icon(Icons.edit),
-                          onPressed: () =>
-                              context.push(RoutePaths.createProduct),
-                        ).expanded,
-                        AppElevatedButton(
-                          label: "Boost",
-                          icon: const Icon(
-                            Icons.edit,
-                            color: AppColors.white,
-                          ),
-                          onPressed: () =>
-                              context.push(RoutePaths.productBoost),
-                        ).expanded,
-                      ],
-                    );
-                  }
-                  return const SizedBox.shrink();
-                },
+              AppTextField(
+                controller: TextEditingController(),
+                labelText: 'Location',
+                keyboardType: TextInputType.text,
+                prefixIcon: Icons.location_on_outlined,
+              ),
+
+              const SizedBox(
+                height: AppSizes.spaceBetweenSections,
+              ),
+
+              AppElevatedButton(
+                label: "Boost",
+                icon: const Icon(
+                  Icons.edit,
+                  color: AppColors.white,
+                ),
+                onPressed: () => context.pop(),
               ),
             ],
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/config/sizes.dart';
 import '../../../../core/shared/widgets/custom_app_bar.dart';
+import '../tabs/all_product_tab.dart';
 import '../tabs/product_orders_request_tab.dart';
 import '../tabs/product_orders_history_tab.dart';
 import '../tabs/product_orders_tab.dart';
@@ -21,7 +22,7 @@ class _ProductOrderScreenState extends State<ProductOrderScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(() {
       if (_tabController.index != _selectedIndex) {
         setState(() {
@@ -66,17 +67,22 @@ class _ProductOrderScreenState extends State<ProductOrderScreen>
                   TabItem(
                     selectedIndex: _selectedIndex,
                     index: 0,
-                    label: "Product Orders",
+                    label: "Products",
                   ),
                   TabItem(
                     selectedIndex: _selectedIndex,
                     index: 1,
+                    label: "Product Orders",
+                  ),
+                  TabItem(
+                    selectedIndex: _selectedIndex,
+                    index: 2,
                     label: "Order Request",
                   ),
                   TabItem(
                     selectedIndex: _selectedIndex,
                     label: "History",
-                    index: 2,
+                    index: 3,
                   ),
                 ],
               ),
@@ -88,6 +94,7 @@ class _ProductOrderScreenState extends State<ProductOrderScreen>
               child: TabBarView(
                 controller: _tabController,
                 children: const <Widget>[
+                  AllProductTab(),
                   ProductOrdersTab(),
                   ProductOrdersRequestTab(),
                   ProductOrdersHistoryTab(),
