@@ -1,13 +1,90 @@
+name: Flutter Android CI + Upload to Google Drive
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  ANDROID_SDK_ROOT: ${{ runner.temp }}/android-sdk
+  FLUTTER_CHANNEL: stable
+  FLUTTER_VERSION: stable
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    outputs:
+      apk_url: ${{ steps.read_url.outputs.apk_url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install system packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip curl jq git xz-utils python3 python3-pip
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 11
+
+      - name: Install Android SDK command-line tools
+        env:
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+        run: |
+          mkdir -p "${ANDROID_SDK_ROOT}"
+          cd "${ANDROID_SDK_ROOT}"
+          CLI_ZIP="commandlinetools-linux-9123335_latest.zip"
+          if [ ! -f "$CLI_ZIP" ]; then
+            curl -fsSL -o $CLI_ZIP https://dl.google.com/android/repository/commandlinetools-linux-9123335_latest.zip
+          fi
+          mkdir -p cmdline-tools
+          unzip -q -o $CLI_ZIP -d cmdline-tools
+          mkdir -p cmdline-tools/latest
+          mv cmdline-tools/cmdline-tools/* cmdline-tools/latest/ 2>/dev/null || true
+          export PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${PATH}"
+          yes | "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --sdk_root="${ANDROID_SDK_ROOT}" "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+
+      - name: Add Android SDK to PATH
+        run: echo "${{ env.ANDROID_SDK_ROOT }}/platform-tools:${{ env.ANDROID_SDK_ROOT }}/cmdline-tools/latest/bin" >> $GITHUB_PATH
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run static analysis
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test --coverage
+
+      - name: Build release APK
+        run: flutter build apk --release
+
+      - name: Upload APK as artifact (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Create service-account.json
+        run: |
+          printf '%s' "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > service-account.json
+
+      - name: Install Python dependencies
+        run: pip3 install google-auth google-auth-httplib2 google-api-python-client
+
       - name: Upload APK to Google Drive
         id: gdrive_upload
-        run: |
-          # Required env
-          echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > service-account.json
-
-          pip3 install google-auth google-auth-httplib2 google-api-python-client
-
-          # Run Python upload script
-          python3 upload_to_drive.py
+        run: python3 upload_to_drive.py
         env:
           GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
 

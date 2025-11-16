@@ -10,14 +10,12 @@ APK_PATH = "build/app/outputs/flutter-apk/app-release.apk"
 if not os.path.exists(APK_PATH):
     raise FileNotFoundError(f"APK not found at: {APK_PATH}")
 
-# Authenticate
 creds = service_account.Credentials.from_service_account_file(
     SERVICE_ACCOUNT_FILE,
     scopes=["https://www.googleapis.com/auth/drive"]
 )
 service = build("drive", "v3", credentials=creds)
 
-# Upload file
 file_metadata = {"name": "app-release.apk", "parents": [FOLDER_ID]}
 media = MediaFileUpload(APK_PATH, mimetype="application/vnd.android.package-archive")
 
@@ -29,7 +27,6 @@ uploaded = service.files().create(
 
 file_id = uploaded.get("id")
 
-# Make public
 service.permissions().create(
     fileId=file_id,
     body={"role": "reader", "type": "anyone"}
