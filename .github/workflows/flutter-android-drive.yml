@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  ANDROID_SDK_ROOT: ${{ runner.temp }}/android-sdk
+  ANDROID_SDK_ROOT: /tmp/android-sdk
   FLUTTER_CHANNEL: stable
   FLUTTER_VERSION: stable
 
