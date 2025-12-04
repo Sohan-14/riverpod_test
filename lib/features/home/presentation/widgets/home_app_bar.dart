@@ -21,6 +21,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           const SizedBox(width: 8.0),
           GestureDetector(
@@ -68,20 +70,13 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             builder: (BuildContext context, WidgetRef ref, Widget? child) {
               final Role role = ref.read(selectedRoleProvider);
               if (role == Role.driver) {
-                return Column(
-                  children: <Widget>[
-                    const SizedBox(
-                      height: AppSizes.spaceBetweenItems,
-                    ),
-                    GestureDetector(
-                      onTap: () => context.push(RoutePaths.parcelRequest),
-                      child: const ImageLoader(
-                        imagePath: AppIcons.parcelRequest,
-                        height: 24,
-                        width: 24,
-                      ),
-                    ),
-                  ],
+                return GestureDetector(
+                  onTap: () => context.push(RoutePaths.parcelRequest),
+                  child: const ImageLoader(
+                    imagePath: AppIcons.parcelRequest,
+                    height: 24,
+                    width: 24,
+                  ),
                 );
               }
               return const SizedBox.shrink();

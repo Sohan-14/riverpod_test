@@ -1,11 +1,14 @@
 import 'package:app/core/extensions/context_extensions.dart';
 import 'package:app/core/extensions/widget_extensions.dart';
+import 'package:app/core/shared/widgets/app_elevated_button.dart';
 import 'package:app/core/shared/widgets/app_outline_button.dart';
 import 'package:app/core/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/config/icons.dart';
 import '../../../../core/config/colors.dart';
 import '../../../../core/config/sizes.dart';
+import '../../../../core/navigation/route_paths.dart';
 import '../../../../core/shared/widgets/image_loader.dart';
 import '../tabs/friends_profile_tab.dart';
 import '../tabs/gallery_profile_tab.dart';
@@ -240,6 +243,17 @@ class ProfileCard extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+
+          const SizedBox(
+            height: AppSizes.md,
+          ),
+
+          AppElevatedButton(
+            label: "Chat",
+            onPressed: () {
+              context.push(RoutePaths.oneToOneChat);
+            },
           ),
         ],
       ),

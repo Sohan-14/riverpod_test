@@ -1,8 +1,8 @@
 import 'package:app/core/extensions/context_extensions.dart';
-import 'package:app/core/shared/widgets/app_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/config/colors.dart';
 import '../../../../core/config/sizes.dart';
 import '../../../../core/navigation/route_paths.dart';
 import '../../../../core/shared/widgets/app_text_field.dart';
@@ -14,6 +14,17 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: ClipOval(
+        child: FloatingActionButton(
+          foregroundColor: AppColors.primary,
+          backgroundColor: AppColors.primary,
+          onPressed: () {},
+          child: const Icon(
+            Icons.add,
+            color: AppColors.white,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
@@ -22,24 +33,6 @@ class ChatScreen extends StatelessWidget {
           ),
           child: Column(
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  SizedBox(
-                    width: 200,
-                    child: AppElevatedButton(
-                      width: 100,
-                      label: "Group Message",
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(
-                height: AppSizes.spaceBetweenItems,
-              ),
-
               AppTextField(
                 labelText: "Search",
                 controller: TextEditingController(),

@@ -8,8 +8,10 @@ import '../../../features/profile/presentation/screens/profile_screen.dart';
 import '../../config/colors.dart';
 import '../../config/icons.dart';
 import '../provider/bottom_navigation_provider.dart';
+import '../provider/scroll_provider.dart';
 import '../widgets/app_nav_bar.dart';
 
+// Create the BottomNavScreen as a ConsumerStatefulWidget
 class BottomNavScreen extends ConsumerStatefulWidget {
   const BottomNavScreen({super.key});
 
@@ -18,13 +20,11 @@ class BottomNavScreen extends ConsumerStatefulWidget {
 }
 
 class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
-  // PageController to control PageView
   late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    // Initialize PageController
     _pageController = PageController(
       initialPage: ref.read(selectedBottomTabProvider),
     );
@@ -32,17 +32,16 @@ class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
 
   @override
   void dispose() {
-    // Dispose of the controller when done
     _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Watch the selected tab index from the provider
+    // Watch the visibility state from the provider
+    final bool isBottomNavVisible = ref.watch(scrollProvider);
     final int selectedIndex = ref.watch(selectedBottomTabProvider);
 
-    // List of screens to display in the body
     final List<Widget> screens = <Widget>[
       const HomeScreen(),
       const MarketplaceScreen(),
@@ -64,20 +63,25 @@ class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
           return screens[index];
         },
       ),
-      bottomNavigationBar: SafeArea(
-        child: AppNavBar(
-          items: getNavItems(),
-          selectedIndex: selectedIndex,
-          onTabTapped: (int index) {
-            ref.read(selectedBottomTabProvider.notifier).setSelectedTab = index;
-            ref.read(selectedBottomTabProvider.notifier).setPageIndex = index;
-            _pageController.jumpToPage(index);
-          },
-        ),
-      ),
+      bottomNavigationBar: isBottomNavVisible
+          ? SafeArea(
+              child: AppNavBar(
+                items: getNavItems(),
+                selectedIndex: selectedIndex,
+                onTabTapped: (int index) {
+                  ref.read(selectedBottomTabProvider.notifier).setSelectedTab =
+                      index;
+                  ref.read(selectedBottomTabProvider.notifier).setPageIndex =
+                      index;
+                  _pageController.jumpToPage(index);
+                },
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 
+  // Get navigation items for the bottom bar
   List<NavItem> getNavItems() {
     return <NavItem>[
       NavItem(
