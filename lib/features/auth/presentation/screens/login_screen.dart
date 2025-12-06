@@ -11,7 +11,6 @@ import '../../../../core/config/sizes.dart';
 import '../../../../core/navigation/route_paths.dart';
 import '../../../../core/shared/widgets/app_outline_button.dart';
 import '../../../../core/shared/widgets/image_loader.dart';
-import '../providers/auth_provider.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/auth_title_section.dart';
 
@@ -112,7 +111,6 @@ class LoginScreen extends ConsumerWidget {
                   //     );
                 },
                 label: 'Log In',
-                isLoading: ref.watch(loginControllerProvider).isSubmitting,
               ),
 
               const SizedBox(
@@ -129,12 +127,6 @@ class LoginScreen extends ConsumerWidget {
 
               AppOutlineButton(
                 onPressed: () {
-                  ref
-                      .read(loginControllerProvider.notifier)
-                      .login(
-                        emailController.text,
-                        passwordController.text,
-                      );
                 },
                 label: 'Google',
                 icon: const ImageLoader(
@@ -142,7 +134,6 @@ class LoginScreen extends ConsumerWidget {
                   width: AppSizes.iconSm,
                   height: AppSizes.iconSm,
                 ),
-                isLoading: ref.watch(loginControllerProvider).isSubmitting,
               ),
 
               Row(

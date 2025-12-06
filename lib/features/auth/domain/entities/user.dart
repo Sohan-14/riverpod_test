@@ -1,29 +1,27 @@
-import 'package:equatable/equatable.dart';
-
-class User extends Equatable {
+class User {
   final String id;
+  final String name;
   final String email;
-  final String? name;
-  final String? avatar;
-  final bool isEmailVerified;
+  final String? location;
+  final DateTime? dateOfBirth;
 
-  const User({
+  User({
     required this.id,
+    required this.name,
     required this.email,
-    this.name,
-    this.avatar,
-    required this.isEmailVerified,
+    this.location,
+    this.dateOfBirth,
   });
 
-  @override
-  List<Object?> get props => <Object?>[
-    id,
-    email,
-    name,
-    avatar,
-    isEmailVerified,
-  ];
-
-   @override
-  String toString() => 'User(id: $id, email: $email, name: $name, isEmailVerified: $isEmailVerified)';
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      email: json['email'] as String,
+      location: json['location'] as String?,
+      dateOfBirth: json['dateOfBirth'] != null
+          ? DateTime.tryParse(json['dateOfBirth'] as String? ?? '')
+          : null,
+    );
+  }
 }

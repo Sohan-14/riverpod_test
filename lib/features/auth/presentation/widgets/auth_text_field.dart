@@ -2,23 +2,25 @@ import 'package:app/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class AuthTextField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String labelText;
   final String? errorText;
   final TextInputType keyboardType;
   final IconData? prefixIcon;
   final bool obscureText;
   final ValueChanged<String>? onChanged;
+  final VoidCallback? onEditingCompleted;
 
   const AuthTextField({
     super.key,
-    required this.controller,
+    this.controller,
     required this.labelText,
     this.errorText,
     this.keyboardType = TextInputType.text,
     this.prefixIcon,
     this.obscureText = false,
     this.onChanged,
+    this.onEditingCompleted
   });
 
   @override
@@ -29,6 +31,7 @@ class AuthTextField extends StatelessWidget {
       obscureText: obscureText,
       keyboardType: keyboardType,
       onChanged: onChanged,
+      onEditingComplete: onEditingCompleted,
       style: context.txtTheme.bodyMedium,
       decoration: InputDecoration(
         prefixIcon: prefixIcon != null

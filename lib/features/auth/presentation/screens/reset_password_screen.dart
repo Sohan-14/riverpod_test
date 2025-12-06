@@ -6,7 +6,6 @@ import '../../../../core/shared/widgets/app_elevated_button.dart';
 import '../../../../core/config/sizes.dart';
 import '../../../../core/navigation/route_paths.dart';
 import '../../../../core/utils/toast/toast.dart';
-import '../providers/auth_provider.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/auth_title_section.dart';
 
@@ -77,7 +76,6 @@ class ResetPasswordScreen extends ConsumerWidget {
                   //     );
                 },
                 label: 'Reset Password',
-                isLoading: ref.watch(loginControllerProvider).isSubmitting,
               ),
             ],
           ),

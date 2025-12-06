@@ -18,19 +18,28 @@ class ExceptionHandler {
 
     // Handle case when no status code is returned.
     if (statusCode == null) {
-      throw const UnknownException(message:  "No status code returned");
+      throw const UnknownException(message: "No status code returned");
     }
 
     // Map HTTP status codes to appropriate exceptions.
     switch (statusCode) {
       case 400:
-        throw BadRequestException(message: "Bad request", statusCode: statusCode);
+        throw BadRequestException(
+          message: "Bad request",
+          statusCode: statusCode,
+        );
       case 401:
-        throw UnauthorizedException(message: "Unauthorized access", statusCode: statusCode);
+        throw UnauthorizedException(
+          message: "Unauthorized access",
+          statusCode: statusCode,
+        );
       case 403:
         throw ForbiddenException(message: "Forbidden", statusCode: statusCode);
       case 404:
-        throw NotFoundException(message: "Resource not found", statusCode: statusCode);
+        throw NotFoundException(
+          message: "Resource not found",
+          statusCode: statusCode,
+        );
       case 500:
       case 502:
       case 503:
@@ -39,7 +48,10 @@ class ExceptionHandler {
         if (statusCode < 200 || statusCode >= 300) {
           throw UnknownException(message: "Unexpected error: $statusCode");
         } else {
-          return ServerException(message: "Server Exception", statusCode: statusCode);
+          return ServerException(
+            message: "Server Exception",
+            statusCode: statusCode,
+          );
         }
     }
   }
@@ -69,7 +81,9 @@ class ExceptionHandler {
 
     // Handle unknown server error when status code is absent.
     if (statusCode == null) {
-      return const UnknownException(message: "Unknown server error with no status code");
+      return const UnknownException(
+        message: "Unknown server error with no status code",
+      );
     }
 
     // Map HTTP status codes to appropriate exceptions.
@@ -78,7 +92,10 @@ class ExceptionHandler {
         final String? message =
             (error.response?.data as Map<String, dynamic>?)?['message']
                 as String?;
-        throw BadRequestException(message: message ?? "Bad Request", statusCode: statusCode);
+        throw BadRequestException(
+          message: message ?? "Bad Request",
+          statusCode: statusCode,
+        );
       case 401:
         final String? message =
             (error.response?.data as Map<String, dynamic>?)?['message']
@@ -91,7 +108,10 @@ class ExceptionHandler {
         final String? message =
             (error.response?.data as Map<String, dynamic>?)?['message']
                 as String?;
-        throw ForbiddenException(message: message ?? "Forbidden", statusCode: statusCode);
+        throw ForbiddenException(
+          message: message ?? "Forbidden",
+          statusCode: statusCode,
+        );
       case 404:
         final String? message =
             (error.response?.data as Map<String, dynamic>?)?['message']
@@ -104,17 +124,91 @@ class ExceptionHandler {
         final String? message =
             (error.response?.data as Map<String, dynamic>?)?['message']
                 as String?;
-        throw NotFoundException(message: message ?? "Conflict Error", statusCode: statusCode);
+        throw NotFoundException(
+          message: message ?? "Conflict Error",
+          statusCode: statusCode,
+        );
       case 500:
       case 502:
       case 503:
-        return ServerException(message: "Server error occurred", statusCode: statusCode);
+        return ServerException(
+          message: "Server error occurred",
+          statusCode: statusCode,
+        );
       default:
         if (statusCode < 200 || statusCode >= 300) {
-          return UnknownException(message: "Unexpected status statusCode: $statusCode");
+          return UnknownException(
+            message: "Unexpected status statusCode: $statusCode",
+          );
         }
-        return ServerException(message: "Server error occurred", statusCode: statusCode);
+        return ServerException(
+          message: "Server error occurred",
+          statusCode: statusCode,
+        );
     }
   }
-  
+
+  static String errorMessage(dynamic e) {
+    if (e is ServerException) {
+      return e.message;
+    } else if (e is NetworkException) {
+      return e.message;
+    } else if (e is UnknownException) {
+      return e.message;
+    } else if (e is BadRequestException) {
+      return e.message;
+    } else if (e is UnauthorizedException) {
+      return e.message;
+    } else if (e is ForbiddenException) {
+      return e.message;
+    } else if (e is NotFoundException) {
+      return e.message;
+    } else if (e is TypeException) {
+      return e.message;
+    } else if (e is TokenException) {
+      return e.message;
+    } else if (e is ValidationException) {
+      return e.message;
+    } else if (e is LocalStorageException) {
+      return e.message;
+    } else if (e is AuthException) {
+      return e.message;
+    } else if (e is Exception) {
+      return e.toString();
+    } else {
+      return "An unexpected error occurred";
+    }
+  }
+
+  static AppException handleException(dynamic e) {
+    if (e is ServerException) {
+      return e;
+    } else if (e is NetworkException) {
+      return e;
+    } else if (e is UnknownException) {
+      return e;
+    } else if (e is BadRequestException) {
+      return e;
+    } else if (e is UnauthorizedException) {
+      return e;
+    } else if (e is ForbiddenException) {
+      return e;
+    } else if (e is NotFoundException) {
+      return e;
+    } else if (e is TypeException) {
+      return e;
+    } else if (e is TokenException) {
+      return e;
+    } else if (e is ValidationException) {
+      return e;
+    } else if (e is LocalStorageException) {
+      return e;
+    } else if (e is AuthException) {
+      return e;
+    } else if (e is Exception) {
+      return UnknownException(message: e.toString());
+    } else {
+      return const UnknownException(message: "An unexpected error occurred");
+    }
+  }
 }

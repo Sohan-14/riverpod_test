@@ -1,357 +1,62 @@
-import 'package:app/features/auth/data/models/auth/auth_response_model.dart';
-import 'package:app/features/auth/data/models/user/user_model.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:app/core/storage/secure/secure_token_storage.dart';
+import 'package:app/features/auth/data/model/sign_in_response.dart';
+
 import '../../../../core/entities/result.dart';
-import '../../../../core/exceptions/exceptions.dart';
-import '../../../../core/exceptions/failures.dart';
-import '../../../../core/utils/app_logger.dart';
+import '../../../../core/exceptions/exception_handler.dart';
+import '../../domain/entities/sign_up_req.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../datasources/local/auth_local_data_source.dart';
-import '../datasources/remote/auth_remote_data_source.dart';
+import '../datasources/auth_remote_data_source.dart';
+import '../model/sign_up_response.dart';
 
-/// Implementation of the auth repository
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
-  final AuthLocalDataSource localDataSource;
-  final Connectivity connectivity;
+  final SecureTokenStorage secureTokenStorage;
 
   AuthRepositoryImpl({
     required this.remoteDataSource,
-    required this.localDataSource,
-    required this.connectivity,
+    required this.secureTokenStorage,
   });
 
   @override
-  Future<Result<User, Failure>> signIn({
+  Future<bool> isLoggedIn() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<User>> signIn({
     required String email,
     required String password,
   }) async {
-    if (await _isConnected()) {
-      try {
-        AppLogger().i('Repository: Signing in user with email $email');
-        final AuthResponseModel authResponse = await remoteDataSource.signIn(
-          email: email,
-          password: password,
-        );
-
-        await localDataSource.saveTokens(
-          accessToken: authResponse.accessToken,
-          refreshToken: authResponse.refreshToken,
-        );
-
-        await localDataSource.saveUser(authResponse.user);
-
-        AppLogger().i('Repository: Sign in successful');
-        return Result<User, Failure>.success(authResponse.user.toEntity());
-      } on AuthException catch (e) {
-        AppLogger().e(
-          'Repository: Auth exception during sign in: ${e.message}',
-        );
-        return Result<User, Failure>.failure(
-          AuthFailure(
-            message: e.message,
-            statusCode: e.statusCode,
-          ),
-        );
-      } on ServerException catch (e) {
-        AppLogger().e(
-          'Repository: Server exception during sign in: ${e.message}',
-        );
-        return Result<User, Failure>.failure(
-          ServerFailure(
-            message: e.message,
-            statusCode: e.statusCode,
-          ),
-        );
-      } catch (e) {
-        AppLogger().e('Repository: Unexpected error during sign in: $e');
-        return Result<User, Failure>.failure(
-          ServerFailure(message: e.toString()),
-        );
-      }
-    } else {
-      AppLogger().w('Repository: No internet connection for sign in');
-      return Result<User, Failure>.failure(
-        const NetworkFailure(message: 'No internet connection'),
-      );
-    }
-  }
-
-  @override
-  Future<Result<User, Failure>> signUp({
-    required String name,
-    required String email,
-    required String password,
-  }) async {
-    if (await _isConnected()) {
-      try {
-        AppLogger().i('Repository: Signing up user with email $email');
-        final AuthResponseModel authResponse = await remoteDataSource.signUp(
-          name: name,
-          email: email,
-          password: password,
-        );
-
-        await localDataSource.saveTokens(
-          accessToken: authResponse.accessToken,
-          refreshToken: authResponse.refreshToken,
-        );
-
-        await localDataSource.saveUser(authResponse.user);
-
-        AppLogger().i('Repository: Sign up successful');
-        return Result<User, Failure>.success(authResponse.user.toEntity());
-      } on AuthException catch (e) {
-        AppLogger().e(
-          'Repository: Auth exception during sign up: ${e.message}',
-        );
-        return Result<User, Failure>.failure(
-          AuthFailure(
-            message: e.message,
-            statusCode: e.statusCode,
-          ),
-        );
-      } on ServerException catch (e) {
-        AppLogger().e(
-          'Repository: Server exception during sign up: ${e.message}',
-        );
-        return Result<User, Failure>.failure(
-          ServerFailure(
-            message: e.message,
-            statusCode: e.statusCode,
-          ),
-        );
-      } catch (e) {
-        AppLogger().e('Repository: Unexpected error during sign up: $e');
-        return Result<User, Failure>.failure(
-          ServerFailure(message: e.toString()),
-        );
-      }
-    } else {
-      AppLogger().w('Repository: No internet connection for sign up');
-      return Result<User, Failure>.failure(
-        const NetworkFailure(message: 'No internet connection'),
-      );
-    }
-  }
-
-  @override
-  Future<Result<void, Failure>> forgotPassword({
-    required String email,
-  }) async {
-    if (await _isConnected()) {
-      try {
-        AppLogger().i('Repository: Sending forgot password request for $email');
-        await remoteDataSource.forgotPassword(email: email);
-        AppLogger().i('Repository: Forgot password request sent');
-        return Result<User, Failure>.success(null);
-      } on AuthException catch (e) {
-        AppLogger().e(
-          'Repository: Auth exception during forgot password: ${e.message}',
-        );
-        return Result<User, Failure>.failure(
-          AuthFailure(
-            message: e.message,
-            statusCode: e.statusCode,
-          ),
-        );
-      } on ServerException catch (e) {
-        AppLogger().e(
-          'Repository: Server exception during forgot password: ${e.message}',
-        );
-        return Result<User, Failure>.failure(
-          ServerFailure(
-            message: e.message,
-            statusCode: e.statusCode,
-          ),
-        );
-      } catch (e) {
-        AppLogger().e(
-          'Repository: Unexpected error during forgot password: $e',
-        );
-        return Result<User, Failure>.failure(
-          ServerFailure(message: e.toString()),
-        );
-      }
-    } else {
-      AppLogger().w('Repository: No internet connection for forgot password');
-      return Result<User, Failure>.failure(
-        const NetworkFailure(message: 'No internet connection'),
-      );
-    }
-  }
-
-  @override
-  Future<Result<void, Failure>> resetPassword({
-    required String token,
-    required String password,
-  }) async {
-    if (await _isConnected()) {
-      try {
-        AppLogger().i('Repository: Resetting password');
-        await remoteDataSource.resetPassword(
-          token: token,
-          password: password,
-        );
-        AppLogger().i('Repository: Password reset successful');
-        return Result<void, Failure>.success(null);
-      } on AuthException catch (e) {
-        AppLogger().e(
-          'Repository: Auth exception during reset password: ${e.message}',
-        );
-        return Result<void, Failure>.failure(
-          AuthFailure(
-            message: e.message,
-            statusCode: e.statusCode,
-          ),
-        );
-      } on ServerException catch (e) {
-        AppLogger().e(
-          'Repository: Server exception during reset password: ${e.message}',
-        );
-        return Result<void, Failure>.failure(
-          ServerFailure(
-            message: e.message,
-            statusCode: e.statusCode,
-          ),
-        );
-      } catch (e) {
-        AppLogger().e('Repository: Unexpected error during reset password: $e');
-        return Result<void, Failure>.failure(
-          ServerFailure(message: e.toString()),
-        );
-      }
-    } else {
-      AppLogger().w('Repository: No internet connection for reset password');
-      return Result<void, Failure>.failure(
-        const NetworkFailure(message: 'No internet connection'),
-      );
-    }
-  }
-
-  @override
-  Future<Result<void, Failure>> changePassword({
-    required String currentPassword,
-    required String newPassword,
-  }) async {
-    if (await _isConnected()) {
-      try {
-        AppLogger().i('Repository: Changing password');
-        await remoteDataSource.changePassword(
-          currentPassword: currentPassword,
-          newPassword: newPassword,
-        );
-        AppLogger().i('Repository: Password change successful');
-        return Result<void, Failure>.success(null);
-      } on AuthException catch (e) {
-        AppLogger().e(
-          'Repository: Auth exception during change password: ${e.message}',
-        );
-        return Result<void, Failure>.failure(
-          AuthFailure(
-            message: e.message,
-            statusCode: e.statusCode,
-          ),
-        );
-      } on ServerException catch (e) {
-        AppLogger().e(
-          'Repository: Server exception during change password: ${e.message}',
-        );
-        return Result<void, Failure>.failure(
-          ServerFailure(
-            message: e.message,
-            statusCode: e.statusCode,
-          ),
-        );
-      } catch (e) {
-        AppLogger().e(
-          'Repository: Unexpected error during change password: $e',
-        );
-        return Result<void, Failure>.failure(
-          ServerFailure(message: e.toString()),
-        );
-      }
-    } else {
-      AppLogger().w('Repository: No internet connection for change password');
-      return Result<void, Failure>.failure(
-        const NetworkFailure(message: 'No internet connection'),
-      );
-    }
-  }
-
-  @override
-  Future<Result<void, Failure>> signOut() async {
     try {
-      AppLogger().i('Repository: Signing out');
-      if (await _isConnected()) {
-        try {
-          await remoteDataSource.signOut();
-          AppLogger().i('Repository: Remote sign out successful');
-        } catch (e) {
-          // Even if remote sign out fails, we still clear local data
-          AppLogger().w(
-            'Repository: Remote sign out failed, proceeding with local sign out',
-          );
-        }
-      }
-
-      await localDataSource.clearAuth();
-      AppLogger().i('Repository: Local sign out successful');
-      return Result<void, Failure>.success(null);
-    } on TokenException catch (e) {
-      AppLogger().e(
-        'Repository: Cache exception during sign out: ${e.message}',
+      // ✅ Call the remote data source to sign up
+      final SignInResponse user = await remoteDataSource.signIn(
+        email: email,
+        password: password,
       );
-      return Result<void, Failure>.failure(CacheFailure(message: e.message));
+      // ✅ Save token if your API returns one (e.g., data['token'])
+      secureTokenStorage.saveAccessToken(user.token);
+      return Result<User>.success(user as User);
     } catch (e) {
-      AppLogger().e('Repository: Unexpected error during sign out: $e');
-      return Result<void, Failure>.failure(
-        ServerFailure(message: e.toString()),
-      );
+      return Result<User>.failure(ExceptionHandler.handleException(e));
     }
   }
 
   @override
-  Future<Result<User?, Failure>> getCurrentUser() async {
-    try {
-      AppLogger().i('Repository: Getting current user from cache');
-      final UserModel? user = await localDataSource.getUser();
-      AppLogger().i('Repository: Current user retrieved: ${user?.email}');
-      return Result<User?, Failure>.success(user?.toEntity());
-    } on LocalStorageException catch (e) {
-      AppLogger().e(
-        'Repository: Cache exception getting current user: ${e.message}',
-      );
-      return Result<User?, Failure>.failure(CacheFailure(message: e.message));
-    } catch (e) {
-      AppLogger().e('Repository: Unexpected error getting current user: $e');
-      return Result<User?, Failure>.failure(
-        ServerFailure(message: e.toString()),
-      );
-    }
+  Future<void> logout() {
+    throw UnimplementedError();
   }
 
   @override
-  Future<Result<bool, Failure>> isSignedIn() async {
+  Future<Result<String>> signUp({required SignUpReq signUpReq}) async {
     try {
-      AppLogger().i('Repository: Checking if user is signed in');
-      final bool isSignedIn = await localDataSource.isSignedIn();
-      AppLogger().i(
-        'Repository: User is ${isSignedIn ? 'signed in' : 'not signed in'}',
+      // ✅ Call the remote data source to sign up
+      final SignUpResponse user = await remoteDataSource.signUp(
+        signUpReq: signUpReq,
       );
-      return Result<bool, Failure>.success(isSignedIn);
+      return Result<String>.success(user.email);
     } catch (e) {
-      AppLogger().e('Repository: Error checking auth status: $e');
-      return Result<bool, Failure>.failure(
-        const CacheFailure(message: 'Error checking auth status'),
-      );
+      return Result<String>.failure(ExceptionHandler.handleException(e));
     }
-  }
-
-  Future<bool> _isConnected() async {
-    final List<ConnectivityResult> connectivityResult = await connectivity
-        .checkConnectivity();
-    return connectivityResult.firstOrNull != ConnectivityResult.none;
   }
 }
