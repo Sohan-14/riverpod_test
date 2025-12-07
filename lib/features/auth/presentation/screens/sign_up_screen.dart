@@ -1,4 +1,3 @@
-import 'package:app/features/auth/presentation/state/sign_up_form_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +12,7 @@ import '../../../../core/config/sizes.dart';
 import '../../../../core/navigation/route_paths.dart';
 import '../../../../core/shared/widgets/image_loader.dart';
 import '../providers/auth_providers.dart';
+import '../state/sign_up_form_state.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/auth_title_section.dart';
 
@@ -21,8 +21,6 @@ class SignUpScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final SignUpFormState formState = ref.watch(signUpFormProvider);
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -57,8 +55,10 @@ class SignUpScreen extends ConsumerWidget {
                     ref.read(signUpFormProvider.notifier).setName = value,
                 onEditingCompleted: () =>
                     ref.read(signUpFormProvider.notifier).markNameTouched(),
+                errorText: ref.watch(
+                  signUpFormProvider.select((SignUpFormState s) => s.nameError),
+                ),
                 labelText: 'User Name',
-                keyboardType: TextInputType.text,
                 prefixIcon: CupertinoIcons.profile_circled,
               ),
 
@@ -69,6 +69,11 @@ class SignUpScreen extends ConsumerWidget {
                     ref.read(signUpFormProvider.notifier).setEmail = value,
                 onEditingCompleted: () =>
                     ref.read(signUpFormProvider.notifier).markEmailTouched(),
+                errorText: ref.watch(
+                  signUpFormProvider.select(
+                    (SignUpFormState s) => s.emailError,
+                  ),
+                ),
                 labelText: 'Email',
                 keyboardType: TextInputType.emailAddress,
                 prefixIcon: Icons.email,
@@ -86,28 +91,14 @@ class SignUpScreen extends ConsumerWidget {
 
               const SizedBox(height: AppSizes.spaceBetweenItems),
 
-              // Consumer(
-              //   builder: (BuildContext context, WidgetRef ref, Widget? child) {
-              //     return const AuthTextField(
-              //       // onChanged: (String value) =>
-              //       //     ref.read(signUpFormProvider.notifier).setDateOfBirth(value),
-              //       labelText: 'Date of birth',
-              //       keyboardType: TextInputType.text,
-              //       prefixIcon: Icons.calendar_today,
-              //     );
-              //   },
-              // ),
-              InputDecorator(
-                decoration: const InputDecoration(
-                  labelText: 'Date of Birth',
-                  errorText: null, // No validation for DOB in this example
+              DatePickerField(
+                selectedDate: ref.watch(
+                  signUpFormProvider.select(
+                    (SignUpFormState s) => s.dateOfBirth,
+                  ),
                 ),
-                child: DatePickerField(
-                  selectedDate: formState.dateOfBirth,
-                  onDateSelected: (DateTime? date) =>
-                      ref.read(signUpFormProvider.notifier).setDateOfBirth =
-                          date,
-                ),
+                onDateSelected: (DateTime? date) =>
+                    ref.read(signUpFormProvider.notifier).setDateOfBirth = date,
               ),
 
               const SizedBox(height: AppSizes.spaceBetweenItems),
@@ -117,6 +108,11 @@ class SignUpScreen extends ConsumerWidget {
                     ref.read(signUpFormProvider.notifier).setPassword = value,
                 onEditingCompleted: () =>
                     ref.read(signUpFormProvider.notifier).markPasswordTouched(),
+                errorText: ref.watch(
+                  signUpFormProvider.select(
+                    (SignUpFormState s) => s.passwordError,
+                  ),
+                ),
                 labelText: 'Password',
                 obscureText: true,
                 prefixIcon: Icons.lock,
@@ -124,9 +120,18 @@ class SignUpScreen extends ConsumerWidget {
 
               const SizedBox(height: AppSizes.spaceBetweenItems),
 
-              if (formState.formError != null) ...<Widget>[
+              if (ref.watch(
+                    signUpFormProvider.select(
+                      (SignUpFormState s) => s.formError,
+                    ),
+                  ) !=
+                  null) ...<Widget>[
                 Text(
-                  formState.formError!,
+                  ref.watch(
+                    signUpFormProvider.select(
+                      (SignUpFormState s) => s.formError!,
+                    ),
+                  ),
                   style: context.txtTheme.bodyMedium?.copyWith(
                     color: Colors.red,
                   ),
@@ -139,7 +144,18 @@ class SignUpScreen extends ConsumerWidget {
                 children: <Widget>[
                   Checkbox(
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    value: formState.termsAccepted,
+                    value: ref.watch(
+                      signUpFormProvider.select(
+                        (SignUpFormState s) => s.termsAccepted,
+                      ),
+                    ),
+                    isError:
+                        ref.watch(
+                          signUpFormProvider.select(
+                            (SignUpFormState s) => s.termsError,
+                          ),
+                        ) !=
+                        null,
                     onChanged: (bool? value) {
                       if (value != null) {
                         ref.read(signUpFormProvider.notifier).setTermsAccepted =
@@ -181,7 +197,23 @@ class SignUpScreen extends ConsumerWidget {
 
               AppElevatedButton(
                 onPressed: () {
-                  formState.isSubmitting || !formState.isValid
+                  print(
+                    "Submit Sign Up valid: ${ref.watch(
+                      signUpFormProvider.select((SignUpFormState s) => s.isValid),
+                    )} submitting: ${ref.watch(
+                      signUpFormProvider.select((SignUpFormState s) => s.isSubmitting),
+                    )}",
+                  );
+                  ref.watch(
+                            signUpFormProvider.select(
+                              (SignUpFormState s) => s.isSubmitting,
+                            ),
+                          ) ||
+                          !ref.watch(
+                            signUpFormProvider.select(
+                              (SignUpFormState s) => s.isValid,
+                            ),
+                          )
                       ? null
                       : () => ref
                             .read(signUpFormProvider.notifier)
@@ -197,7 +229,11 @@ class SignUpScreen extends ConsumerWidget {
                   //       passwordController.text,
                   //     );
                 },
-                isLoading: formState.isSubmitting,
+                isLoading: ref.watch(
+                  signUpFormProvider.select(
+                    (SignUpFormState s) => s.isSubmitting,
+                  ),
+                ),
                 label: 'Continue',
               ),
 
@@ -253,16 +289,14 @@ class DatePickerField extends StatelessWidget {
         }
       },
       child: AbsorbPointer(
-        child: TextFormField(
+        child: AuthTextField(
           controller: TextEditingController(
             text: selectedDate == null
                 ? ''
                 : DateFormat('dd/MM/yyyy').format(selectedDate!),
           ),
-          decoration: const InputDecoration(
-            hintText: 'Tap to select date',
-            suffixIcon: Icon(Icons.calendar_today),
-          ),
+          labelText: 'Tap to select date',
+          suffixIcon: Icons.calendar_today,
         ),
       ),
     );

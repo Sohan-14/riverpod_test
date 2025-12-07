@@ -1,4 +1,3 @@
-
 class SignUpFormState {
   final String name;
   final String email;
@@ -13,7 +12,6 @@ class SignUpFormState {
   final String? passwordError;
   final String? termsError;
 
-  // Track if field was touched (for lazy validation)
   final bool nameTouched;
   final bool emailTouched;
   final bool passwordTouched;
@@ -77,65 +75,43 @@ class SignUpFormState {
       location: location ?? this.location,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       termsAccepted: termsAccepted ?? this.termsAccepted,
-      nameError: nameError ?? this.nameError,
-      emailError: emailError ?? this.emailError,
-      passwordError: passwordError ?? this.passwordError,
-      termsError: termsError ?? this.termsError,
+      nameError: nameError,
+      emailError: emailError,
+      passwordError: passwordError,
+      termsError: termsError,
       nameTouched: nameTouched ?? this.nameTouched,
       emailTouched: emailTouched ?? this.emailTouched,
       passwordTouched: passwordTouched ?? this.passwordTouched,
       termsTouched: termsTouched ?? this.termsTouched,
-      formError: formError ?? this.formError,
+      formError: formError,
       isSubmitting: isSubmitting ?? this.isSubmitting,
     );
   }
 
-  // Validate a specific field when it's touched
-  SignUpFormState validateName() {
-    String? error;
-    if (nameTouched && name.trim().isEmpty) {
-      error = 'Name is required';
-    }
-    return copyWith(nameError: error);
-  }
+  @override
+  String toString() {
+    return '''
+      SignUpFormState(
+        name: $name,
+        email: $email,
+        password: ${password.isNotEmpty ? "******" : ""},
+        location: $location,
+        dateOfBirth: $dateOfBirth,
+        termsAccepted: $termsAccepted,
+        
+        nameError: $nameError,
+        emailError: $emailError,
+        passwordError: $passwordError,
+        termsError: $termsError,
 
-  SignUpFormState validateEmail() {
-    String? error;
-    if (emailTouched) {
-      if (email.isEmpty) {
-        error = 'Email is required';
-      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(email)) {
-        error = 'Enter a valid email';
-      }
-    }
-    return copyWith(emailError: error);
-  }
+        nameTouched: $nameTouched,
+        emailTouched: $emailTouched,
+        passwordTouched: $passwordTouched,
+        termsTouched: $termsTouched,
 
-  SignUpFormState validatePassword() {
-    String? error;
-    if (passwordTouched) {
-      if (password.isEmpty) {
-        error = 'Password is required';
-      } else if (password.length < 6) {
-        error = 'Password must be at least 6 characters';
-      }
-    }
-    return copyWith(passwordError: error);
-  }
-
-  SignUpFormState validateTerms() {
-    String? error;
-    if (termsTouched && !termsAccepted) {
-      error = 'You must accept the terms';
-    }
-    return copyWith(termsError: error);
-  }
-
-  // Full validation (used on submit)
-  SignUpFormState validateAll() {
-    return validateName()
-        .validateEmail()
-        .validatePassword()
-        .validateTerms();
+        formError: $formError,
+        isSubmitting: $isSubmitting,
+        isValid: $isValid
+      )''';
   }
 }

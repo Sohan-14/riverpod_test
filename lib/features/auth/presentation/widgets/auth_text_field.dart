@@ -7,6 +7,7 @@ class AuthTextField extends StatelessWidget {
   final String? errorText;
   final TextInputType keyboardType;
   final IconData? prefixIcon;
+  final IconData? suffixIcon;
   final bool obscureText;
   final ValueChanged<String>? onChanged;
   final VoidCallback? onEditingCompleted;
@@ -18,6 +19,7 @@ class AuthTextField extends StatelessWidget {
     this.errorText,
     this.keyboardType = TextInputType.text,
     this.prefixIcon,
+    this.suffixIcon,
     this.obscureText = false,
     this.onChanged,
     this.onEditingCompleted
@@ -39,6 +41,15 @@ class AuthTextField extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
                   prefixIcon,
+                  size: 20.0,
+                ),
+              )
+            : null,
+        suffixIcon: suffixIcon != null
+            ? Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  suffixIcon,
                   size: 20.0,
                 ),
               )

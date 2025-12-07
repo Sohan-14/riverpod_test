@@ -1,9 +1,10 @@
-import 'package:app/core/entities/result.dart';
-import 'package:app/core/exceptions/exception_handler.dart';
-import 'package:app/features/auth/domain/entities/sign_up_req.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/entities/result.dart';
+import '../../../../core/exceptions/exception_handler.dart';
 import '../../../../core/utils/app_logger.dart';
+import '../../../../core/utils/app_validation.dart';
+import '../../domain/entities/sign_up_req.dart';
 import '../providers/auth_providers.dart';
 import '../state/sign_up_form_state.dart';
 
@@ -14,60 +15,98 @@ class SignUpFormNotifier extends Notifier<SignUpFormState> {
   SignUpFormState build() => SignUpFormState();
 
   set setName(String value) {
-    state = state.copyWith(name: value, nameTouched: true);
-    state = state.validateName();
+    state = state.copyWith(
+      name: value,
+      nameTouched: true,
+      nameError: AppValidation.validateRequired(value, fieldName: "User name"),
+    );
+    AppLogger().d('Name set to: ${state.name}, Error: ${state.nameError}');
   }
 
   set setEmail(String value) {
-    state = state.copyWith(email: value, emailTouched: true);
-    state = state.validateEmail();
+    state = state.copyWith(
+      email: value,
+      emailTouched: true,
+      emailError: AppValidation.validateEmail(value),
+    );
+    AppLogger().d('Email set to: ${state.email}, Error: ${state.emailError}');
   }
 
   set setPassword(String value) {
-    state = state.copyWith(password: value, passwordTouched: true);
-    state = state.validatePassword();
+    state = state.copyWith(
+      password: value,
+      passwordTouched: true,
+      passwordError: AppValidation.validatePassword(value, ),
+    );
+    AppLogger().d(
+      'Password set to: ${state.password}, Error: ${state.passwordError}',
+    );
   }
 
   set setTermsAccepted(bool value) {
-    state = state.copyWith(termsAccepted: value, termsTouched: true);
-    state = state.validateTerms();
+    state = state.copyWith(
+      termsAccepted: value,
+      termsTouched: true,
+      termsError: AppValidation.validateBool(
+        value,
+        message: "You must accept the terms.",
+      ),
+    );
+    AppLogger().d(
+      'Terms set to: ${state.termsAccepted}, Error: ${state.termsError}',
+    );
   }
 
   set setLocation(String? value) {
     state = state.copyWith(location: value);
+    AppLogger().d('Location set to: ${state.location}');
   }
 
   set setDateOfBirth(DateTime? value) {
     state = state.copyWith(dateOfBirth: value);
+    AppLogger().d('Date of Birth set to: ${state.dateOfBirth}');
   }
 
-  // Called on field "blur" (optional: if you want validation only on blur)
   void markNameTouched() {
     if (!state.nameTouched) {
-      state = state.copyWith(nameTouched: true).validateName();
+      state = state.copyWith(nameTouched: true, nameError: AppValidation.validateRequired(
+        state.name,
+        fieldName: "User name",
+      ));
     }
   }
 
   void markEmailTouched() {
     if (!state.emailTouched) {
-      state = state.copyWith(emailTouched: true).validateEmail();
+      state = state.copyWith(emailTouched: true, emailError: AppValidation.validateEmail(state.email));
     }
   }
 
   void markPasswordTouched() {
     if (!state.passwordTouched) {
-      state = state.copyWith(passwordTouched: true).validatePassword();
+      state = state.copyWith(passwordTouched: true, passwordError: AppValidation.validatePassword(state.password));
     }
   }
 
   void markTermsTouched() {
     if (!state.termsTouched) {
-      state = state.copyWith(termsTouched: true).validateTerms();
+      state = state.copyWith(termsTouched: true, termsError: AppValidation.validateBool(
+        state.termsAccepted,
+        message: "You must accept the terms.",
+      ));
     }
   }
 
   Future<void> submitSignUp(WidgetRef ref) async {
-    state = state.validateAll();
+    state = state.copyWith(
+      nameError: AppValidation.validateRequired(state.name, fieldName: "User name"),
+      emailError: AppValidation.validateEmail(state.email),
+      passwordError: AppValidation.validatePassword(state.password),
+      termsError: AppValidation.validateBool(
+        state.termsAccepted,
+        message: "You must accept the terms.",
+      ),
+    );
     if (!state.isValid) {
       return;
     }
@@ -89,7 +128,9 @@ class SignUpFormNotifier extends Notifier<SignUpFormState> {
     state = state.copyWith(isSubmitting: false);
 
     if (result.isFailure) {
-      state = state.copyWith(formError: result.data ?? ExceptionHandler.errorMessage(result.error));
+      state = state.copyWith(
+        formError: result.data ?? ExceptionHandler.errorMessage(result.error),
+      );
     }
     AppLogger().i('SignUp Result: ${result.data}, Error: ${result.error}');
     // Success: navigate or update global state
