@@ -120,26 +120,26 @@ class SignUpScreen extends ConsumerWidget {
 
               const SizedBox(height: AppSizes.spaceBetweenItems),
 
-              if (ref.watch(
-                    signUpFormProvider.select(
-                      (SignUpFormState s) => s.formError,
-                    ),
-                  ) !=
-                  null) ...<Widget>[
-                Text(
-                  ref.watch(
-                    signUpFormProvider.select(
-                      (SignUpFormState s) => s.formError!,
-                    ),
-                  ),
-                  style: context.txtTheme.bodyMedium?.copyWith(
-                    color: Colors.red,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: AppSizes.spaceBetweenItems),
-              ],
-
+              // if (ref.watch(
+              //       signUpFormProvider.select(
+              //         (SignUpFormState s) => s.formError,
+              //       ),
+              //     ) !=
+              //     null) ...<Widget>[
+              //   Text(
+              //     ref.watch(
+              //       signUpFormProvider.select(
+              //         (SignUpFormState s) => s.formError,
+              //       ),
+              //     ),
+              //     style: context.txtTheme.bodyMedium?.copyWith(
+              //       color: Colors.red,
+              //     ),
+              //     textAlign: TextAlign.center,
+              //   ),
+              //   const SizedBox(height: AppSizes.spaceBetweenItems),
+              // ],
+              
               Row(
                 children: <Widget>[
                   Checkbox(
@@ -197,27 +197,30 @@ class SignUpScreen extends ConsumerWidget {
 
               AppElevatedButton(
                 onPressed: () {
-                  print(
+                  debugPrint(
                     "Submit Sign Up valid: ${ref.watch(
                       signUpFormProvider.select((SignUpFormState s) => s.isValid),
                     )} submitting: ${ref.watch(
                       signUpFormProvider.select((SignUpFormState s) => s.isSubmitting),
                     )}",
                   );
-                  ref.watch(
+                  if (ref.read(
                             signUpFormProvider.select(
                               (SignUpFormState s) => s.isSubmitting,
                             ),
-                          ) ||
-                          !ref.watch(
-                            signUpFormProvider.select(
-                              (SignUpFormState s) => s.isValid,
-                            ),
-                          )
-                      ? null
-                      : () => ref
-                            .read(signUpFormProvider.notifier)
-                            .submitSignUp(ref);
+                          ) ==
+                          false &&
+                      ref.read(
+                        signUpFormProvider.select(
+                          (SignUpFormState s) => s.isValid,
+                        ),
+                      )) {
+                    debugPrint("dhaka 1");
+
+                    ref.read(signUpFormProvider.notifier).submitSignUp(ref);
+                  }
+                  debugPrint("dhaka 2 ");
+
                   // context.go(
                   //   RoutePaths.verifyEmail,
                   //   extra: <String, String>{"type": "signup"},S
