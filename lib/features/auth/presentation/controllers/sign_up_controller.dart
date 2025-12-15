@@ -1,3 +1,5 @@
+import 'package:app/core/navigation/app_router.dart';
+import 'package:app/core/navigation/route_paths.dart';
 import 'package:app/core/providers/app_providers.dart';
 import 'package:app/core/shared/provider/role_provider.dart';
 import 'package:app/core/utils/toast/toast.dart';
@@ -12,7 +14,6 @@ import '../../data/model/sign_up_response.dart';
 import '../../domain/entities/sign_up_req.dart';
 import '../state/sign_up_form_state.dart';
 
-// In auth_providers.dart (or signup_form_notifier.dart)
 
 class SignUpFormNotifier extends Notifier<SignUpFormState> {
   @override
@@ -153,11 +154,20 @@ class SignUpFormNotifier extends Notifier<SignUpFormState> {
           );
 
       state = state.copyWith(isSubmitting: false);
+      ref
+          .read(appRouterProvider)
+          .go(
+            RoutePaths.verifyEmail,
+            extra: <String, Object>{"email": data.email, "type": "sign_up"},
+          );
 
       Toast.showSuccess(response.message);
     } catch (e) {
       Toast.showError(ExceptionHandler.errorMessage(e));
       AppLogger().e("SignUp Error", error: e);
+    }
+    finally{
+      state = state.copyWith(isSubmitting: false);
     }
   }
 }

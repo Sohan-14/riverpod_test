@@ -329,7 +329,12 @@ List<RouteBase> get authRoutes {
     GoRoute(
       path: RoutePaths.resetPassword,
       builder: (BuildContext context, GoRouterState state) {
-        return const ResetPasswordScreen();
+        final Map<String, dynamic>? extraData =
+            state.extra as Map<String, dynamic>?;
+        final String email = extraData?['email'] as String? ?? '';
+        return ResetPasswordScreen(
+          email: email,
+        );
       },
     ),
     GoRoute(
@@ -343,9 +348,11 @@ List<RouteBase> get authRoutes {
       builder: (BuildContext context, GoRouterState state) {
         final Map<String, dynamic>? extraData =
             state.extra as Map<String, dynamic>?;
-        final String type = extraData?['type'] as String? ?? 'forgot';
+        final String type = extraData?['type'] as String? ?? 'sign_up';
+        final String email = extraData?['email'] as String? ?? '';
         return VerifyEmailScreen(
           type: type,
+          email: email,
         );
       },
     ),

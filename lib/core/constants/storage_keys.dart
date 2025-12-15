@@ -4,6 +4,8 @@ class StorageKeys {
   // Secure storage keys (sensitive data)
   static const String accessToken = 'access_token';
   static const String refreshToken = 'refresh_token';
+
+  static const String role = 'role';
   
   // storage keys (non-sensitive data)
   static const String themeMode = 'theme_mode';

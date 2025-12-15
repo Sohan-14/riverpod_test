@@ -1,3 +1,4 @@
+import 'package:app/core/storage/secure_storage_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,12 +7,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../api/api_client.dart';
 import '../api/interceptors/auth_interceptor.dart';
 import '../api/interceptors/logging_interceptor.dart';
-import '../storage/secure/secure_token_storage_impl.dart';
 
 
 /// [connectivityProvider]
-/// [secureStorageProvider]
-/// [secureTokenStorageProvider]
  
 /// [authInterceptorProvider]
 /// [loggingInterceptorProvider]
@@ -32,25 +30,12 @@ final Provider<Connectivity> connectivityProvider = Provider<Connectivity>(
 final Provider<FlutterSecureStorage> secureStorageProvider =
     Provider<FlutterSecureStorage>((Ref ref) => const FlutterSecureStorage());
 
-//* ------------------------------------ Secure Token Storage Providers ------------------------------------
-final Provider<SecureTokenStorageImpl> secureTokenStorageProvider =
-    Provider<SecureTokenStorageImpl>((Ref ref) {
-      final FlutterSecureStorage secureStorage = ref.watch(
-        secureStorageProvider,
-      );
-      return SecureTokenStorageImpl(secureStorage);
-    });
-
 
 
 //* ------------------------------------ Interceptors Providers ------------------------------------
 final Provider<AuthInterceptor> authInterceptorProvider =
     Provider<AuthInterceptor>(
-      (Ref ref) => AuthInterceptor(
-        tokenStorage: ref.watch(
-          secureTokenStorageProvider,
-        ),
-      ),
+      (Ref ref) => AuthInterceptor(secureStorage: SecureStorageService()),
     );
 
 final Provider<LoggingInterceptor> loggingInterceptorProvider =

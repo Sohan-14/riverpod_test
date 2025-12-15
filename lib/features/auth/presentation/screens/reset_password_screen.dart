@@ -1,22 +1,21 @@
+import 'package:app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:app/features/auth/presentation/state/reset_password_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../core/shared/widgets/app_elevated_button.dart';
 import '../../../../core/config/sizes.dart';
-import '../../../../core/navigation/route_paths.dart';
-import '../../../../core/utils/toast/toast.dart';
+import '../../../../core/shared/widgets/app_elevated_button.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/auth_title_section.dart';
 
 class ResetPasswordScreen extends ConsumerWidget {
-  const ResetPasswordScreen({super.key});
+  final String email;
+
+  const ResetPasswordScreen({super.key, required this.email});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextEditingController newPasswordController = TextEditingController();
-    final TextEditingController confirmPasswordController =
-        TextEditingController();
+    final ResetPasswordState state = ref.watch(resetPasswordProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -38,43 +37,39 @@ class ResetPasswordScreen extends ConsumerWidget {
 
               const SizedBox(height: AppSizes.spaceBetweenSections),
 
-              Consumer(
-                builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  return AuthTextField(
-                    controller: newPasswordController,
-                    labelText: 'New Password',
-                    keyboardType: TextInputType.text,
-                    prefixIcon: Icons.lock_outline_rounded,
-                  );
-                },
+              AuthTextField(
+                onChanged: (String value) =>
+                    ref.read(resetPasswordProvider.notifier).setNewPassword =
+                        value,
+                labelText: 'New Password',
+                obscureText: true,
+                prefixIcon: Icons.lock_outline_rounded,
+                errorText: state.newPasswordError,
               ),
 
               const SizedBox(height: AppSizes.spaceBetweenItems),
 
-              Consumer(
-                builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  return AuthTextField(
-                    controller: confirmPasswordController,
-                    labelText: 'Confirm Password',
-                    obscureText: true,
-                    prefixIcon: Icons.lock_outline_rounded,
-                  );
-                },
+              AuthTextField(
+                onChanged: (String value) =>
+                    ref
+                            .read(resetPasswordProvider.notifier)
+                            .setConfirmPassword =
+                        value,
+                labelText: 'Confirm Password',
+                obscureText: true,
+                prefixIcon: Icons.lock_outline_rounded,
+                errorText: state.confirmPasswordError,
               ),
 
               const SizedBox(height: AppSizes.spaceBetweenSections),
 
               AppElevatedButton(
-                onPressed: () {
-                  Toast.showSuccess("Password reset successfully");
-                  context.go(RoutePaths.login);
-                  // ref
-                  //     .read(loginControllerProvider.notifier)
-                  //     .login(
-                  //       ol.text,
-                  //       passwordController.text,
-                  //     );
-                },
+                onPressed: state.isValid && !state.isSubmitting
+                    ? () => ref
+                          .read(resetPasswordProvider.notifier)
+                          .resetPassword(email)
+                    : null,
+                isLoading: state.isSubmitting,
                 label: 'Reset Password',
               ),
             ],

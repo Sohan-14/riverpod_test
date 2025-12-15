@@ -3,58 +3,39 @@ class SignInFormState {
   final String password;
   final String? emailError;
   final String? passwordError;
-  final String? formError;
   final bool isSubmitting;
+  final String? formError;
 
-  SignInFormState({
+  const SignInFormState({
     this.email = '',
     this.password = '',
     this.emailError,
     this.passwordError,
-    this.formError,
     this.isSubmitting = false,
+    this.formError,
   });
-
-  bool get isValid => emailError == null && passwordError == null && email.isNotEmpty && password.isNotEmpty;
 
   SignInFormState copyWith({
     String? email,
     String? password,
     String? emailError,
     String? passwordError,
-    String? formError,
     bool? isSubmitting,
+    String? formError,
   }) {
     return SignInFormState(
       email: email ?? this.email,
       password: password ?? this.password,
-      emailError: emailError ?? this.emailError,
-      passwordError: passwordError ?? this.passwordError,
-      formError: formError ?? this.formError,
+      emailError: emailError,
+      passwordError: passwordError,
       isSubmitting: isSubmitting ?? this.isSubmitting,
+      formError: formError,
     );
   }
 
-  SignInFormState validate() {
-    String? emailErr;
-    String? passErr;
-
-    if (email.isEmpty) {
-      emailErr = 'Email is required';
-    } else if (!email.contains('@')) {
-      emailErr = 'Enter a valid email';
-    }
-
-    if (password.isEmpty) {
-      passErr = 'Password is required';
-    } else if (password.length < 6) {
-      passErr = 'Password must be at least 6 characters';
-    }
-
-    return copyWith(
-      emailError: emailErr,
-      passwordError: passErr,
-      formError: null, // Clear form error on re-type
-    );
-  }
+  bool get isValid =>
+      emailError == null &&
+      passwordError == null &&
+      email.isNotEmpty &&
+      password.isNotEmpty;
 }

@@ -1,24 +1,29 @@
-import 'package:app/core/extensions/context_extensions.dart';
+// lib/features/auth/presentation/screens/verify_email_screen.dart
+import 'package:app/features/auth/presentation/state/verify_email_form_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/colors.dart';
-import '../../../../core/navigation/route_paths.dart';
-import '../../../../core/shared/provider/role_provider.dart';
-import '../../../../core/shared/widgets/app_elevated_button.dart';
 import '../../../../core/config/sizes.dart';
-import '../../../../core/utils/toast/toast.dart';
+import '../../../../core/extensions/context_extensions.dart';
+import '../../../../core/shared/widgets/app_elevated_button.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/auth_title_section.dart';
+import '../providers/auth_providers.dart'; // to access verifyEmailProvider
 
 class VerifyEmailScreen extends ConsumerWidget {
   final String type;
-  const VerifyEmailScreen({super.key, required this.type});
+  final String email;
+
+  const VerifyEmailScreen({
+    super.key,
+    required this.type,
+    required this.email,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextEditingController otpController = TextEditingController();
+    final VerifyEmailState state = ref.watch(verifyEmailProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -41,52 +46,42 @@ class VerifyEmailScreen extends ConsumerWidget {
 
               const SizedBox(height: AppSizes.spaceBetweenSections),
 
-              Consumer(
-                builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  return AuthTextField(
-                    controller: otpController,
-                    labelText: 'Enter OTP',
-                    keyboardType: TextInputType.number,
-                    prefixIcon: Icons.pin_outlined,
-                  );
-                },
+              AuthTextField(
+                onChanged: (String value) =>
+                    ref.read(verifyEmailProvider.notifier).setOtp = value,
+                labelText: 'Enter OTP',
+                keyboardType: TextInputType.number,
+                prefixIcon: Icons.pin_outlined,
+                errorText: state.otpError,
               ),
+
               const SizedBox(height: AppSizes.spaceBetweenSections),
+
               AppElevatedButton(
-                onPressed: () {
-                  Toast.showSuccess("Email is verified");
-                  if (type == "forgot") {
-                    context.go(
-                      RoutePaths.resetPassword,
-                    );
-                  }
-                  else{
-                    final Role role = ref.read(selectedRoleProvider);
-                    if(role == Role.seller){
-                      context.go(RoutePaths.businessInfo);
-                    }
-                    else if(role == Role.driver){
-                      context.go(RoutePaths.vehicleInfo);
-                    }
-                    else{
-                      context.go(RoutePaths.interest);
-                    }
-                  }
-                },
+                onPressed: state.isValid && !state.isSubmitting
+                    ? () => ref
+                          .read(verifyEmailProvider.notifier)
+                          .verifyOtp(type: type, email: email)
+                    : null,
+                isLoading: state.isSubmitting,
                 label: 'Verify Email',
               ),
+
+              const SizedBox(height: AppSizes.spaceBetweenItems),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Didn’t  received  code?",
+                    "Didn’t receive code?",
                     style: context.txtTheme.bodyMedium,
                   ),
                   TextButton(
-                    onPressed: () {
-                      Toast.showSuccess("Code Resend Successfully");
-                    },
+                    onPressed: state.isResending
+                        ? null
+                        : () => ref
+                              .read(verifyEmailProvider.notifier)
+                              .resendCode(email),
                     child: Text(
                       'Resend Code',
                       style: context.txtTheme.bodyMedium?.copyWith(

@@ -1,16 +1,18 @@
-import 'package:app/core/shared/provider/role_provider.dart';
+// lib/features/auth/presentation/screens/login_screen.dart
+import 'package:app/features/auth/presentation/state/sign_in_form_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/colors.dart';
-import '../../../../core/shared/widgets/app_elevated_button.dart';
-import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/config/icons.dart';
 import '../../../../core/config/sizes.dart';
+import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/navigation/route_paths.dart';
+import '../../../../core/shared/widgets/app_elevated_button.dart';
 import '../../../../core/shared/widgets/app_outline_button.dart';
 import '../../../../core/shared/widgets/image_loader.dart';
+import '../providers/auth_providers.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/auth_title_section.dart';
 
@@ -19,8 +21,7 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+    final SignInFormState state = ref.watch(signInProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -46,34 +47,44 @@ class LoginScreen extends ConsumerWidget {
 
               const AuthTitleSection(
                 title: "Sign in to continue",
-                subTitle: "Enter valid user name & password to continue",
+                subTitle: "Enter valid email & password to continue",
               ),
 
               const SizedBox(height: AppSizes.spaceBetweenSections),
 
-              Consumer(
-                builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  return AuthTextField(
-                    controller: emailController,
-                    labelText: 'Email',
-                    keyboardType: TextInputType.emailAddress,
-                    prefixIcon: Icons.email_outlined,
-                  );
-                },
+              AuthTextField(
+                onChanged: (String value) =>
+                    ref.read(signInProvider.notifier).setEmail = value,
+                labelText: 'Email',
+                keyboardType: TextInputType.emailAddress,
+                prefixIcon: Icons.email_outlined,
+                errorText: state.emailError,
               ),
 
               const SizedBox(height: AppSizes.spaceBetweenItems),
 
-              Consumer(
-                builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  return AuthTextField(
-                    controller: passwordController,
-                    labelText: 'Password',
-                    obscureText: true,
-                    prefixIcon: Icons.lock_outline_sharp,
-                  );
-                },
+              AuthTextField(
+                onChanged: (String value) =>
+                    ref.read(signInProvider.notifier).setPassword = value,
+                labelText: 'Password',
+                obscureText: true,
+                prefixIcon: Icons.lock_outline_sharp,
+                errorText: state.passwordError,
               ),
+
+              if (state.formError != null) ...<Widget>[
+                const SizedBox(height: AppSizes.spaceBetweenItems),
+                Text(
+                  state.formError!,
+                  style: context.txtTheme.bodyMedium?.copyWith(
+                    color: Colors.red,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+
+              const SizedBox(height: AppSizes.spaceBetweenItems),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -92,42 +103,24 @@ class LoginScreen extends ConsumerWidget {
               ),
 
               AppElevatedButton(
-                onPressed: () {
-                  final Role role = ref.read(selectedRoleProvider);
-                  if(role == Role.seller){
-                    context.go(RoutePaths.businessInfo);
-                  }
-                  else if(role == Role.driver){
-                    context.go(RoutePaths.vehicleInfo);
-                  }
-                  else{
-                    context.go(RoutePaths.interest);
-                  }
-                  // ref
-                  //     .read(loginControllerProvider.notifier)
-                  //     .login(
-                  //       emailController.text,
-                  //       passwordController.text,
-                  //     );
-                },
+                onPressed: state.isValid && !state.isSubmitting
+                    ? () => ref.read(signInProvider.notifier).login()
+                    : null,
+                isLoading: state.isSubmitting,
                 label: 'Log In',
               ),
 
-              const SizedBox(
-                height: AppSizes.spaceBetweenItems,
-              ),
+              const SizedBox(height: AppSizes.spaceBetweenItems),
               Text(
                 "OR",
                 textAlign: TextAlign.center,
                 style: context.txtTheme.bodySmall,
               ),
-              const SizedBox(
-                height: AppSizes.spaceBetweenItems,
-              ),
+              const SizedBox(height: AppSizes.spaceBetweenItems),
 
               AppOutlineButton(
-                onPressed: () {
-                },
+                onPressed: () =>
+                    ref.read(signInProvider.notifier).signInWithGoogle(),
                 label: 'Google',
                 icon: const ImageLoader(
                   imagePath: AppIcons.google,
@@ -135,6 +128,8 @@ class LoginScreen extends ConsumerWidget {
                   height: AppSizes.iconSm,
                 ),
               ),
+
+              const SizedBox(height: AppSizes.spaceBetweenItems),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
