@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../features/profile/domain/entities/user_profile.dart';
 import './route_paths.dart';
 import '../../features/screens.dart';
 
@@ -183,8 +184,10 @@ List<RouteBase> get profileRoutes {
     ),
     GoRoute(
       path: RoutePaths.profileEdit,
-      builder: (BuildContext context, GoRouterState state) =>
-          const ProfileEditScreen(),
+      builder: (BuildContext context, GoRouterState state) {
+        final UserProfile? userProfile = state.extra as UserProfile?;
+        return ProfileEditScreen(userProfile: userProfile!);
+      },
     ),
 
     GoRoute(

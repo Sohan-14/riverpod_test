@@ -6,8 +6,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../utils/app_logger.dart';
 import '../../utils/detect_image_type.dart';
 
-
-
 class ImageLoader extends StatelessWidget {
   final dynamic imagePath;
   final double? width;
@@ -123,8 +121,32 @@ class ImageLoader extends StatelessWidget {
       errorWidget: (BuildContext context, String url, Object error) {
         // Use custom error widget if provided, or default error icon
         AppLogger().e("Loading asset network Error", error: error);
-        return errorWidget ??
-            const Center(child: Icon(Icons.error, color: Colors.red));
+        return Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.blueGrey, width: .5),
+          ),
+          child:
+              errorWidget ??
+              const Center(
+                child: Column(
+                  spacing: 8.0,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.error, color: Colors.red),
+                    Text(
+                      "Loading asset network Error",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14.0, color: Colors.red),
+                    ),
+                  ],
+                ),
+              ),
+        );
       },
     );
   }

@@ -52,10 +52,9 @@ class InterestNotifier extends Notifier<InterestState> {
 
       Toast.showSuccess(response['message'] as String);
       final GoRouter router = ref.read(appRouterProvider);
-      if(role == "seller" && shopCompleted == "not_completed"){
+      if (role == "seller" && shopCompleted == "not_completed") {
         router.go(RoutePaths.businessInfo);
-      }
-      else{
+      } else {
         router.go(RoutePaths.bottomNav);
       }
     } catch (e) {

@@ -19,8 +19,10 @@ class ApiEndpoints {
       '${ApiConstants.baseUrl}/auth/refresh-token';
   static const String logout = '${ApiConstants.baseUrl}/auth/logout';
 
-  // User endpoints
-  static const String userProfile = '${ApiConstants.baseUrl}/user/profile';
+//----------------------------------------------------------------------//
+  // Profile endpoints
+  static const String userProfile = '${ApiConstants.baseUrl}/user/self-profile';
+  
   static const String updateProfile =
       '${ApiConstants.baseUrl}/user/update-profile';
   
