@@ -31,6 +31,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     final String? token = await SecureStorageService().read(
       StorageKeys.accessToken,
     );
+    final String? interestPage = await SecureStorageService().read(
+      StorageKeys.interestPage,
+    );
+
+    final String? shopCompletePage = await SecureStorageService().read(
+      StorageKeys.shopCompletePage,
+    );
 
     final String? role = await SecureStorageService().read(StorageKeys.role);
 
@@ -38,17 +45,29 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       if (token != null && token.isNotEmpty) {
         // User is authenticated
         if (role == 'user') {
-          ref.read(selectedRoleProvider.notifier).setRole = Role.user;
-          context.go(RoutePaths.bottomNav);
+          ref.read(selectedRoleProvider.notifier).setRole(Role.user);
+          context.go(
+            interestPage != null ? RoutePaths.interest : RoutePaths.bottomNav,
+          );
         } else if (role == "creator") {
-          ref.read(selectedRoleProvider.notifier).setRole = Role.creator;
-          context.go(RoutePaths.bottomNav);
+          ref.read(selectedRoleProvider.notifier).setRole(Role.creator);
+          context.go(
+            interestPage != null ? RoutePaths.interest : RoutePaths.bottomNav,
+          );
         } else if (role == "seller") {
-          ref.read(selectedRoleProvider.notifier).setRole = Role.seller;
-          context.go(RoutePaths.bottomNav);
+          ref.read(selectedRoleProvider.notifier).setRole(Role.seller);
+          context.go(
+            interestPage != null
+                ? RoutePaths.interest
+                : shopCompletePage == "not_completed"
+                ? RoutePaths.businessInfo
+                : RoutePaths.bottomNav,
+          );
         } else if (role == "driver") {
-          ref.read(selectedRoleProvider.notifier).setRole = Role.driver;
-          context.go(RoutePaths.bottomNav);
+          ref.read(selectedRoleProvider.notifier).setRole(Role.driver);
+          context.go(
+            interestPage != null ? RoutePaths.interest : RoutePaths.bottomNav,
+          );
         } else {
           context.go(RoutePaths.onboarding);
         }

@@ -173,7 +173,18 @@ class ProductDetailsScreen extends StatelessWidget {
 
               Consumer(
                 builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  final Role role = ref.read(selectedRoleProvider);
+                  // ✅ Watch the async provider
+                  final AsyncValue<Role> roleAsync = ref.watch(
+                    selectedRoleProvider,
+                  );
+
+                  final Role? role = roleAsync.value;
+
+                  if (role == null) {
+                    return const SizedBox.shrink();
+                  }
+
+                  // Now safely use `role`
                   if (role != Role.seller) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -186,7 +197,6 @@ class ProductDetailsScreen extends StatelessWidget {
                               "Quantity : ",
                               style: context.txtTheme.bodyLarge,
                             ),
-
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 16,
@@ -201,12 +211,10 @@ class ProductDetailsScreen extends StatelessWidget {
                                 style: context.txtTheme.bodyLarge,
                               ),
                             ),
-
                             Text(
                               "1",
                               style: context.txtTheme.bodyLarge,
                             ),
-
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 16,
@@ -223,10 +231,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: AppSizes.md,
-                        ),
-
+                        const SizedBox(height: AppSizes.md),
                         AppElevatedButton(
                           label: "Order Now",
                           onPressed: () {
@@ -257,6 +262,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       ],
                     );
                   }
+
                   return const SizedBox.shrink();
                 },
               ),

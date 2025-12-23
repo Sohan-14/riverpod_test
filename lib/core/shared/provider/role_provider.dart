@@ -3,22 +3,46 @@ import 'package:app/core/storage/secure_storage_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 part '../enums/role.dart';
 
-final NotifierProvider<SelectedRoleNotifier, Role> selectedRoleProvider =
-    NotifierProvider<SelectedRoleNotifier, Role>(
+// Change provider to AsyncNotifier
+final AsyncNotifierProvider<SelectedRoleNotifier, Role> selectedRoleProvider =
+    AsyncNotifierProvider<SelectedRoleNotifier, Role>(
       () => SelectedRoleNotifier(),
     );
 
-
-class SelectedRoleNotifier extends Notifier<Role> {
+class SelectedRoleNotifier extends AsyncNotifier<Role> {
   @override
-  Role build(){
-    SecureStorageService().write(StorageKeys.role, Role.user.name);
-    return Role.user;
+  Future<Role> build() async {
+    final Role role = await _readRoleFromStorage();
+    state = AsyncData<Role>(role);
+    return role;
   }
 
-  // Method to update the set role
-  set setRole(Role role) {
-    SecureStorageService().write(StorageKeys.role, Role.user.name);
-    state = role;
+  Future<Role> _readRoleFromStorage() async {
+    final String? roleStr = await SecureStorageService().read(StorageKeys.role);
+
+    Role role;
+    switch (roleStr) {
+      case 'creator':
+        role = Role.creator;
+        break;
+      case 'seller':
+        role = Role.seller;
+        break;
+      case 'driver':
+        role = Role.driver;
+        break;
+      case 'user':
+      default:
+        role = Role.user;
+    }
+
+    // Optionally re-save to ensure consistency (e.g., if null)
+    await SecureStorageService().write(StorageKeys.role, role.name);
+    return role;
+  }
+
+  Future<void> setRole(Role role) async {
+    await SecureStorageService().write(StorageKeys.role, role.name);
+    state = AsyncData<Role>(role);
   }
 }

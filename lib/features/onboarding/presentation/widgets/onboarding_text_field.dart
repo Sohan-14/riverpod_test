@@ -2,7 +2,7 @@ import 'package:app/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingTextField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String labelText;
   final String? errorText;
   final TextInputType keyboardType;
@@ -14,7 +14,7 @@ class OnboardingTextField extends StatelessWidget {
 
   const OnboardingTextField({
     super.key,
-    required this.controller,
+    this.controller,
     required this.labelText,
     this.errorText,
     this.keyboardType = TextInputType.text,

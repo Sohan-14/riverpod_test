@@ -197,13 +197,6 @@ class SignUpScreen extends ConsumerWidget {
 
               AppElevatedButton(
                 onPressed: () {
-                  debugPrint(
-                    "Submit Sign Up valid: ${ref.watch(
-                      signUpFormProvider.select((SignUpFormState s) => s.isValid),
-                    )} submitting: ${ref.watch(
-                      signUpFormProvider.select((SignUpFormState s) => s.isSubmitting),
-                    )}",
-                  );
                   if (ref.read(
                             signUpFormProvider.select(
                               (SignUpFormState s) => s.isSubmitting,
@@ -215,28 +208,16 @@ class SignUpScreen extends ConsumerWidget {
                           (SignUpFormState s) => s.isValid,
                         ),
                       )) {
-                    debugPrint("dhaka 1");
 
                     ref.read(signUpFormProvider.notifier).submitSignUp(ref);
                   }
-                  debugPrint("dhaka 2 ");
-
-                  // context.go(
-                  //   RoutePaths.verifyEmail,
-                  //   extra: <String, String>{"type": "signup"},S
-                  // );
-                  // ref
-                  //     .read(loginControllerProvider.notifier)
-                  //     .login(
-                  //       emailController.text,
-                  //       passwordController.text,
-                  //     );
                 },
                 isLoading: ref.watch(
                   signUpFormProvider.select(
                     (SignUpFormState s) => s.isSubmitting,
                   ),
                 ),
+                
                 label: 'Continue',
               ),
 

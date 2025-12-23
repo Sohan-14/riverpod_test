@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/config/sizes.dart';
 import '../../../../core/navigation/route_paths.dart';
+import '../../../../core/storage/secure_storage_service.dart';
 import '../../../../core/utils/bottom_sheet/custom_bottom_sheet.dart';
 import '../widgets/settings_item.dart';
 
@@ -85,7 +86,8 @@ class SettingProfileTab extends StatelessWidget {
                       AppElevatedButton(
                         width: 100,
                         label: "Logout",
-                        onPressed: () {
+                        onPressed: () async {
+                          await SecureStorageService().clear();
                           context.go(RoutePaths.role);
                         },
                       ),

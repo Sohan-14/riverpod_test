@@ -48,8 +48,11 @@ class MarketplaceScreen extends StatelessWidget {
       ),
       floatingActionButton: Consumer(
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
-          final Role role = ref.read(selectedRoleProvider);
-          if (role == Role.seller) {
+          // ✅ Watch the full state object
+          final Role? roleState = ref.watch(selectedRoleProvider).value;
+
+          // ✅ Safely access the role value
+          if (roleState == Role.seller) {
             return ClipOval(
               child: FloatingActionButton(
                 foregroundColor: AppColors.primary,

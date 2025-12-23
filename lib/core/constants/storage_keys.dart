@@ -6,6 +6,9 @@ class StorageKeys {
   static const String refreshToken = 'refresh_token';
 
   static const String role = 'role';
+
+  static const String interestPage = 'interestPage';
+  static const String shopCompletePage = 'shopCompletePage';
   
   // storage keys (non-sensitive data)
   static const String themeMode = 'theme_mode';

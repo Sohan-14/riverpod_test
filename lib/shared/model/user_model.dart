@@ -6,6 +6,7 @@ class UserModel {
   final String? image;
   final bool isEmailVerified;
   final bool isDeleted;
+  final bool? isShopComplete;
   final List<String> interests;
 
   UserModel({
@@ -16,6 +17,7 @@ class UserModel {
     this.image,
     required this.isEmailVerified,
     required this.isDeleted,
+    this.isShopComplete,
     required this.interests,
   });
 
@@ -28,6 +30,7 @@ class UserModel {
       image: json['image'] as String?,
       isEmailVerified: json['isEmailVerified'] as bool,
       isDeleted: json['isDeleted'] as bool,
+      isShopComplete: json['isShopComplete'] as bool?,
       interests: json['interests'] != null
           ? List<String>.from(
               (json['interests'] as List<dynamic>).map(

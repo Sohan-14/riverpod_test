@@ -37,7 +37,13 @@ class CartScreen extends StatelessWidget {
 
               Consumer(
                 builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  final Role role = ref.read(selectedRoleProvider);
+                  // Watch the async provider
+                  final AsyncValue<Role> roleAsync = ref.watch(
+                    selectedRoleProvider,
+                  );
+
+                  final Role? role = roleAsync.value;
+
                   if (role == Role.seller || role == Role.driver) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -56,9 +62,10 @@ class CartScreen extends StatelessWidget {
                         ),
                       ],
                     );
-                  } else {
-                    return const SizedBox.shrink();
                   }
+
+                  // Hide during loading, error, or unsupported role
+                  return const SizedBox.shrink();
                 },
               ),
 

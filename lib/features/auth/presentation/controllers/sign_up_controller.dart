@@ -14,7 +14,6 @@ import '../../data/model/sign_up_response.dart';
 import '../../domain/entities/sign_up_req.dart';
 import '../state/sign_up_form_state.dart';
 
-
 class SignUpFormNotifier extends Notifier<SignUpFormState> {
   @override
   SignUpFormState build() => SignUpFormState();
@@ -135,13 +134,22 @@ class SignUpFormNotifier extends Notifier<SignUpFormState> {
       }
 
       state = state.copyWith(isSubmitting: true, formError: null);
+
+      final Role? selectedRole = ref.read(selectedRoleProvider).value;
+
+      // Ensure a role is selected
+      if (selectedRole == null) {
+        // Handle error: role not selected
+        Toast.showWarning("Please select a role");
+        return;
+      }
       final SignUpReq data = SignUpReq(
         name: state.name,
         email: state.email,
         password: state.password,
         location: state.location,
         dateOfBirth: state.dateOfBirth,
-        role: ref.read(selectedRoleProvider),
+        role: selectedRole,
       );
 
       final SignUpResponse response = await ref
@@ -165,8 +173,7 @@ class SignUpFormNotifier extends Notifier<SignUpFormState> {
     } catch (e) {
       Toast.showError(ExceptionHandler.errorMessage(e));
       AppLogger().e("SignUp Error", error: e);
-    }
-    finally{
+    } finally {
       state = state.copyWith(isSubmitting: false);
     }
   }

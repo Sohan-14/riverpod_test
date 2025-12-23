@@ -23,4 +23,7 @@ class ApiEndpoints {
   static const String userProfile = '${ApiConstants.baseUrl}/user/profile';
   static const String updateProfile =
       '${ApiConstants.baseUrl}/user/update-profile';
+  
+  static const String updateSellerProfile =
+      '${ApiConstants.baseUrl}/seller/update_shop';
 }

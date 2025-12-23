@@ -68,7 +68,12 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           const Spacer(),
           Consumer(
             builder: (BuildContext context, WidgetRef ref, Widget? child) {
-              final Role role = ref.read(selectedRoleProvider);
+              final AsyncValue<Role> roleAsync = ref.watch(
+                selectedRoleProvider,
+              );
+
+              final Role? role =
+                  roleAsync.value; 
               if (role == Role.driver) {
                 return GestureDetector(
                   onTap: () => context.push(RoutePaths.parcelRequest),
@@ -79,6 +84,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 );
               }
+
               return const SizedBox.shrink();
             },
           ),

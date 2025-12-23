@@ -10,9 +10,15 @@ import 'package:app/features/profile/presentation/state/interest_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/constants/storage_keys.dart';
+import '../../../../core/storage/secure_storage_service.dart';
+
 class InterestNotifier extends Notifier<InterestState> {
   @override
-  InterestState build() => const InterestState();
+  InterestState build() {
+    SecureStorageService().write(StorageKeys.interestPage, "interestPage");
+    return const InterestState();
+  }
 
   void setSelectedInterests(List<String> interests) {
     state = state.copyWith(selectedInterests: interests);
@@ -36,10 +42,22 @@ class InterestNotifier extends Notifier<InterestState> {
               'interests': state.selectedInterests,
             },
           );
+      await SecureStorageService().delete(StorageKeys.interestPage);
+      final String? shopCompleted = await SecureStorageService().read(
+        StorageKeys.shopCompletePage,
+      );
+      final String? role = await SecureStorageService().read(
+        StorageKeys.role,
+      );
 
       Toast.showSuccess(response['message'] as String);
       final GoRouter router = ref.read(appRouterProvider);
-      router.go(RoutePaths.bottomNav);
+      if(role == "seller" && shopCompleted == "not_completed"){
+        router.go(RoutePaths.businessInfo);
+      }
+      else{
+        router.go(RoutePaths.bottomNav);
+      }
     } catch (e) {
       final String message = ExceptionHandler.errorMessage(e);
       state = state.copyWith(formError: message);

@@ -138,13 +138,13 @@ class ProfileCard extends StatelessWidget {
 
           Consumer(
             builder: (BuildContext context, WidgetRef ref, Widget? child) {
-              final Role role = ref.read(selectedRoleProvider);
+              // ✅ Watch the full state object
+              final Role? role = ref.watch(selectedRoleProvider).value;
+
               if (role == Role.creator) {
                 return Column(
                   children: <Widget>[
-                    const SizedBox(
-                      height: AppSizes.spaceBetweenItems,
-                    ),
+                    const SizedBox(height: AppSizes.spaceBetweenItems),
                     AppElevatedButton(
                       icon: const ImageLoader(
                         imagePath: AppIcons.advertise,
@@ -152,9 +152,7 @@ class ProfileCard extends StatelessWidget {
                         height: 24.0,
                         color: AppColors.white,
                       ),
-                      onPressed: () {
-                        context.push(RoutePaths.ads);
-                      },
+                      onPressed: () => context.push(RoutePaths.ads),
                       label: "Advertise",
                     ),
                   ],
@@ -162,9 +160,7 @@ class ProfileCard extends StatelessWidget {
               } else if (role == Role.seller) {
                 return Column(
                   children: <Widget>[
-                    const SizedBox(
-                      height: AppSizes.spaceBetweenItems,
-                    ),
+                    const SizedBox(height: AppSizes.spaceBetweenItems),
                     AppElevatedButton(
                       icon: const ImageLoader(
                         imagePath: AppIcons.order,
@@ -172,9 +168,7 @@ class ProfileCard extends StatelessWidget {
                         height: 24.0,
                         color: AppColors.white,
                       ),
-                      onPressed: () {
-                        context.push(RoutePaths.productOrders);
-                      },
+                      onPressed: () => context.push(RoutePaths.productOrders),
                       label: "Orders",
                     ),
                   ],
@@ -182,9 +176,7 @@ class ProfileCard extends StatelessWidget {
               } else if (role == Role.driver) {
                 return Column(
                   children: <Widget>[
-                    const SizedBox(
-                      height: AppSizes.spaceBetweenItems,
-                    ),
+                    const SizedBox(height: AppSizes.spaceBetweenItems),
                     AppElevatedButton(
                       icon: const ImageLoader(
                         imagePath: AppIcons.parcelRequest,
@@ -192,14 +184,13 @@ class ProfileCard extends StatelessWidget {
                         height: 24.0,
                         color: AppColors.white,
                       ),
-                      onPressed: () {
-                        context.push(RoutePaths.parcelRequest);
-                      },
+                      onPressed: () => context.push(RoutePaths.parcelRequest),
                       label: "Request",
                     ),
                   ],
                 );
               }
+
               return const SizedBox.shrink();
             },
           ),

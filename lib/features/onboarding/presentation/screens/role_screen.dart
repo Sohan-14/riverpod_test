@@ -55,8 +55,7 @@ class RoleScreen extends ConsumerWidget {
                             "Share posts, stories, and connect with your community.",
                         onTapCallback: () {
                           // Update the role in Riverpod using Notifier
-                          ref.read(selectedRoleProvider.notifier).setRole =
-                              Role.user;
+                          ref.read(selectedRoleProvider.notifier).setRole(Role.user);
                           Toast.showSuccess("Standard User");
                           context.push(RoutePaths.login);
                         },
@@ -71,8 +70,7 @@ class RoleScreen extends ConsumerWidget {
                             "Create posts, stories, and connect with your community.",
                         onTapCallback: () {
                           // Update the role in Riverpod using Notifier
-                          ref.read(selectedRoleProvider.notifier).setRole =
-                              Role.creator;
+                          ref.read(selectedRoleProvider.notifier).setRole(Role.creator);
                           Toast.showSuccess("Creator");
                           context.push(RoutePaths.login);
                         },
@@ -96,8 +94,9 @@ class RoleScreen extends ConsumerWidget {
                             "List products, manage sales, and grow your business.",
                         onTapCallback: () {
                           // Update the role in Riverpod using Notifier
-                          ref.read(selectedRoleProvider.notifier).setRole =
-                              Role.seller;
+                          ref
+                              .read(selectedRoleProvider.notifier)
+                              .setRole(Role.seller);
                           Toast.showSuccess("Seller");
                           context.push(RoutePaths.login);
                         },
@@ -111,8 +110,9 @@ class RoleScreen extends ConsumerWidget {
                         subtitle: "Deliver products and track your earnings.",
                         onTapCallback: () {
                           // Update the role in Riverpod using Notifier
-                          ref.read(selectedRoleProvider.notifier).setRole =
-                              Role.driver;
+                          ref
+                              .read(selectedRoleProvider.notifier)
+                              .setRole(Role.driver);
                           Toast.showSuccess("Delivery Driver");
                           context.push(RoutePaths.login);
                         },

@@ -1,11 +1,14 @@
 import 'package:app/core/config/colors.dart';
 import 'package:app/core/extensions/context_extensions.dart';
+import 'package:app/core/navigation/route_paths.dart';
 import 'package:app/core/shared/widgets/custom_app_bar.dart';
+import 'package:app/core/storage/secure_storage_service.dart';
 import 'package:app/features/profile/presentation/controllers/interest_controller.dart';
 import 'package:app/features/profile/presentation/providers/profile_providers.dart'; // adjust path
 import 'package:app/features/profile/presentation/state/interest_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/sizes.dart';
 import '../../../../core/shared/widgets/app_elevated_button.dart';
@@ -41,12 +44,23 @@ class InterestScreen extends ConsumerWidget {
       '🌱 Nature & Environment',
     ];
 
+
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: "Your Interest",
         showBackBtn: false,
-        titleAlignment: TitleAlignment.center,
+        titleAlignment: TitleAlignment.left,
         alignmentValue: 0,
+        elevation: 4.0,
+        actions: <Widget>[
+          IconButton(
+            onPressed: () async {
+              await SecureStorageService().clear();
+              context.go(RoutePaths.role);
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -54,7 +68,7 @@ class InterestScreen extends ConsumerWidget {
           children: <Widget>[
             Text(
               "Select a few of your interests and let everyone know what you’re passionate about.",
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.start,
               style: context.txtTheme.bodyMedium?.copyWith(
                 wordSpacing: 2.0,
                 height: 2.0,

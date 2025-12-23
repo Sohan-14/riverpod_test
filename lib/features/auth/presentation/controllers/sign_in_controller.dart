@@ -70,12 +70,24 @@ class SignInNotifier extends Notifier<SignInFormState> {
         StorageKeys.accessToken,
         response.tokens.accessToken,
       );
+
+      await SecureStorageService().write(StorageKeys.role, response.data.role);
+
+      if (response.data.isShopComplete != null &&
+          response.data.isShopComplete == false) {
+        await SecureStorageService().write(
+          StorageKeys.shopCompletePage,
+          "not_completed",
+        );
+      }
       if (response.data.interests.isEmpty) {
         router.go(RoutePaths.interest);
+      } else if (response.data.isShopComplete == false) {
+        router.go(RoutePaths.businessInfo);
       } else {
         router.go(RoutePaths.bottomNav);
       }
-
+      state = state.copyWith(isSubmitting: false, formError: null);
       Toast.showSuccess(response.message);
     } catch (e) {
       final String message = ExceptionHandler.errorMessage(e);

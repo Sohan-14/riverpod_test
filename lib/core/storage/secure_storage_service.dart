@@ -1,3 +1,4 @@
+import 'package:app/core/utils/app_logger.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// A secure storage service for storing sensitive data like tokens.
@@ -12,7 +13,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// ```
 class SecureStorageService {
   // Singleton instance
-  static final SecureStorageService _instance = SecureStorageService._internal();
+  static final SecureStorageService _instance =
+      SecureStorageService._internal();
 
   /// Factory constructor to return the singleton instance.
   factory SecureStorageService() => _instance;
@@ -22,24 +24,26 @@ class SecureStorageService {
 
   /// Private constructor with secure options for Android and iOS.
   SecureStorageService._internal()
-      : _storage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(
-      encryptedSharedPreferences: true,
-    ),
-    iOptions: IOSOptions(
-      accessibility: KeychainAccessibility.first_unlock,
-    ),
-  );
+    : _storage = const FlutterSecureStorage(
+        aOptions: AndroidOptions(
+          encryptedSharedPreferences: true,
+        ),
+        iOptions: IOSOptions(
+          accessibility: KeychainAccessibility.first_unlock,
+        ),
+      );
 
   /// Writes a [value] to secure storage for the given [key].
   Future<void> write(String key, String? value) async {
     await _storage.write(key: key, value: value);
   }
-  
+
   /// Reads and returns the value associated with the given [key].
   ///
   /// Returns `null` if the key does not exist.
   Future<String?> read(String key) async {
+    final String? retrieveValue = await _storage.read(key: key);
+    AppLogger().i("key: $key || retrieveValue : $retrieveValue");
     return await _storage.read(key: key);
   }
 
