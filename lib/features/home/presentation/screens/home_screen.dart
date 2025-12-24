@@ -1,6 +1,7 @@
 import 'package:app/core/config/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Make sure you import this for the provider
 
